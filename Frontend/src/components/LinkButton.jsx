@@ -7,7 +7,7 @@ function LinkButton (props) {
     };
 
     return (
-       <div className={`flex rounded-full ${props.bgColor} text-center justify-center w-fit px-5 py-2`}>
+       <div className={`flex rounded-full ${props.bgColor} text-center justify-center w-fit px-5 py-2 transition-transform transform hover:scale-105`}>
            <Link
                to={props.href}
                onClick={handleButtonClick}

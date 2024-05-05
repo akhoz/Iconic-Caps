@@ -22,11 +22,11 @@ function Header() {
                     <div className="hidden md:block">
                         <nav>
                             <ul className="flex justify-center items-center space-x-4">
-                                <Link to="/" onClick={handleButtonClick} className="text-black">Home</Link>
-                                <Link to="/Shop" onClick={handleButtonClick} className="text-black">Shop</Link>
-                                <Link to="/About" onClick={handleButtonClick} className="text-black">About</Link>
-                                <Link to="/LogIn" onClick={handleButtonClick} className="text-black">Log In</Link>
-                                <Link to="/OurTeam" onClick={handleButtonClick} className="text-black">Our Team</Link>
+                                <Link to="/" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">Home</Link>
+                                <Link to="/Shop" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">Shop</Link>
+                                <Link to="/About" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">About</Link>
+                                <Link to="/LogIn" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">Log In</Link>
+                                <Link to="/OurTeam" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">Our Team</Link>
                             </ul>
                         </nav>
                     </div>
