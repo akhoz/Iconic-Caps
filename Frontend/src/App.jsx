@@ -1,9 +1,10 @@
 import './App.css'
+import Home from "./views/Home.jsx";
 
 function App() {
     return (
-        <div className='bg-amber-300 text-center'>
-            Hello World
+        <div>
+            <Home/>
         </div>
     )
 }
