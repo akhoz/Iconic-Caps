@@ -8,13 +8,14 @@ import Shop from "./views/Shop.jsx";
 import OurTeam from "./views/OurTeam.jsx";
 import LogIn from "./views/LogIn.jsx";
 import SignUp from "./views/SignUp.jsx";
+import Header from "./components/Header.jsx";
 
 
 function App() {
     return (
         <div>
             <Router>
-                {/* Add the Header component here */}
+                <Header/>
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/Shop" element={<Shop/>}/>

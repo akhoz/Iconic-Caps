@@ -7,13 +7,13 @@ function Home() {
               <div
                   className="bg-hero-left bg-no-repeat bg-cover h-72 flex flex-col-reverse items-start md:h-auto md:w-1/2 md:py-40 xl:py-64">
                   <div className='space-y-3 ml-5 mb-5 md:mb-0 lg:ml-10'>
-                      <p className='text-3xl text-white'>
+                      <p className='text-3xl text-black'>
                           Shop
                       </p>
                       <LinkButton
-                          bgColor={'bg-white'}
-                          textColor={'text-black'}
-                          text={'Get Started'}
+                          bgColor={'bg-black'}
+                          textColor={'text-white'}
+                          text={'Get started'}
                           href={'./Shop'}
                       />
                   </div>
@@ -27,7 +27,7 @@ function Home() {
                       <LinkButton
                           bgColor={'bg-white'}
                           textColor={'text-black'}
-                          text={'Get Started'}
+                          text={'Browse now'}
                           href={'./About'}
                       />
                   </div>
