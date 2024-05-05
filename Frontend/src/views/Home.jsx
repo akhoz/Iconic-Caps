@@ -14,7 +14,7 @@ function Home() {
                           bgColor={'bg-white'}
                           textColor={'text-black'}
                           text={'Get Started'}
-                          href={'#'}
+                          href={'./Shop'}
                       />
                   </div>
               </div>
@@ -28,7 +28,7 @@ function Home() {
                           bgColor={'bg-white'}
                           textColor={'text-black'}
                           text={'Get Started'}
-                          href={'#'}
+                          href={'./About'}
                       />
                   </div>
               </div>
@@ -47,7 +47,7 @@ function Home() {
                       bgColor={'bg-black'}
                       textColor={'text-white'}
                       text={'Explore more'}
-                      href={'#'}
+                      href={'./Shop'}
                   />
               </div>
               <img
@@ -74,7 +74,7 @@ function Home() {
                       bgColor={'bg-white'}
                       textColor={'text-black'}
                       text={'Log in'}
-                      href={'#'}
+                      href={'./LogIn'}
                   />
               </div>
           </div>
