@@ -9,6 +9,9 @@ function Header() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+    const handleLinkClick = () => {
+        setIsOpen(false);
+    };
     return (
         <header className="bg-white py-5">
             <div className="container mx-auto pr-4">
@@ -19,11 +22,11 @@ function Header() {
                     <div className="hidden md:block">
                         <nav>
                             <ul className="flex justify-center items-center space-x-4">
-                                <Link to="./" onClick={handleButtonClick} className="text-black">Home</Link>
-                                <Link to="./Shop" onClick={handleButtonClick} className="text-black">Shop</Link>
-                                <Link to="./About" onClick={handleButtonClick} className="text-black">About</Link>
-                                <Link to="./LogIn" onClick={handleButtonClick} className="text-black">Log In</Link>
-                                <Link to="./OurTeam" onClick={handleButtonClick} className="text-black">Our Team</Link>
+                                <Link to="/" onClick={handleButtonClick} className="text-black">Home</Link>
+                                <Link to="/Shop" onClick={handleButtonClick} className="text-black">Shop</Link>
+                                <Link to="/About" onClick={handleButtonClick} className="text-black">About</Link>
+                                <Link to="/LogIn" onClick={handleButtonClick} className="text-black">Log In</Link>
+                                <Link to="/OurTeam" onClick={handleButtonClick} className="text-black">Our Team</Link>
                             </ul>
                         </nav>
                     </div>
@@ -55,11 +58,11 @@ function Header() {
             {isOpen && (
                 <div className="flex flex-col justify-center items-center md:hidden bg-white mt-5 text-center">
                     <ul className="flex flex-col space-y-2">
-                        <Link to="./" onClick={handleButtonClick} className="text-black">Home</Link>
-                        <Link to="./Shop" onClick={handleButtonClick} className="text-black">Shop</Link>
-                        <Link to="./About" onClick={handleButtonClick} className="text-black">About</Link>
-                        <Link to="./LogIn" onClick={handleButtonClick} className="text-black">Log In</Link>
-                        <Link to="./OurTeam" onClick={handleButtonClick} className="text-black">Our Team</Link>
+                        <Link to="/" onClick={() => { handleButtonClick(); handleLinkClick(); }} className="text-black">Home</Link>
+                        <Link to="/Shop" onClick={() => { handleButtonClick(); handleLinkClick(); }} className="text-black">Shop</Link>
+                        <Link to="/About" onClick={() => { handleButtonClick(); handleLinkClick(); }} className="text-black">About</Link>
+                        <Link to="/LogIn" onClick={() => { handleButtonClick(); handleLinkClick(); }} className="text-black">Log In</Link>
+                        <Link to="/OurTeam" onClick={() => { handleButtonClick(); handleLinkClick(); }} className="text-black">Our Team</Link>
                     </ul>
                     <LiaShoppingBagSolid className="text-black h-6 w-6 mt-2"/>
                 </div>

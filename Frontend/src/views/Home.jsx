@@ -7,12 +7,12 @@ function Home() {
               <div
                   className="bg-hero-left bg-no-repeat bg-cover h-72 flex flex-col-reverse items-start md:h-auto md:w-1/2 md:py-40 xl:py-64">
                   <div className='space-y-3 ml-5 mb-5 md:mb-0 lg:ml-10'>
-                      <p className='text-3xl text-black'>
+                      <p className='text-3xl text-white lg:text-black'>
                           Shop
                       </p>
                       <LinkButton
-                          bgColor={'bg-black'}
-                          textColor={'text-white'}
+                          bgColor={'bg-white lg:bg-black'}
+                          textColor={'text-black lg:text-white'}
                           text={'Get started'}
                           href={'./Shop'}
                       />

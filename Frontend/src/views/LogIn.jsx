@@ -41,7 +41,7 @@ function LogIn () {
                         href="#">
                         I forgot my password
                     </a>
-                    <Link to="./SignUp" className="text-md text-gray-600">
+                    <Link to="/SignUp" className="text-md text-gray-600">
                         Create an Account
                     </Link>
                 </div>

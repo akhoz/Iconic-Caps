@@ -35,22 +35,22 @@ function Footer () {
             </div>
             <div className="flex flex-row text-gray-400 text-xs space-x-5 justify-center my-5">
                 <Link
-                    to="./"
+                    to="/"
                     onClick={handleButtonClick}>
                     Home
                 </Link>
                 <Link
-                    to="./OurTeam"
+                    to="/OurTeam"
                     onClick={handleButtonClick}>
                     Contact Us
                 </Link>
                 <Link
-                    to="./OurTeam"
+                    to="/OurTeam"
                     onClick={handleButtonClick}>
                     Our Team
                 </Link>
                 <Link
-                    to="./About"
+                    to="/About"
                     onClick={handleButtonClick}>
                     Work With Us
                 </Link>
