@@ -5,7 +5,7 @@ function Home() {
       <div className="flex flex-col">
           <div className="flex flex-col md:flex-row">
               <div
-                  className="bg-hero-right bg-no-repeat bg-cover h-72 flex flex-col-reverse items-start md:h-auto md:w-1/2 md:py-40 xl:py-64">
+                  className="bg-hero-left bg-no-repeat bg-cover h-72 flex flex-col-reverse items-start md:h-auto md:w-1/2 md:py-40 xl:py-64">
                   <div className='space-y-3 ml-5 mb-5 md:mb-0 lg:ml-10'>
                       <p className='text-3xl text-white'>
                           Shop
@@ -19,7 +19,7 @@ function Home() {
                   </div>
               </div>
               <div
-                  className="bg-hero-left bg-no-repeat bg-cover h-72 flex flex-col-reverse items-end md:h-auto md:w-1/2 md:py-40 xl:py-64">
+                  className="bg-hero-right bg-no-repeat bg-cover h-72 flex flex-col-reverse items-end md:h-auto md:w-1/2 md:py-40 xl:py-64">
                   <div className='space-y-3 mr-5 mb-5 md:mb-0 lg:mr-10'>
                       <p className='text-3xl text-white'>
                           About Us
