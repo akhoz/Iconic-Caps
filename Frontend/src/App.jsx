@@ -9,11 +9,12 @@ import OurTeam from "./views/OurTeam.jsx";
 import LogIn from "./views/LogIn.jsx";
 import SignUp from "./views/SignUp.jsx";
 
+
 function App() {
     return (
         <div>
             <Router>
-                {/* Header */}
+                {/* Add the Header component here */}
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/Shop" element={<Shop/>}/>

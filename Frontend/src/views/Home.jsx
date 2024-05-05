@@ -38,10 +38,28 @@ function Home() {
                   <h1 className='text-5xl font-bold'>
                       Iconic Caps
                   </h1>
-                  <p className='my-10'>
+                  <p className='my-10 lg:mt-10 lg:mb-2'>
                       We are a premium cap store offering
                       top-quality caps from various
                       categories and leading brands.
+                  </p>
+                  <p className="hidden lg:block mb-10">
+                      Discover a world of premium headwear at
+                      our store, where luxury meets style.
+                      Explore our extensive collection
+                      featuring top-quality caps crafted from
+                      premium materials, meticulously curated
+                      from leading brands and various categories.
+                      Elevate your look with our exclusive
+                      selection of caps, each embodying
+                      unparalleled craftsmanship and timeless
+                      elegance. Whether you are seeking the
+                      perfect accessory for everyday wear or
+                      a statement piece for special occasions,
+                      our store offers the ultimate destination
+                      for discerning cap enthusiasts.
+                      Experience the epitome of style, comfort,
+                      and sophistication with our premium cap collection.
                   </p>
                   <LinkButton
                       bgColor={'bg-black'}

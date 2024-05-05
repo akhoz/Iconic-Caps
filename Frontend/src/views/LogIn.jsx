@@ -1,8 +1,8 @@
-
+import { Button } from "flowbite-react";
 function LogIn () {
     return (
         <div>
-            Log in
+            <Button>Click me</Button>
         </div>
     )
 }
