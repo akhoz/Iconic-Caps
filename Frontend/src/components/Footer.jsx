@@ -50,14 +50,14 @@ function Footer () {
                     Our Team
                 </Link>
                 <Link
-                    to="/About"
+                    to="/LocalStores"
                     onClick={handleButtonClick}>
-                    Work With Us
+                    Visit Our Stores
                 </Link>
             </div>
             <div className="flex justify-center mb-5">
                 <p className="text-gray-400 text-xs">
-                    © 2021 Iconic Caps
+                    © 2024 Iconic Caps
                 </p>
             </div>
         </footer>
