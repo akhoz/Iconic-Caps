@@ -11,9 +11,9 @@ export default {
     extend: {
       backgroundImage: {
         'hero-right': "url(img/hero-right.png)",
-        'hero-left': "url(img/hero-left.png)",
+        'hero-left': "url(img/hero-left.jpg)",
 
-        'about': "url(img/about-banner.png)",
+        'about': "url(img/about.png)",
       }
     },
   },
