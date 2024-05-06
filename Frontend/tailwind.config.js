@@ -12,6 +12,8 @@ export default {
       backgroundImage: {
         'hero-right': "url(img/hero-right.png)",
         'hero-left': "url(img/hero-left.png)",
+
+        'about': "url(img/about-banner.png)",
       }
     },
   },
