@@ -5,7 +5,7 @@ import { FaGithub } from "react-icons/fa6";
 
 function DeveloperCard(props) {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg transition-transform transform hover:scale-105">
+    <div className="max-w-xs rounded overflow-hidden shadow-lg transition-transform transform hover:scale-105">
         <img className="w-full" src={props.image} alt={props.name}/>
         <div className="px-6 py-10">
             <div className="font-bold text-xl mb-2">{props.name}</div>

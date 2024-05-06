@@ -13,12 +13,12 @@ function Home() {
           <div className="flex flex-col md:flex-row">
               <div className="bg-hero-left bg-no-repeat bg-cover h-72 flex flex-col-reverse items-start md:h-auto md:w-1/2 md:py-40 xl:py-64">
                   <div className='space-y-3 ml-5 mb-5 md:mb-0 lg:ml-10'>
-                      <p className='text-3xl text-white lg:text-black'>
+                      <p className='text-3xl text-white'>
                           Shop
                       </p>
                       <LinkButton
-                          bgColor={'bg-white lg:bg-black'}
-                          textColor={'text-black lg:text-white'}
+                          bgColor={'bg-white'}
+                          textColor={'text-black'}
                           text={'Get started'}
                           href={'./Shop'}
                       />

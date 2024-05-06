@@ -1,5 +1,4 @@
-import React from "react";
-import DeveloperCard from "../components/Cards"; 
+import DeveloperCard from "../components/DeveloperCard";
 
 function OurTeam() {
     return (
