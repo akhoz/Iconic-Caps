@@ -10,7 +10,7 @@ function OurTeam() {
                     image="/img/adrian.jpeg"
                     description="Adrian is an expert developer and he has autism."
                     ig="https://www.instagram.com/adrian_jvp25/"
-                    x="https://twitter.com/adrian_jvp25"
+                    x="https://twitter.com/akhoz69"
                     github= "https://github.com/akhoz"
 
                 />
@@ -20,7 +20,7 @@ function OurTeam() {
                     image="/img/ram.png"
                     description="Ram is a developer and is in love with Fernanda Vazquez."
                     ig="https://www.instagram.com/ortizbarquero/"
-                    x="https://twitter.com/ramchelortiz"
+                    x="https://twitter.com/OrtizRamchel"
                     github="https://github.com/RamchelOrtiz"
                 />
 
@@ -29,7 +29,7 @@ function OurTeam() {
                     image="/img/hector.png"
                     description="Hector is a developer and thinks he is Andrew Tate."
                     ig="https://www.instagram.com/hector_caravaca/"
-                    x="https://twitter.com/hector_caravaca"
+                    x="https://twitter.com/hector_cv13"
                     github="https://github.com/hectorcaravacavargas"
 
                 />
