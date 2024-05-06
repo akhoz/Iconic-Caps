@@ -1,4 +1,11 @@
 import LinkButton from "../components/LinkButton.jsx";
+import { SiNike } from "react-icons/si";
+import { SiAdidas } from "react-icons/si";
+import { SiUnderarmour } from "react-icons/si";
+import { SiPuma } from "react-icons/si";
+import { SiReebok } from "react-icons/si";
+import { SiNewbalance } from "react-icons/si";
+import { SiJordan } from "react-icons/si";
 
 function Home() {
   return (
@@ -33,8 +40,17 @@ function Home() {
                   </div>
               </div>
           </div>
+          <div className="flex flex-row mt-10 items-center justify-center space-x-5 text-black text-3xl">
+              <SiNike/>
+              <SiJordan/>
+              <SiAdidas/>
+              <SiUnderarmour/>
+              <SiPuma/>
+              <SiReebok/>
+              <SiNewbalance/>
+          </div>
           <div className='flex flex-row justify-between items-center'>
-              <div className='w-1/2 my-16 ml-5 lg:ml-20 text-wrap'>
+              <div className='w-1/2 my-16 ml-5 lg:ml-20 text-wrap' data-aos="fade-right">
                   <h1 className='text-5xl font-bold'>
                       Iconic Caps
                   </h1>
@@ -72,10 +88,10 @@ function Home() {
                   src='/img/example-cap.png'
                   alt='example cap'
                   className='w-1/3 h-1/3 mr-5 lg:w-1/4 lg:mr-20'
+                  data-aos="fade-left"
               />
           </div>
           <div className="relative h-screen">
-              {/* Video de fondo */}
               <video
                   autoPlay
                   loop
@@ -84,7 +100,7 @@ function Home() {
                   src="/videos/hero-video.mp4"
                   type="video/mp4"
               />
-              <div className="absolute inset-0 flex flex-col justify-center items-center space-y-3 lg:space-y-6">
+              <div className="absolute inset-0 flex flex-col justify-center items-center space-y-3 lg:space-y-6" data-aos="fade-up">
                   <h1 className='text-xl text-white font-bold lg:text-5xl'>
                       Start shopping with us
                   </h1>
