@@ -8,6 +8,8 @@ import OurTeam from "./views/OurTeam.jsx";
 import LogIn from "./views/LogIn.jsx";
 import SignUp from "./views/SignUp.jsx";
 import Header from "./components/Header.jsx";
+import Account from "./views/Account.jsx";
+import LocalStores from "./views/LocalStores.jsx";
 
 function App() {
     return (
@@ -18,9 +20,11 @@ function App() {
                     <Route path="/Shop" element={<HeaderFooterLayout><Shop/></HeaderFooterLayout>}/>
                     <Route path="/About" element={<HeaderFooterLayout><About/></HeaderFooterLayout>}/>
                     <Route path="/OurTeam" element={<HeaderFooterLayout><OurTeam/></HeaderFooterLayout>}/>
+                    <Route path="/LocalStores" element={<HeaderFooterLayout><LocalStores/></HeaderFooterLayout>}/>
 
                     <Route path="/LogIn" element={<LogIn/>}/>
                     <Route path="/SignUp" element={<SignUp/>}/>
+                    <Route path="/Account" element={<Account/>}/>
                 </Routes>
             </Router>
         </div>
@@ -37,7 +41,5 @@ function HeaderFooterLayout({ children }) {
         </>
     );
 }
-
-
 
 export default App;
