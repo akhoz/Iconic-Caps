@@ -4,7 +4,7 @@ import {FaArrowLeft} from "react-icons/fa";
 function SignUp () {
     return (
         <div className="flex flex-col lg:h-screen lg:flex-row">
-            <div className="flex flex-col items-center justify-center mt-10 lg:mt-0 lg:w-3/4">
+            <div className="flex flex-col items-center justify-center mt-10 lg:mt-0 lg:w-3/4" data-aos="fade-right">
                 <img
                     src="/img/iconic-caps-logo.png"
                     alt="iconic-caps-logo"

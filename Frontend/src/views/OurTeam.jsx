@@ -3,7 +3,7 @@ import DeveloperCard from "../components/Cards";
 
 function OurTeam() {
     return (
-        <div className="container mx-auto py-8">
+        <div className="container mx-auto py-8" data-aos="zoom-in">
             <div className="flex flex-wrap justify-center gap-8">
                 <DeveloperCard
                     name="Adrian Villalobos"

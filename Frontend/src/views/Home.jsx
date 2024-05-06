@@ -9,10 +9,9 @@ import { SiJordan } from "react-icons/si";
 
 function Home() {
   return (
-      <div className="flex flex-col">
+      <div className="flex flex-col" data-aos="fade-up">
           <div className="flex flex-col md:flex-row">
-              <div
-                  className="bg-hero-left bg-no-repeat bg-cover h-72 flex flex-col-reverse items-start md:h-auto md:w-1/2 md:py-40 xl:py-64">
+              <div className="bg-hero-left bg-no-repeat bg-cover h-72 flex flex-col-reverse items-start md:h-auto md:w-1/2 md:py-40 xl:py-64">
                   <div className='space-y-3 ml-5 mb-5 md:mb-0 lg:ml-10'>
                       <p className='text-3xl text-white lg:text-black'>
                           Shop
@@ -50,7 +49,7 @@ function Home() {
               <SiNewbalance/>
           </div>
           <div className='flex flex-row justify-between items-center'>
-              <div className='w-1/2 my-16 ml-5 lg:ml-20 text-wrap' data-aos="fade-right">
+              <div className='w-1/2 my-8 ml-5 lg:ml-20 text-wrap' data-aos="fade-right">
                   <h1 className='text-5xl font-bold'>
                       Iconic Caps
                   </h1>
