@@ -1,3 +1,4 @@
+import Product from "../components/Product.jsx";
 
 function About() {
     const line = "img/line.png";
