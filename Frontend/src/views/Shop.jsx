@@ -1,9 +1,8 @@
+import CompShowProductos from "../components/ShowProductos.jsx";
 
 function Shop () {
     return (
-        <div>
-            Shop
-        </div>
+        <CompShowProductos></CompShowProductos>
     )
 }
 
