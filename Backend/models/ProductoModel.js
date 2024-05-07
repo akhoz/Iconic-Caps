@@ -4,9 +4,9 @@ import db from "../database/db.js"
 //importamos sequelize
 import {DataTypes} from "sequelize";
 
-const ProductoModel = db.define('producto', {
-    Modelo: {type: DataTypes.STRING},
-    IndentificadorFiscalProvedor : {type: DataTypes.INTEGER},
+const ProductoModel = db.define('Producto', {
+    Modelo: {type: DataTypes.STRING, primaryKey:true},
+    //IndentificadorFiscalProvedor : {type: DataTypes.INTEGER},
     Categoria: {type: DataTypes.STRING},
     Precio : {type: DataTypes.INTEGER},
     ExistenciasDisponibles : {type: DataTypes.INTEGER}

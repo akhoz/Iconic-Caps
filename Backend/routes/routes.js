@@ -5,10 +5,10 @@ import { createProducto, deleteProducto, getAllProductos, getProducto, updatePro
  const router = express.Router()
 
  router.get('/', getAllProductos)
- router.get('/:id', getProducto)
+ router.get('/:modelo', getProducto)
  router.post('/',createProducto)
  router.put('/', updateProducto)
- router.delete('/:id',deleteProducto)
+ router.delete('/:modelo',deleteProducto)
 
  export default router;
  

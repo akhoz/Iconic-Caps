@@ -3,7 +3,7 @@ import ProductoModel from "../models/ProductoModel.js";
 
 //** Métodos para el CRUD**/
 
-//Mostrar todos los registros
+    //Mostrar todos los registros
 export const getAllProductos = async (req, res) => {
     try {
          const productos = await ProductoModel.findAll()
@@ -19,10 +19,10 @@ export const getProducto = async (req, res) => {
     try {
         const producto = await ProductoModel.findAll({
             where:{
-                id:req.params.id
+                modelo:req.params.modelo
             }
         })
-        res.json(producto)
+        res.json(producto[0])
     } catch (error) {
         res.json({message: error.message})
     }
@@ -42,7 +42,7 @@ export const createProducto = async (req, res) => {
 export const updateProducto = async (req, res) => {
     try {
         await ProductoModel.update(req.body, {
-            where: {id: req.params.id}
+            where: {modelo: req.params.modelo}
         })
         res.json({"message":"Registro actualizado con éxito"})
     } catch (error) {
