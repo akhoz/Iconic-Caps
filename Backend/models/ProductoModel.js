@@ -20,6 +20,4 @@ ProductoModel.belongsTo(ProvedorModel, {
     foreignKey: 'IdentificadorFiscalProvedor',
 });
 
-
-
 export default ProductoModel;
