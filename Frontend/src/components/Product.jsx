@@ -3,16 +3,19 @@ import BagButton from "./BagButton.jsx";
 
 function Product(props) {
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col transition-transform transform hover:scale-105">
             <div className="bg-gray-300 rounded-xl mb-2">
-            <img
-                src={props.imgSrc}
-                alt={props.imgAlt}
-                className="w-40 h-40 object-cover p-1"/>
+                <img
+                    src={props.imgSrc}
+                    alt={props.imgAlt}
+                    className="w-40 h-40 object-cover p-1"/>
             </div>
             <h1 className="font-bold text-xl">
                 {props.model}
             </h1>
+            <p className="text-black">
+                {props.brand}
+            </p>
             <p className="text-gray-600">
                 {props.category}
             </p>
@@ -31,6 +34,7 @@ Product.propTypes = {
     imgSrc: PropTypes.string,
     imgAlt: PropTypes.string,
     model: PropTypes.string,
+    brand: PropTypes.string,
     category: PropTypes.string,
     stock: PropTypes.number,
     price: PropTypes.number
