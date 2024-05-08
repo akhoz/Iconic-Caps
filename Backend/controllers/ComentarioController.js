@@ -18,7 +18,7 @@ export const getComentario = async (req, res) => {
         const comentarios = await ComentarioModel.findAll({
             where:{
                 ModeloProducto:req.params.ModeloProducto
-            }
+            }, include: [{model: ProductoModel}, {model: ClienteModel}]
         })
         res.json(comentarios)
     } catch (error) {
