@@ -11,6 +11,7 @@ app.use(express.json())
 app.use('/productos', productoRoutes)
 
 
+
 try {
     await db.authenticate()
     console.log('Conexión exitosa a la DB')
