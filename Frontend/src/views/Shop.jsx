@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {useState, useEffect} from 'react'
 import Product from "../components/Product.jsx";
+import {Link} from "react-router-dom";
 
 function Shop () {
     const URI = 'http://localhost:8000/productos/'
@@ -16,22 +17,31 @@ function Shop () {
     }
 
     return (
-        <div className="flex justify-center items-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-16 gap-y-6">
-                {productos.map(producto => (
-                    <div key={producto.id} className="w-fit" data-aos="fade-up">
-                        <Product
-                            imgSrc={"/img/example-cap-transparent.png"}
-                            imgAlt="Cap"
-                            model={producto.Modelo}
-                            category={producto.Categoria}
-                            stock={producto.ExistenciasDisponibles}
-                            price={producto.Precio}
-                        />
-                    </div>
-                ))}
+        <>
+            <div className="flex flex-col" data-aos="fade-up">
+                <p className="flex justify-center items-center mt-5 mb-10 font-bold text-3xl lg:justify-start lg:ml-28"
+                   >
+                    Our Iconic Caps
+                </p>
             </div>
-        </div>
+            <div className="flex justify-center w-full items-center mb-20" data-aos="fade-up">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-20">
+                    {productos.map(producto => (
+                        <Link to={`/Product/${producto.Modelo}`} key={producto.id} className="w-fit">
+                            <Product
+                                imgSrc={"/img/example-cap-transparent.png"}
+                                imgAlt="Cap"
+                                model={producto.Modelo}
+                                brand={producto.Provedor.NombreEmpresa}
+                                category={producto.Categoria}
+                                stock={producto.ExistenciasDisponibles}
+                                price={producto.Precio}
+                            />
+                        </Link>
+                    ))}
+                </div>
+            </div>
+        </>
     )
 }
 

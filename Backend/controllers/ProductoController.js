@@ -1,12 +1,13 @@
 // importamos el modelo
 import ProductoModel from "../models/ProductoModel.js";
+import ProvedorModel from "../models/ProvedorModel.js";
 
 //** Métodos para el CRUD**/
 
     //Mostrar todos los registros
 export const getAllProductos = async (req, res) => {
     try {
-         const productos = await ProductoModel.findAll()
+         const productos = await ProductoModel.findAll({include : [{model: ProvedorModel}]})
          res.json(productos)
 
     } catch (error) {

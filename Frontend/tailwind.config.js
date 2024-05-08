@@ -10,10 +10,10 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'hero-right': "url(img/hero-right.png)",
-        'hero-left': "url(img/hero-left.jpg)",
+        'hero-right': "url(/img/hero-right.png)",
+        'hero-left': "url(/img/hero-left.jpg)",
 
-        'about': "url(img/about.png)",
+        'about': "url(/img/about.png)",
       }
     },
   },
