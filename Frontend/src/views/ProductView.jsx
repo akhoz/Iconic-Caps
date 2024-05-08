@@ -2,22 +2,25 @@ import {useParams} from "react-router-dom";
 import PropTypes from 'prop-types';
 import {useState, useEffect} from 'react'
 import ProductViewComponent from "../components/ProductViewComponent.jsx";
+import axios from 'axios';
 
 function ProductView({productos}) {
     let { modelo } = useParams();
-    console.log(modelo)
+    // console.log(modelo)
 
-    const URI = `http://localhost:8000/comentarios/${modelo}`
+    const URI = `http://localhost:8000/comentarios/AD5`
+    console.log(URI)
 
     const [comentarios, setComentarios] = useState([])
     useEffect( ()=>{
-        getComentarios()
+        getComentario()
     },[])
 
-    const getComentarios = async () => {
+    const getComentario = async () => {
         const res = await axios.get(URI)
         setComentarios(res.data)
     }
+
 
     const producto = productos.find(producto => producto.Modelo === modelo);
 
@@ -27,6 +30,9 @@ function ProductView({productos}) {
 
   return (
     <div>
+        <p>
+            {comentarios[0].Cliente}
+        </p>
         <ProductViewComponent
             imgSrc={"/img/example-cap-transparent.png"}
             imgAlt="Cap"
