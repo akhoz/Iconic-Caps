@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {useState, useEffect} from 'react'
 import Product from "../components/Product.jsx";
+import {Link} from "react-router-dom";
 
 function Shop () {
     const URI = 'http://localhost:8000/productos/'
@@ -24,9 +25,9 @@ function Shop () {
                 </p>
             </div>
             <div className="flex justify-center w-full items-center mb-20" data-aos="fade-up">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-20">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-x-6 gap-y-20">
                     {productos.map(producto => (
-                        <div key={producto.id} className="w-fit">
+                        <Link to={`/Product/${producto.Modelo}`} key={producto.id} className="w-fit">
                             <Product
                                 imgSrc={"/img/example-cap-transparent.png"}
                                 imgAlt="Cap"
@@ -36,7 +37,7 @@ function Shop () {
                                 stock={producto.ExistenciasDisponibles}
                                 price={producto.Precio}
                             />
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

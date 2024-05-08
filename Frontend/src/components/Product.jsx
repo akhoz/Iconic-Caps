@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import BagButton from "./BagButton.jsx";
 
 function Product(props) {
     return (
