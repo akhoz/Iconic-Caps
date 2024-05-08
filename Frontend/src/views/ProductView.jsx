@@ -44,6 +44,9 @@ function ProductView({productos}) {
             <h1 className="font-bold text-2xl absolute top-8 left-8">
                 Comments
             </h1>
+            <p className={`${comentarios.length > 0 ? 'hidden' : ''} text-lg ml-8`}>
+                This product has no comments yet
+            </p>
             <div className="flex justify-start w-full">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20 mx-8">
                     {comentarios.map((comentario) => (

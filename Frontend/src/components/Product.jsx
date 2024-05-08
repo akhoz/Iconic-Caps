@@ -1,8 +1,13 @@
 import PropTypes from 'prop-types';
 
 function Product(props) {
+    const handleButtonClick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     return (
-        <div className="flex flex-col transition-transform transform hover:scale-105">
+        <div className="flex flex-col transition-transform transform hover:scale-105"
+             onClick={handleButtonClick}>
             <div className="bg-gray-100 mb-2 p-5">
                 <img
                     src={props.imgSrc}

@@ -2,6 +2,7 @@ import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaYoutube } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 
 function Footer () {
@@ -25,12 +26,17 @@ function Footer () {
                 <a
                     className="rounded-full bg-white p-1"
                     href="#">
-                    <FaXTwitter />
+                    <FaXTwitter/>
                 </a>
                 <a
                     className="rounded-full bg-white p-1"
                     href="#">
                     <FaYoutube/>
+                </a>
+                <a
+                    className="rounded-full bg-white p-1"
+                    href="#">
+                    <FaGithub/>
                 </a>
             </div>
             <div className="flex flex-row text-gray-400 text-xs space-x-5 justify-center my-5">
