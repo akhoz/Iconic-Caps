@@ -1,10 +1,23 @@
 import {useParams} from "react-router-dom";
 import PropTypes from 'prop-types';
+import {useState, useEffect} from 'react'
 import ProductViewComponent from "../components/ProductViewComponent.jsx";
 
 function ProductView({productos}) {
     let { modelo } = useParams();
     console.log(modelo)
+
+    const URI = `http://localhost:8000/comentarios/${modelo}`
+
+    const [comentarios, setComentarios] = useState([])
+    useEffect( ()=>{
+        getComentarios()
+    },[])
+
+    const getComentarios = async () => {
+        const res = await axios.get(URI)
+        setComentarios(res.data)
+    }
 
     const producto = productos.find(producto => producto.Modelo === modelo);
 
