@@ -28,7 +28,6 @@ function Shop () {
                             category={producto.Categoria}
                             stock={producto.ExistenciasDisponibles}
                             price={producto.Precio}
-                            name={producto.Provedor.NombreEmpresa}
                         />
                     </div>
                 ))}
