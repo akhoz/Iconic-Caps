@@ -24,6 +24,7 @@ function Shop () {
                             imgSrc={"/img/example-cap-transparent.png"}
                             imgAlt="Cap"
                             model={producto.Modelo}
+                            brand={producto.Provedor.NombreEmpresa}
                             category={producto.Categoria}
                             stock={producto.ExistenciasDisponibles}
                             price={producto.Precio}
