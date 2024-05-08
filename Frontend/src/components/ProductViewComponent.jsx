@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import BagButton from "./BagButton.jsx";
 
 function ProductViewComponent(props) {
     return (
@@ -21,9 +22,10 @@ function ProductViewComponent(props) {
                     {`Available stock: ${props.stock}`}
                 </p>
                 <hr className="border-1 border-gray-300 my-1 w-full"/>
-                <p className="font-bold text-lg lg:text-xl">
+                <p className="font-bold text-lg mb-2 lg:text-xl">
                     {`$${props.price}`}
                 </p>
+                <BagButton/>
             </div>
         </div>
     );

@@ -1,11 +1,11 @@
 
 function BagButton() {
     return (
-        <div className="flex items-center justify-center bg-black rounded-xl">
-            <p className="text-white text-md px-5 py-2">
+        <button className="flex items-center justify-center bg-black rounded-xl">
+            <p className="text-white text-md px-2 py-1">
                 Add to Bag
             </p>
-        </div>
+        </button>
     )
 }
 
