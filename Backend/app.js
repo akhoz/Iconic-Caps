@@ -2,14 +2,14 @@ import express from "express";
 import cors from 'cors'
 
 import db from "./database/db.js";
-import productoRoutes from './routes/routes.js'
-
+import productoRoutes from './routes/Productoroutes.js'
+import clienteRoutes from './routes/Clienteroutes.js'
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 app.use('/productos', productoRoutes)
-
+app.use('/clientes',clienteRoutes)
 
 
 try {
