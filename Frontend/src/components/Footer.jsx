@@ -45,11 +45,9 @@ function Footer () {
                     onClick={handleButtonClick}>
                     Home
                 </Link>
-                <Link
-                    to="/OurTeam"
-                    onClick={handleButtonClick}>
+                <a href="mailto:iconic@store.com" target="_blank">
                     Contact Us
-                </Link>
+                </a>
                 <Link
                     to="/OurTeam"
                     onClick={handleButtonClick}>
