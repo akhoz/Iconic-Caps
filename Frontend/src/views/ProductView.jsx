@@ -47,8 +47,8 @@ function ProductView({productos}) {
             <p className={`${comentarios.length > 0 ? 'hidden' : ''} text-lg ml-8`}>
                 This product has no comments yet
             </p>
-            <div className="flex justify-start w-full">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20 mx-8">
+            <div className="flex w-full justify-center">
+                <div className="grid grid-cols-1 gap-x-10 gap-y-20 mx-8 w-full md:grid-cols-2 lg:grid-cols-3">
                     {comentarios.map((comentario) => (
                         <div key={comentario.id}>
                             <div className="flex flex-row justify-between items-center">
