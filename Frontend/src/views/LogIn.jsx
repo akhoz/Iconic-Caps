@@ -3,7 +3,7 @@ import { FaArrowLeft } from "react-icons/fa";
 
 function LogIn () {
     return (
-        <div className="flex flex-col lg:h-screen lg:flex-row">
+        <div className="flex flex-col mt-20 lg:mt-0 lg:h-screen lg:flex-row">
             <div className="flex flex-col items-center justify-center mt-10 lg:mt-0 lg:w-3/4" data-aos="fade-right">
                 <img
                     src="/img/iconic-caps-logo.png"
@@ -46,7 +46,7 @@ function LogIn () {
                     </Link>
                 </div>
             </div>
-            <div className="hidden lg:block flex-col bg-black justify-center pt-28 w-1/4">
+            <div className="hidden lg:flex flex-col bg-black justify-center items-center w-1/4">
                 <img src="/img/slogan.png" alt="slogan" />
             </div>
             <Link to="/" className="flex flex-row items-center space-x-2 absolute top-0 left-0 ml-4 mt-4 text-black font-bold text-md transition-transform transform hover:scale-105" data-aos="fade-right">

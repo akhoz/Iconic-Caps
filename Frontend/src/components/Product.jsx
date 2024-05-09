@@ -8,7 +8,7 @@ function Product(props) {
     return (
         <div className="flex flex-col transition-transform transform hover:scale-105"
              onClick={handleButtonClick}>
-            <div className="bg-gray-100 mb-2 p-5">
+            <div className="bg-gray-100 mb-2 p-1 md:p-5">
                 <img
                     src={props.imgSrc}
                     alt={props.imgAlt}

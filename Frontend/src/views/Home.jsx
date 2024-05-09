@@ -36,8 +36,8 @@ function Home() {
               <SiReebok/>
               <SiNewbalance/>
           </div>
-          <div className='flex flex-row justify-between items-center'>
-              <div className='w-1/2 my-8 ml-5 lg:ml-20 text-wrap' data-aos="fade-right">
+          <div className='flex flex-row justify-between items-center xl:mx-10'>
+              <div className='w-1/2 text-wrap my-12 ml-5 md:my-8 lg:ml-20 xl:w-1/3' data-aos="fade-right">
                   <h1 className='text-5xl font-bold'>
                       Iconic Caps
                   </h1>
@@ -46,7 +46,7 @@ function Home() {
                       top-quality caps from various
                       categories and leading brands.
                   </p>
-                  <p className="hidden lg:block mb-10">
+                  <p className="hidden md:block md:mb-6">
                       Discover a world of premium headwear at
                       our store, where luxury meets style.
                       Explore our extensive collection
