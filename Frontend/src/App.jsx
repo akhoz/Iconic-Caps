@@ -27,7 +27,7 @@ function App() {
         setProducto(res.data)
     }
     return (
-        <div>
+        <div className="flex flex-col min-h-screen">
             <Router>
                 <Routes>
                     <Route path="/" element={<HeaderFooterLayout><Home/></HeaderFooterLayout>}/>
@@ -51,7 +51,10 @@ function HeaderFooterLayout({ children }) {
     return (
         <>
             <Header/>
-            {children}
+            <div className="flex-1">
+                {children}
+            </div>
+
             <Footer/>
         </>
     );

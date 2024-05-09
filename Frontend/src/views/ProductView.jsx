@@ -31,7 +31,7 @@ function ProductView({productos}) {
     }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col xl:min-h-screen">
         <ProductViewComponent
             imgSrc={"/img/example-cap-transparent.png"}
             imgAlt="Cap"
@@ -40,7 +40,7 @@ function ProductView({productos}) {
             category={producto.Categoria}
             stock={producto.ExistenciasDisponibles}
             price={producto.Precio}/>
-        <div className="flex bg-black w-full text-white mt-10 py-20 relative ">
+        <div className="flex-grow bg-black w-full text-white mt-10 py-20 relative ">
             <h1 className="font-bold text-2xl absolute top-8 left-8">
                 Comments
             </h1>
