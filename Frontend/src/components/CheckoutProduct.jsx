@@ -1,24 +1,30 @@
 
 function CheckoutProduct() {
     return (
-        <div className="flex w-10/12 flex-col" data-aos="fade-up">
+        <div className="flex w-10/12 flex-col">
             <div className="flex w-full flex-row justify-between items-center">
-                <div className="flex flex-row w-1/2 lg:py-10 lg:space-x-10 xl:space-x-20">
-                    <p>
-                        produc
-                    </p>
-                    <p>
-                        Descrip
-                    </p>
+                <div className="flex flex-row w-1/3 md:space-x-5 lg:w-1/2 lg:py-10 lg:space-x-10 xl:py-5 xl:space-x-20">
+                    <img src="/img/example-cap-transparent.png" alt="example-cap-transparent" className="hidden w-1/4 md:block md:w-1/4 xl:w-1/3"/>
+                    <div className="flex flex-col items-start justify-center">
+                        <h2 className="text-lg font-bold xl:text-xl">
+                            NR2
+                        </h2>
+                        <p className="text-black xl:text-lg">
+                            Nike
+                        </p>
+                        <p className="text-black xl:text-lg">
+                            Deportiva
+                        </p>
+                    </div>
                 </div>
-                <div className="flex flex-row justify-between items-center w-1/2 lg:py-10">
-                    <p>
+                <div className="flex flex-row justify-between items-center w-2/3 lg:w-1/2 lg:py-5">
+                    <p className="text-black xl:text-lg">
                         $100
                     </p>
-                    <p>
+                    <p className="text-black xl:text-lg">
                         3
                     </p>
-                    <p>
+                    <p className="text-black xl:text-lg">
                         $100
                     </p>
                 </div>
