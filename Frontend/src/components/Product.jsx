@@ -12,7 +12,7 @@ function Product(props) {
                 <img
                     src={props.imgSrc}
                     alt={props.imgAlt}
-                    className="w-40 h-40 object-cover p-1 md:w-60 md:h-60 lg:w-80 lg:h-80"/>
+                    className="w-40 h-40 object-cover p-1 md:w-60 md:h-60 lg:w-80 lg:h-80 xl:w-96 xl:h-96"/>
             </div>
             <h1 className="font-bold text-xl lg:text-2xl">
                 {props.model}

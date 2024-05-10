@@ -27,8 +27,12 @@ export const ProductsProvider = ({children}) => {
         }
     }
 
+    const emptyBag = () => {
+        setBagItems(new Map());
+    }
+
     return (
-        <ProductsContext.Provider value={{ bagItems, addItemToBag, removeItemFromBag }}>
+        <ProductsContext.Provider value={{ bagItems, addItemToBag, removeItemFromBag, emptyBag }}>
             {children}
         </ProductsContext.Provider>
     );

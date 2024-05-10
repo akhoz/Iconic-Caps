@@ -13,6 +13,7 @@ import Header from "./components/Header.jsx";
 import Account from "./views/Account.jsx";
 import LocalStores from "./views/LocalStores.jsx";
 import ProductView from "./views/ProductView.jsx";
+import Checkout from "./views/Checkout.jsx";
 
 function App() {
     const URI = 'http://localhost:8000/productos/'
@@ -41,6 +42,7 @@ function App() {
                     <Route path="/LogIn" element={<LogIn/>}/>
                     <Route path="/SignUp" element={<SignUp/>}/>
                     <Route path="/Account" element={<Account/>}/>
+                    <Route path="/Checkout" element={<Checkout/>}/>
                 </Routes>
             </Router>
         </div>
