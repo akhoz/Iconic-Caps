@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { LiaShoppingBagSolid } from "react-icons/lia";
+import Bag from "./Bag.jsx";
 
 function Header() {
     const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +31,7 @@ function Header() {
                         </nav>
                     </div>
                     <div className="hidden md:block">
-                        <LiaShoppingBagSolid className="text-black h-10 w-10" />
+                        <Bag/>
                     </div>
                     <div className="md:hidden">
                         <button
@@ -64,7 +64,7 @@ function Header() {
                         <Link to="/LogIn" onClick={() => { handleButtonClick(); handleLinkClick(); }} className="text-black">Log In</Link>
                         <Link to="/OurTeam" onClick={() => { handleButtonClick(); handleLinkClick(); }} className="text-black">Our Team</Link>
                     </ul>
-                    <LiaShoppingBagSolid className="text-black h-6 w-6 mt-2"/>
+                    <Bag/>
                 </div>
             )}
         </header>

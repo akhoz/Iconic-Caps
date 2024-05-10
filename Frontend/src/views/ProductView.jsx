@@ -7,11 +7,8 @@ import Stars from "../components/Stars.jsx";
 
 function ProductView({productos}) {
     let { modelo } = useParams();
-    console.log(modelo)
-
 
     const URI = `http://localhost:8000/comentarios/${modelo}`
-    console.log(URI)
 
     const [comentarios, setComentarios] = useState([])
     useEffect( ()=>{
