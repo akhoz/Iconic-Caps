@@ -9,8 +9,8 @@ const ProductoModel = db.define('Producto', {
     Modelo: {type: DataTypes.STRING, primaryKey:true},
     Categoria: {type: DataTypes.STRING},
     Precio : {type: DataTypes.INTEGER},
-    ExistenciasDisponibles : {type: DataTypes.INTEGER}
-
+    ExistenciasDisponibles : {type: DataTypes.INTEGER},
+    Img: {type: DataTypes.STRING},
 });
 
 ProvedorModel.hasOne(ProductoModel, {
