@@ -1,7 +1,15 @@
 import PropTypes from 'prop-types';
 import BagButton from "./BagButton.jsx";
+import { useProducts } from "../contexts/ProductsContext.jsx";
 
 function ProductViewComponent(props) {
+    const { addItemToBag } = useProducts();
+
+    const handleBagButtonClick = () => {
+        addItemToBag(props.model);
+        console.log(`Added ${props.model} to bag`);
+    }
+
     return (
         <div className="flex flex-row justify-center items-center space-x-8">
             <img
@@ -25,7 +33,9 @@ function ProductViewComponent(props) {
                 <p className="font-bold text-md md:text-lg mb-2 lg:text-xl">
                     {`$${props.price}`}
                 </p>
-                <BagButton/>
+                <div className="w-full" onClick={handleBagButtonClick}>
+                    <BagButton/>
+                </div>
             </div>
         </div>
     );
