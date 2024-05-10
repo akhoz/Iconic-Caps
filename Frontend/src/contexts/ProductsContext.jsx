@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import PropTypes from 'prop-types';
 
-const ProductsContext = createContext()
+const ProductsContext = createContext();
 
 export const ProductsProvider = ({children}) => {
     const [bagItems, setBagItems] = useState(new Map());
@@ -16,8 +16,19 @@ export const ProductsProvider = ({children}) => {
         }
     }
 
+    const removeItemFromBag = (product) => {
+        if (bagItems.has(product)) {
+            const newAmount = bagItems.get(product) - 1;
+            if (newAmount === 0) {
+                bagItems.delete(product);
+            } else {
+                setBagItems(new Map(bagItems.set(product, newAmount)));
+            }
+        }
+    }
+
     return (
-        <ProductsContext.Provider value={{ bagItems, addItemToBag }}>
+        <ProductsContext.Provider value={{ bagItems, addItemToBag, removeItemFromBag }}>
             {children}
         </ProductsContext.Provider>
     );
