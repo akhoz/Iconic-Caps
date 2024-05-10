@@ -4,7 +4,7 @@ function Product(props) {
     const handleButtonClick = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
+    console.log(props.imgAlt)
     return (
         <div className="flex flex-col transition-transform transform hover:scale-105"
              onClick={handleButtonClick}>

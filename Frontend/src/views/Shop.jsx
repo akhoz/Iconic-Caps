@@ -29,8 +29,8 @@ function Shop () {
                     {productos.map(producto => (
                         <Link to={`/Product/${producto.Modelo}`} key={producto.id} className="w-fit">
                             <Product
-                                imgSrc={"/img/example-cap-transparent.png"}
-                                imgAlt="Cap"
+                                imgSrc={`/img/caps/${producto.Img}`}
+                                imgAlt={producto.Img}
                                 model={producto.Modelo}
                                 brand={producto.Provedor.NombreEmpresa}
                                 category={producto.Categoria}

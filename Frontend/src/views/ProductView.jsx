@@ -33,8 +33,8 @@ function ProductView({productos}) {
   return (
     <div className="flex flex-col min-h-screen mt-10">
         <ProductViewComponent
-            imgSrc={"/img/example-cap-transparent.png"}
-            imgAlt="Cap"
+            imgSrc={`/img/caps/${producto.Img}`}
+            imgAlt={producto.Img}
             model={producto.Modelo}
             brand={producto.Provedor.NombreEmpresa}
             category={producto.Categoria}
