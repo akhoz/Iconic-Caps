@@ -13,7 +13,7 @@ function Header() {
         setIsOpen(false);
     };
     return (
-        <header className="bg-white py-5 lg:px-16">
+        <header className="bg-white py-5 md:sticky md:top-0 md:z-10 md:opacity-95 lg:px-16">
             <div className="container mx-auto pr-4">
                 <div className="flex items-center justify-between h-16">
                     <div className="">

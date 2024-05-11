@@ -63,7 +63,7 @@ function Bag() {
             </button>
             {isBagOpen && (
                 <div
-                    className="flex flex-col justify-center items-center bg-gray-50 rounded-xl py-4 absolute top-full mt-2 z-10 md:right-0 xl:px-10 ">
+                    className="flex flex-col justify-center items-center bg-gray-50 rounded-xl py-4 absolute top-full mt-2 z-20 md:right-0 xl:px-10 ">
                     {addedItems.length === 0 && (
                         <p className="text-center text-nowrap w-fit px-10">No items in the bag</p>
                     )}
