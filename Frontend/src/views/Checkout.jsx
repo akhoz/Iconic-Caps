@@ -87,8 +87,8 @@ function Checkout() {
                         total={item.price * item.amount}
                     />
                 ))}
-                <div className="flex flex-row justify-between w-10/12 mt-14">
-                    <div className="flex flex-col justify-start items-start w-1/2">
+                <div className="flex flex-col w-full mt-8 ml-5 md:ml-0 md:mt-14 md:w-10/12  md:flex-row md:justify-between">
+                    <div className="flex flex-col justify-start items-start w-full md:w-1/2">
                         <div className="flex flex-row w-full items-center justify-start">
                             <input
                                 type="text"
@@ -105,19 +105,19 @@ function Checkout() {
                             <input
                                 type="text"
                                 id="text"
-                                className="w-1/2 text-xl border-0 border-b-2 border-black p-1 my-5 focus:border-b-2 focus:border-black focus:ring-0"
+                                className="w-1/2 text-xl border-0 border-b-2 border-black p-1 my-5 focus:border-b-2 focus:border-black focus:ring-0 md:w-1/2"
                                 placeholder="Card Number"
                             />
                             <input
                                 type="text"
                                 id="text"
-                                className="w-1/4 text-xl border-0 border-b-2 border-black p-1 my-5 focus:border-b-2 focus:border-black focus:ring-0"
+                                className="text-center w-1/6 text-xl border-0 border-b-2 border-black p-1 my-5 focus:border-b-2 focus:border-black focus:ring-0 md:w-1/4"
                                 placeholder="Expire"
                             />
                             <input
                                 type="text"
                                 id="text"
-                                className="w-1/4 text-xl border-0 border-b-2 border-black p-1 my-5 focus:border-b-2 focus:border-black focus:ring-0"
+                                className="text-center w-1/6 text-xl border-0 border-b-2 border-black p-1 my-5 focus:border-b-2 focus:border-black focus:ring-0 md:w-1/4"
                                 placeholder="CVV"
                             />
                         </div>
@@ -125,18 +125,18 @@ function Checkout() {
                             <input
                                 type="text"
                                 id="text"
-                                className="w-3/4 text-xl border-0 border-b-2 border-black p-1 my-5 focus:border-b-2 focus:border-black focus:ring-0"
+                                className="w-2/3 text-xl border-0 border-b-2 border-black p-1 my-5 focus:border-b-2 focus:border-black focus:ring-0 md:w-3/4"
                                 placeholder="Delivery Direction"
                             />
                             <input
                                 type="text"
                                 id="text"
-                                className="w-1/4 text-xl border-0 border-b-2 border-black p-1 my-5 focus:border-b-2 focus:border-black focus:ring-0"
+                                className="text-center w-1/4 text-xl border-0 border-b-2 border-black p-1 my-5 focus:border-b-2 focus:border-black focus:ring-0 md:w-1/4"
                                 placeholder="Postal Code"
                             />
                         </div>
                     </div>
-                    <div className="flex flex-col justify-start items-end w-1/2">
+                    <div className="flex flex-col justify-end items-end w-11/12 mt-8 md:justify-start md:mt-0 md:w-1/2">
                         <h1 className="text-3xl font bold">
                             {`Total: $${total}`}
                         </h1>

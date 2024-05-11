@@ -6,7 +6,7 @@ function CheckoutProduct(props) {
             <div className="flex w-full flex-row justify-between items-center">
                 <div className="flex flex-row w-1/3 py-5 md:space-x-5 lg:py-0 lg:w-1/2 lg:space-x-10 xl:space-x-20">
                     <img src={props.imgSrc} alt={props.imgSrc} className="hidden w-1/4 md:block md:w-1/4 xl:w-1/3"/>
-                    <div className="flex flex-col items-start justify-center">
+                    <div className="flex flex-col items-center text-center justify-center">
                         <h2 className="text-lg font-bold xl:text-xl">
                             {props.model}
                         </h2>

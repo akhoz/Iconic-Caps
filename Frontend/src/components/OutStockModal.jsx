@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 
 function OutStockModal(props) {
     return (
-        <div className="flex flex-col items-center justify-center bg-white rounded-md p-20 relative" data-aos="zoom-in">
+        <div className="flex flex-col items-center justify-center text-center bg-white rounded-md p-20 relative" data-aos="zoom-in">
             <h1 className="text-2xl font-bold">Oops, out of stock!</h1>
             <p className="text-lg mt-3">
                 {`Seems like you're trying to buy more of this product (${props.model}) than we have in stock`}
             </p>
-            <p>
+            <p className="mt-2 mb-5 md:mt-0 md:mb-0">
                 {`But you can purchase the ${props.amount} units of this product that you have in your bag`}
             </p>
             <Link to={"/Shop"} className="underline">
