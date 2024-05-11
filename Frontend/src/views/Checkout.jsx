@@ -1,10 +1,52 @@
 import CheckoutProduct from "../components/CheckoutProduct.jsx";
 import {Link} from "react-router-dom";
+import { useProducts } from "../contexts/ProductsContext.jsx";
+import axios from 'axios'
 import {FaArrowLeft} from "react-icons/fa";
 import { FaCcVisa } from "react-icons/fa";
 import { RiMastercardFill } from "react-icons/ri";
+import {useEffect, useState} from "react";
 
 function Checkout() {
+    const URI = 'http://localhost:8000/productos/'
+    const { bagItems } = useProducts();
+
+    const [productos, setProducto] = useState([])
+    useEffect( ()=>{
+        getProductos()
+    },[])
+
+    const getProductos = async () => {
+        const res = await axios.get(URI)
+        setProducto(res.data)
+    }
+
+    const [addedItems, setAddedItems] = useState([]);
+    const [total, setTotal] = useState(0);
+
+    useEffect(() => {
+        if (bagItems.length === 0) {
+            setAddedItems([]);
+            return;
+        }
+    console.log(total)
+    const updatedAddedItems = Array.from(bagItems, ([id, amount]) => {
+        const product = productos.find(producto => producto.Modelo === id)
+
+        return {
+            id,
+            image: product ? `/img/caps/${product.Img}` : '',
+            model: product ? product.Modelo : '',
+            price: product ? product.Precio : 0,
+            amount: amount,
+        };
+    });
+        setAddedItems(updatedAddedItems);
+        setTotal(updatedAddedItems.reduce((acc, item) => acc + item.price * item.amount, 0));
+    }, [bagItems, productos]);
+
+
+
     return (
         <>
             <div className="flex flex-col items-center justify-center my-24" data-aos="fade-up">
@@ -28,8 +70,16 @@ function Checkout() {
                     </div>
                 </div>
                 <hr className="w-10/12 border-b border-gray-100 xl:mb-8"/>
-                <CheckoutProduct/>
-                <CheckoutProduct/>
+                {addedItems.map(item => (
+                    <CheckoutProduct
+                        key={item.id}
+                        imgSrc={item.image}
+                        model={item.model}
+                        price={item.price}
+                        quantity={item.amount}
+                        total={item.price * item.amount}
+                    />
+                ))}
                 <div className="flex flex-row justify-between w-10/12 mt-14">
                     <div className="flex flex-col justify-start items-start w-1/2">
                         <div className="flex flex-row w-full items-center justify-start">
@@ -80,7 +130,17 @@ function Checkout() {
                         </div>
                     </div>
                     <div className="flex flex-col justify-start items-end w-1/2">
-                        Information
+                        <h1 className="text-3xl font bold">
+                            {`Total: $${total}`}
+                        </h1>
+                        <p className="text-gray-600 text-md">
+                            Garanty: 100%
+                        </p>
+                        <button
+                            className="bg-black text-white rounded-lg text-center py-3 px-5 mt-3
+                            duration-300 hover:bg-white hover:text-black hover:border hover:border-black">
+                            Confirm Purchase
+                        </button>
                     </div>
                 </div>
             </div>
