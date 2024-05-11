@@ -56,6 +56,10 @@ function Bag() {
         setAddedItems([]);
     }
 
+    const handleCheckoutClick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     return (
         <div className="relative flex items-center justify-center">
             <button onClick={toggleBag}>
@@ -97,6 +101,7 @@ function Bag() {
                     {addedItems.length > 0 && (
                         <Link
                             to={"/Checkout"}
+                            onClick={handleCheckoutClick}
                             className="bg-black w-11/12 rounded-lg py-2 text-center text-white mt-4 xl:w-full">
                             Go to checkout
                         </Link>

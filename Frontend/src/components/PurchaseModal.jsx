@@ -12,7 +12,7 @@ function PurchaseModal() {
             <p>
                 {"Order number: 293"}
             </p>
-            <button className="absolute right-5 top-5 text-xl text-black">
+            <button className="absolute right-5 top-5 text-xl text-black transition-transform transform hover:scale-150">
                 <Link to="/Shop">
                     <IoClose/>
                 </Link>
