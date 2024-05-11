@@ -24,7 +24,7 @@ function Shop () {
                     Our Iconic Caps
                 </p>
             </div>
-            <div className="flex justify-center w-full items-center mb-20" data-aos="fade-up">
+            <div className="flex justify-center w-full items-center mb-20 lg:mx-2 xl:mx-0" data-aos="fade-up">
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-20">
                     {productos.map(producto => (
                         <Link to={`/Product/${producto.Modelo}`} key={producto.id} className="w-fit">
