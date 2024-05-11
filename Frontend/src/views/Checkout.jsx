@@ -50,9 +50,9 @@ function Checkout() {
 
     const [showModal, setShowModal] = useState(false);
     const handlePurchaseClick = () => {
+        setShowModal(true);
         emptyBag();
         setAddedItems([]);
-        setShowModal(true);
     }
 
     return (
@@ -92,7 +92,7 @@ function Checkout() {
                 ))}
                 <PaymentForm
                 total={total}
-                handlePurchaseClick={handlePurchaseClick}/>
+                confirmPurchase={handlePurchaseClick}/>
             </div>
             <Link to="/Shop"
                   className="flex flex-row items-center space-x-2 absolute top-0 left-0 ml-4 mt-4 text-black font-bold text-md transition-transform transform hover:scale-105"
@@ -101,7 +101,7 @@ function Checkout() {
                 <span>Keep Shopping</span>
             </Link>
             {showModal && (
-                <div className="fixed z-50 inset-0 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
+                <div className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
                     <PurchaseModal/>
                 </div>
 
