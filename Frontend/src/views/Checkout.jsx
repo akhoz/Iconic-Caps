@@ -39,6 +39,8 @@ function Checkout() {
             id,
             image: product ? `/img/caps/${product.Img}` : '',
             model: product ? product.Modelo : '',
+            brand: product ? product.Provedor.NombreEmpresa : '',
+            category: product ? product.Categoria : '',
             price: product ? product.Precio : 0,
             amount: amount,
         };
@@ -82,6 +84,8 @@ function Checkout() {
                         key={item.id}
                         imgSrc={item.image}
                         model={item.model}
+                        brand={item.brand}
+                        category={item.category}
                         price={item.price}
                         quantity={item.amount}
                         total={item.price * item.amount}
@@ -145,7 +149,7 @@ function Checkout() {
                         </p>
                         <button
                             className="bg-black text-white rounded-lg text-center py-3 px-5 mt-3
-                            duration-300 hover:bg-white hover:text-black hover:border hover:border-black"
+                            duration-500 hover:bg-white hover:text-black hover:border hover:border-black"
                             onClick={handlePurchaseClick}>
                             Confirm Purchase
                         </button>
