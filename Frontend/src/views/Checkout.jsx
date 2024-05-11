@@ -6,10 +6,11 @@ import {FaArrowLeft} from "react-icons/fa";
 import { FaCcVisa } from "react-icons/fa";
 import { RiMastercardFill } from "react-icons/ri";
 import {useEffect, useState} from "react";
+import PurchaseModal from "../components/PurchaseModal.jsx";
 
 function Checkout() {
     const URI = 'http://localhost:8000/productos/'
-    const { bagItems } = useProducts();
+    const { bagItems, addItemToBag, removeItemFromBag, emptyBag } = useProducts();
 
     const [productos, setProducto] = useState([])
     useEffect( ()=>{
@@ -23,6 +24,7 @@ function Checkout() {
 
     const [addedItems, setAddedItems] = useState([]);
     const [total, setTotal] = useState(0);
+
 
     useEffect(() => {
         if (bagItems.length === 0) {
@@ -45,7 +47,12 @@ function Checkout() {
         setTotal(updatedAddedItems.reduce((acc, item) => acc + item.price * item.amount, 0));
     }, [bagItems, productos]);
 
-
+    const [showModal, setShowModal] = useState(false);
+    const handlePurchaseClick = () => {
+        emptyBag();
+        setAddedItems([]);
+        setShowModal(true);
+    }
 
     return (
         <>
@@ -138,7 +145,8 @@ function Checkout() {
                         </p>
                         <button
                             className="bg-black text-white rounded-lg text-center py-3 px-5 mt-3
-                            duration-300 hover:bg-white hover:text-black hover:border hover:border-black">
+                            duration-300 hover:bg-white hover:text-black hover:border hover:border-black"
+                            onClick={handlePurchaseClick}>
                             Confirm Purchase
                         </button>
                     </div>
@@ -150,6 +158,17 @@ function Checkout() {
                 <FaArrowLeft/>
                 <span>Keep Shopping</span>
             </Link>
+            {showModal && (
+                <div className="fixed z-50 inset-0 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
+                    <PurchaseModal/>
+                </div>
+
+            )}
+            {
+                showModal && (
+                    <div className="fixed inset-0 w-screen h-screen bg-black z-30 opacity-80">
+                    </div>
+                )}
         </>
     );
 }
