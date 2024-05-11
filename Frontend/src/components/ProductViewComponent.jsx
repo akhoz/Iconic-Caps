@@ -26,6 +26,10 @@ function ProductViewComponent(props) {
     }
 
     useEffect(() => {
+        if (bagItems.size === 0) {
+            setAvailableStock(true);
+        }
+
         const addedItems = Array.from(bagItems, ([id, amount]) => {
             return {
                 id,
