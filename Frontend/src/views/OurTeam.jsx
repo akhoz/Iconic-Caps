@@ -3,7 +3,10 @@ import DeveloperCard from "../components/DeveloperCard";
 function OurTeam() {
     return (
         <div className="container mx-auto py-8" data-aos="zoom-in">
-            <div className="flex flex-wrap justify-center gap-8">
+            <h1 className="text-4xl font-bold text-center">Our Team</h1>
+            <p className="text-center text-lg md:text-2xl lg:text-2xl mb-8">We are a team of developers who are passionate about technology and programming. We are committed to creating innovative solutions that meet the needs of our customers.</p>
+            
+            <div className="flex flex-wrap justify-center gap-8 mb-10">
                 <DeveloperCard
                     name="Adrian Villalobos"
                     image="/img/adrian.jpeg"

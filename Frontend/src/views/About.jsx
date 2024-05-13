@@ -1,4 +1,5 @@
 import Product from "../components/Product.jsx";
+import FAQ from "../components/FAQ.jsx";
 
 function About() {
     const line = "img/line.png";
@@ -38,7 +39,13 @@ function About() {
                     Nike and professional sports teams such as Real Madrid and AC Milan have collaborated with Iconic
                     Caps, showcasing the commitment and quality we offer.</p>
             </div>
+       
+            <div className="text-center my-10">
+                <FAQ />
+            </div>
         </div>
+
+      
     );
 }
 
