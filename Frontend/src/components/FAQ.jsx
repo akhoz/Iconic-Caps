@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 function Faq() {
   const questionsAnswers = [
@@ -23,7 +23,7 @@ function Faq() {
       {questionsAnswers.map((item, index) => (
         <div key={index} className="mb-2">
           <button
-            className="py-2 px-4 w-full text-left flex justify-between items-center text-white bg-gray-700 hover:bg-gray-500 font-semibold rounded-lg"
+            className="py-2 px-4 w-full text-left flex justify-between items-center text-white bg-black font-semibold rounded-lg"
             onClick={() => toggleIndex(index)}
           >
             <span>{item.question}</span>
@@ -34,7 +34,7 @@ function Faq() {
             </svg>
           </button>
           {openIndexes[index] && (
-            <div className="p-4 bg-gray-200 rounded-lg mt-2">
+            <div className="flex items-center justify-center p-4 bg-gray-200 rounded-lg mt-2" data-aos="zoom-in">
               {item.answer}
             </div>
           )}

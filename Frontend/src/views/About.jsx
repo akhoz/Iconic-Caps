@@ -40,7 +40,7 @@ function About() {
                     Caps, showcasing the commitment and quality we offer.</p>
             </div>
        
-            <div className="text-center my-10">
+            <div className="w-1/2 text-center my-10" data-aos="fade-up">
                 <FAQ />
             </div>
         </div>
