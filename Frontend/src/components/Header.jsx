@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Bag from "./Bag.jsx";
+import {useUser} from "../contexts/UserContext.jsx";
 
 function Header() {
+    const { user } = useUser();
     const [isOpen, setIsOpen] = useState(false);
 
     const handleButtonClick = () => {
@@ -25,7 +27,12 @@ function Header() {
                                 <Link to="/" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">Home</Link>
                                 <Link to="/Shop" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">Shop</Link>
                                 <Link to="/About" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">About</Link>
-                                <Link to="/LogIn" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">Log In</Link>
+                                <Link
+                                    to={`${user ? '/Account' : '/LogIn'}`}
+                                    onClick={handleButtonClick}
+                                    className="text-black transition-transform transform hover:scale-105">
+                                    {user ? 'Account' : 'Log In'}
+                                </Link>
                                 <Link to="/OurTeam" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">Our Team</Link>
                             </ul>
                         </nav>

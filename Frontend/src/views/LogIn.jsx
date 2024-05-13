@@ -3,8 +3,11 @@ import { FaArrowLeft } from "react-icons/fa";
 import axios from 'axios'
 import { useState } from "react";
 import WarningModal from "../components/WarningModal.jsx";
+import {useUser} from "../contexts/UserContext.jsx";
 
 function LogIn() {
+    const { logIn } = useUser();
+
     const [username, setUsername] = useState('x');
     const [cliente, setCliente] = useState(null);
     const [password, setPassword] = useState('');
@@ -41,6 +44,7 @@ function LogIn() {
                     console.log('Acceso concedido');
                     console.log(`Bienvenido ${clienteData.Usuario}`);
                     setAccess(true);
+                    logIn(clienteData);
                 } else {
                     console.log('Contraseña incorrecta');
                     setAccess(false);
@@ -96,7 +100,7 @@ function LogIn() {
                         </div>
                         <Link to={access ? `/Account` : ''}
                             className="flex items-center justify-center bg-black text-white font-bold p-2 rounded-md mb-5 transition-transform transform hover:scale-105">
-                            <button onClick={handleLogInClick}>
+                            <button onClick={handleLogInClick} className="w-full h-full">
                                 Log In
                             </button>
                         </Link>
