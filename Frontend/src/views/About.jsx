@@ -38,11 +38,11 @@ function About() {
                 <p className="text-black lg:mx-52 lg:text-2xl">Throughout our years of history, renowned brands like
                     Nike and professional sports teams such as Real Madrid and AC Milan have collaborated with Iconic
                     Caps, showcasing the commitment and quality we offer.</p>
+            </div>
+       
+            <div className="text-center my-10">
                 <FAQ />
             </div>
-            
-        
-       
         </div>
 
       
