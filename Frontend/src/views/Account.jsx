@@ -8,6 +8,7 @@ import Order from "../components/Order.jsx";
 
 function Account() {
     const { user, logOut } = useUser();
+    const [deleteAccount, setDeleteAccount] = useState(false);
 
     const handleLogOutClick = () => {
         logOut();
@@ -34,6 +35,7 @@ function Account() {
         setModalTitle("Are you sure you want to delete your account?");
         setModalDescription("This action cannot be undone. Your account will be permanently deleted.");
         setModalButtonText("Delete Account");
+        setDeleteAccount(true);
     }
     return (
         <>
@@ -111,6 +113,7 @@ function Account() {
                         modalDescription={modalDescription}
                         modalButtonText={modalButtonText}
                         handleCloseModal={handleCloseModal}
+                        deleteAccount={deleteAccount}
                     />
                 </div>
 

@@ -17,7 +17,6 @@ function UserComments(props) {
         setComentarios(res.data)
     }
 
-    console.log(URI)
     return (
         <>
             <div className="flex-grow bg-black w-full text-white mt-20 py-20 relative">

@@ -4,15 +4,18 @@ import axios from 'axios'
 import { useState } from "react";
 import WarningModal from "../components/WarningModal.jsx";
 import {useUser} from "../contexts/UserContext.jsx";
+import {useCookies} from "react-cookie";
 
 function LogIn() {
     const { logIn } = useUser();
+    const [cookie, setCookie, removeCookie] = useCookies(['username']);
 
     const [username, setUsername] = useState('x');
     const [cliente, setCliente] = useState(null);
     const [password, setPassword] = useState('');
     const [access, setAccess] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -32,19 +35,24 @@ function LogIn() {
         setShowModal(false);
     }
 
+    const handleRememberMe = () => {
+        setRememberMe(!rememberMe);
+    }
+
     const handleLogInClick = async () => {
         try {
             const res = await axios.get(`http://localhost:8000/clientes/${username}`);
             const clienteData = res.data;
             if (clienteData) {
                 setCliente(clienteData);
-                console.log(clienteData.Contrasena)
-                console.log(password)
                 if (clienteData.Contrasena === password) {
                     console.log('Acceso concedido');
-                    console.log(`Bienvenido ${clienteData.Usuario}`);
                     setAccess(true);
                     logIn(clienteData);
+                    if (rememberMe) {
+                        setCookie('username', username, { path: '/' });
+                        console.log(`Cookie set: ${cookie.username}`);
+                    }
                 } else {
                     console.log('Contraseña incorrecta');
                     setAccess(false);
@@ -92,6 +100,7 @@ function LogIn() {
                             <input
                                 type="checkbox"
                                 id="checkbox"
+                                onChange={handleRememberMe}
                                 className="border-1 border-black text-black focus:ring-0 focus:outline-0 checkbox-black"
                             />
                             <p className="text-md text-gray-600 pl-3">
@@ -99,7 +108,7 @@ function LogIn() {
                             </p>
                         </div>
                         <Link to={access ? `/Account` : ''}
-                            className="flex items-center justify-center bg-black text-white font-bold p-2 rounded-md mb-5 transition-transform transform hover:scale-105">
+                              className="flex items-center justify-center bg-black text-white font-bold p-2 rounded-md mb-5 transition-transform transform hover:scale-105">
                             <button onClick={handleLogInClick} className="w-full h-full">
                                 Log In
                             </button>
@@ -125,9 +134,9 @@ function LogIn() {
             {showModal && (
                 <div className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
                     <WarningModal
-                    warningTitle={errorTitle}
-                    warningDescription={errorMsg}
-                    handleCloseModal={handleCloseModal}/>
+                        warningTitle={errorTitle}
+                        warningDescription={errorMsg}
+                        handleCloseModal={handleCloseModal}/>
                 </div>
             )}
             {showModal && (

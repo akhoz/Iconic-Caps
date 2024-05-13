@@ -14,9 +14,13 @@ import Account from "./views/Account.jsx";
 import LocalStores from "./views/LocalStores.jsx";
 import ProductView from "./views/ProductView.jsx";
 import Checkout from "./views/Checkout.jsx";
+import {useUser} from "./contexts/UserContext.jsx";
 
 function App() {
     const URI = 'http://localhost:8000/productos/'
+    const { user, logIn, logOut, checkCookies } = useUser();
+
+    checkCookies();
 
     const [productos, setProducto] = useState([])
     useEffect( ()=>{

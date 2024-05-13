@@ -1,11 +1,10 @@
-import React from 'react';
 import Stores from '../components/Stores.jsx';
 
 function LocalStores() {
     return (
-        <div className="bg-white p-8">
-            <h1 className="text-3xl font-bold text-center mb-8">Our Stores</h1>
-            <p className="text-center md:text-xl ml:text-xl">We have stores in different cities. Visit us!</p>
+        <div className="w-full">
+            <h1 className="text-3xl font-bold text-center mb-5">Our Stores</h1>
+            <p className="text-center mb-5 md:text-xl ml:text-xl">We have stores in different cities. Visit us!</p>
                 <Stores
                     imgSrc="../../public/img/local-ny.webp"
                     name="Iconic New York"
