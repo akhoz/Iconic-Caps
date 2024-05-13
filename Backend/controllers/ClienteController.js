@@ -18,13 +18,14 @@ export const getAllClientes = async (req, res) => {
 //Mostrar un registro
 export const getCliente = async (req, res) => {
     try {
-        const cliente = await ClienteModel.findAll({
-            where:{
-                Usuario:req.params.Usuario
+        const cliente = await ClienteModel.findOne({
+            where: {
+                Usuario: req.params.Usuario
             }
-        })
-        res.json(cliente[0])
+        });
+        res.json(cliente);
     } catch (error) {
-        res.json({message: error.message})
+        res.json({ message: error.message });
     }
 };
+

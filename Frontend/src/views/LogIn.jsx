@@ -1,46 +1,35 @@
 import { Link } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
 import axios from 'axios'
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
-function LogIn () {
-    const URI = 'http://localhost:8000/clientes/'
+function LogIn() {
+    const [username, setUsername] = useState('x');
+    const [cliente, setCliente] = useState(null);
 
-    const [clientes, setClientes] = useState([])
-    useEffect( ()=>{
-        getAllClientes()
-    }, [])
+    const handleUsernameChange = (e) => {
+        setUsername(e.target.value);
 
-    const [username, setUsername] = useState('')
-
-    const getAllClientes = async () => {
-        const res = await axios.get(URI)
-        console.log(res.data)
-    }
-
-    const findClienteByUsername = async (username) => {
-        for (let i = 0; i < clientes.length; i++) {
-            if (clientes[i].Usuario === username) {
-                return clientes[i]
-            }
+        if (e.target.value === '') {
+            setUsername('x');
         }
     }
 
     const handleLogInClick = async () => {
-        console.log(username)
-        console.log(findClienteByUsername(username))
-        if (clientes.filter(cliente => cliente.Usuario === username).length === 0) {
-            console.log('No existe el usuario')
-        } else {
-            setClientes(clientes.filter(cliente => cliente.Usuario === username))
-            console.log(clientes)
+        try {
+            const res = await axios.get(`http://localhost:8000/clientes/${username}`);
+            const clienteData = res.data;
+            if (clienteData) {
+                setCliente(clienteData);
+                console.log('Acceso concedido');
+                console.log(`Bienvenido ${clienteData.Usuario}`);
+            } else {
+                console.log('No existe el usuario');
+            }
+        } catch (error) {
+            console.error('Error al obtener el cliente:', error);
         }
     }
-
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value)
-    }
-
 
     return (
         <div className="flex flex-col mt-20 lg:mt-0 lg:h-screen lg:flex-row">
@@ -48,7 +37,7 @@ function LogIn () {
                 <img
                     src="/img/iconic-caps-logo.png"
                     alt="iconic-caps-logo"
-                    className="w-1/6"/>
+                    className="w-1/6" />
                 <h1 className="text-4xl font-bold">Log In</h1>
                 <div className="flex flex-col w-1/3 mt-5">
                     <input
@@ -74,13 +63,12 @@ function LogIn () {
                             Remember Me
                         </p>
                     </div>
-                    <Link
-                        to={"/Account"}
-                          className="flex items-center justify-center bg-black text-white font-bold p-2 rounded-md mb-5 transition-transform transform hover:scale-105">
+                    <div
+                        className="flex items-center justify-center bg-black text-white font-bold p-2 rounded-md mb-5 transition-transform transform hover:scale-105">
                         <button onClick={handleLogInClick}>
                             Log In
                         </button>
-                    </Link>
+                    </div>
                     <a
                         className="text-md text-gray-600 mb-2 transition-transform transform hover:scale-105"
                         href="#">
@@ -95,7 +83,7 @@ function LogIn () {
                 <img src="/img/slogan.png" alt="slogan" />
             </div>
             <Link to="/" className="flex flex-row items-center space-x-2 absolute top-0 left-0 ml-4 mt-4 text-black font-bold text-md transition-transform transform hover:scale-105" data-aos="fade-right">
-                <FaArrowLeft/>
+                <FaArrowLeft />
                 <span>Home</span>
             </Link>
         </div>
