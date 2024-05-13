@@ -13,11 +13,27 @@ export const getAllComentarios = async (req, res) => {
 };
 
 //Mostrar un registro
-export const getComentario = async (req, res) => {
+export const getComentarioByModel = async (req, res) => {
     try {
         const comentarios = await ComentarioModel.findAll({
             where:{
                 ModeloProducto:req.params.ModeloProducto
+            }, include: [{model: ProductoModel}, {model: ClienteModel}]
+        })
+        res.json(comentarios)
+    } catch (error) {
+        res.json({message: error.message})
+    }
+};
+
+
+
+//Mostrar un registro
+export const getComentarioByCedula = async (req, res) => {
+    try {
+        const comentarios = await ComentarioModel.findAll({
+            where:{
+                CedulaCliente:req.params.CedulaCliente
             }, include: [{model: ProductoModel}, {model: ClienteModel}]
         })
         res.json(comentarios)

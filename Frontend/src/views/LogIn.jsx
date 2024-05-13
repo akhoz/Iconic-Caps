@@ -1,7 +1,47 @@
 import { Link } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
+import axios from 'axios'
+import {useEffect, useState} from "react";
 
 function LogIn () {
+    const URI = 'http://localhost:8000/clientes/'
+
+    const [clientes, setClientes] = useState([])
+    useEffect( ()=>{
+        getAllClientes()
+    }, [])
+
+    const [username, setUsername] = useState('')
+
+    const getAllClientes = async () => {
+        const res = await axios.get(URI)
+        console.log(res.data)
+    }
+
+    const findClienteByUsername = async (username) => {
+        for (let i = 0; i < clientes.length; i++) {
+            if (clientes[i].Usuario === username) {
+                return clientes[i]
+            }
+        }
+    }
+
+    const handleLogInClick = async () => {
+        console.log(username)
+        console.log(findClienteByUsername(username))
+        if (clientes.filter(cliente => cliente.Usuario === username).length === 0) {
+            console.log('No existe el usuario')
+        } else {
+            setClientes(clientes.filter(cliente => cliente.Usuario === username))
+            console.log(clientes)
+        }
+    }
+
+    const handleUsernameChange = (e) => {
+        setUsername(e.target.value)
+    }
+
+
     return (
         <div className="flex flex-col mt-20 lg:mt-0 lg:h-screen lg:flex-row">
             <div className="flex flex-col items-center justify-center mt-10 lg:mt-0 lg:w-3/4" data-aos="fade-right">
@@ -16,6 +56,7 @@ function LogIn () {
                         id="text"
                         className="border-0 border-b-2 border-black p-1 my-5 focus:border-b-2 focus:border-black focus:ring-0"
                         placeholder="Username"
+                        onChange={handleUsernameChange}
                     />
                     <input
                         type="password"
@@ -33,9 +74,13 @@ function LogIn () {
                             Remember Me
                         </p>
                     </div>
-                    <button className="bg-black text-white font-bold p-2 rounded-md mb-5 transition-transform transform hover:scale-105">
-                        Log In
-                    </button>
+                    <Link
+                        to={"/Account"}
+                          className="flex items-center justify-center bg-black text-white font-bold p-2 rounded-md mb-5 transition-transform transform hover:scale-105">
+                        <button onClick={handleLogInClick}>
+                            Log In
+                        </button>
+                    </Link>
                     <a
                         className="text-md text-gray-600 mb-2 transition-transform transform hover:scale-105"
                         href="#">

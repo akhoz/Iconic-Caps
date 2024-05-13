@@ -11,6 +11,7 @@ export default {
         'hero-left': "url(/img/hero-left.jpg)",
 
         'about': "url(/img/about.png)",
+        'account': "url(/img/account.jpg)"
       }
     },
   },

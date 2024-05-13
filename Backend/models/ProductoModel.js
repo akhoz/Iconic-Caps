@@ -1,5 +1,5 @@
 // impoortamos la conexión a la DB
-import db from "../database/db.js"
+import db from '../database/db.js'
 import ProvedorModel from "./ProvedorModel.js";
 
 //importamos sequelize
