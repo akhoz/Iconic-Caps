@@ -12,3 +12,13 @@ body {
 .remove-arrow {
   -moz-appearance: textfield;
 }
+
+.checkbox-black {
+  border: 1px solid black;
+  color: black;
+}
+
+.checkbox-black:hover {
+  background-color: black;
+  color: white;
+}

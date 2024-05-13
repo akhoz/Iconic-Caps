@@ -1,4 +1,3 @@
-import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {IoClose} from "react-icons/io5";
 
@@ -12,10 +11,9 @@ function WarningModal(props) {
                 {props.warningDescription}
             </p>
             <button
+                onClick={props.handleCloseModal}
                 className="absolute right-5 top-5 text-xl text-black transition-transform transform hover:scale-150">
-                <Link to="/Shop">
-                    <IoClose/>
-                </Link>
+                <IoClose/>
             </button>
         </div>
     );
@@ -23,7 +21,8 @@ function WarningModal(props) {
 
 WarningModal.propTypes = {
     warningTitle: PropTypes.string.isRequired,
-    warningDescription: PropTypes.string.isRequired
+    warningDescription: PropTypes.string.isRequired,
+    handleCloseModal: PropTypes.func.isRequired
 };
 
 export default WarningModal;
