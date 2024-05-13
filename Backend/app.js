@@ -17,7 +17,7 @@ app.use('/comentarios',comentatioRoutes)
 app.use('/empleados', empleadoRoutes)
 
 
-try {git
+try {
     await db.authenticate()
     console.log('Conexión exitosa a la DB')
 } catch (error) {
