@@ -3,16 +3,16 @@ import { FaShippingFast } from "react-icons/fa";
 
 function NoOrders() {
     return (
-        <div className="flex flex-row items-center justify-between w-full px-40 my-24">
-            <div className="flex flex-col justify-center items-start w-1/2">
-                <h2 className="w-full text-3xl font-bold">
+        <div className="flex flex-col items-center justify-between w-full px-14 my-16 md:flex-row md:px-28 md:my-20 lg:px-40 lg:my-24 xl:px-60">
+            <div className="flex flex-col justify-center items-center w-full md:items-start">
+                <h2 className="w-full text-center font-bold text-2xl md:text-start md:text-3xl">
                     You don't have any orders yet
                 </h2>
-                <p className="w-2/3 text-xl mt-5 mb-2">
+                <p className="mt-5 mb-2 text-lg text-center md:text-start md:w-2/3 md:text-xl">
                     Start shopping now so you can view your pending
                     shipments from here.
                 </p>
-                <p className="w-2/3 text-xl mb-5">
+                <p className="mb-5 text-lg text-center md:text-start md:w-2/3 md:text-xl">
                     Check out our shop section, we're sure you'll find
                     the perfect product for you, so we suggest you take
                     a look!
@@ -24,7 +24,7 @@ function NoOrders() {
                     href={"/Shop"}/>
             </div>
             <div className="flex flex-row-reverse w-1/2">
-                <FaShippingFast className="w-2/3 h-2/3 font-bold"/>
+                <FaShippingFast className="hidden md:block font-bold md:w-2/3 md:h-2/3 lg:w-2/3 lg:h-2/3 xl:h-2/5 xl:w-2/5"/>
             </div>
 
         </div>
