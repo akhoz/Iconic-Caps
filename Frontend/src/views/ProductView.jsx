@@ -20,6 +20,7 @@ function ProductView({productos}) {
         setComentarios(res.data)
     }
 
+    console.log(comentarios)
 
     const producto = productos.find(producto => producto.Modelo === modelo);
 
