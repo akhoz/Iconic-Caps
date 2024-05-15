@@ -5,7 +5,7 @@ function Stores (props) {
 const storeIndex = props.storeIndex;
 
     return (
-        <div className="flex flex-row bg-black text-white w-full">
+        <div className={`flex w-full ${storeIndex % 2 === 0  ? 'bg-white flex-row-reverse text-black text-right' : 'flex-row bg-black text-white text-left'}`}>
             <div className="w-2/5 p-5">
                 <img src={props.imgSrc} alt={props.imgSrc} className="w-full h-full object-cover rounded-lg" />
             </div>
@@ -14,11 +14,8 @@ const storeIndex = props.storeIndex;
                     <h2 className="text-xl font-semibold">
                         {props.name}
                     </h2>
-                    <p className="w-3/5">
+                    <p className={`${storeIndex % 2 === 0 ? 'ml-60' : 'mr-60'}`}>
                         {props.description}
-                    </p>
-                    <p>
-                        {storeIndex}
                     </p>
                 </div>
                 <div>
@@ -38,7 +35,7 @@ const storeIndex = props.storeIndex;
                     </div>
                     <div>
                         <a href={props.location} target="_blank" rel="noopener noreferrer">
-                            <button className="bg-white text-black font-bold py-2 px-4 rounded mb-1 mt-1 duration-300 transition-transform transform hover:scale-110">
+                            <button className={` ${storeIndex % 2 === 0 ? 'bg-black text-white' : 'bg-white text-black'} font-bold py-2 px-4 rounded mb-1 mt-1 duration-300 transition-transform transform hover:scale-110`}>
                                 See in the Map
                             </button>
                         </a>
