@@ -6,7 +6,7 @@ import productoRoutes from './routes/Productoroutes.js'
 import clienteRoutes from './routes/Clienteroutes.js'
 import comentatioRoutes from './routes/Comentarioroutes.js'
 import empleadoRoutes from './routes/Empleadoroutes.js'
-
+import sucursalRoutes from './routes/Sucursalroutes.js'
 const app = express()
 
 app.use(cors())
@@ -15,6 +15,7 @@ app.use('/productos', productoRoutes)
 app.use('/clientes',clienteRoutes)
 app.use('/comentarios',comentatioRoutes)
 app.use('/empleados', empleadoRoutes)
+app.use('/sucursales', sucursalRoutes)
 
 
 try {
