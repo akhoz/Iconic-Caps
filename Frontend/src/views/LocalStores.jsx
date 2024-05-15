@@ -4,7 +4,8 @@ import axios from "axios";
 
 function LocalStores() {
     const employeesUri = "http://localhost:8000/empleados";
-    const storesUri = "http://localhost:8000/sucursales/";
+    const storesUri = "http://localhost:8000/sucursales";
+    const personasUri = "http://localhost:8000/personas";
 
     const [employees, setEmployees] = useState([]);
     useEffect(() => {
@@ -26,22 +27,34 @@ function LocalStores() {
         setStores(res.data);
     }
 
-    console.log(stores)
-    console.log(employees)
+    const employeesByStore = (storeNumber) => {
+        if (employees.filter(employee => employee.NumeroSucursalAsignada === storeNumber).length === 0) {
+            return [];
+        }
+        return employees
+            .filter(employee => employee.NumeroSucursalAsignada === storeNumber)
+            .map(employee => employee.CedulaEmpleado);
+    }
 
+    console.log(employeesByStore(1))
     return (
         <div className="w-full">
             <h1 className="text-3xl font-bold text-center mb-5">Our Stores</h1>
             <p className="text-center mb-5 md:text-xl ml:text-xl">We have stores in different cities. Visit us!</p>
+            {stores.map(store => (
                 <Stores
-                    imgSrc="../../public/img/local-ny.webp"
-                    name="Iconic New York"
-                    description="This is our first store in New York. We have a wide variety of products for all tastes."
-                    employe="Adrian Villalobos"
-                    email="newyorkcaps@iconicaps.com"
-                    phone="1234567890"
-                    ubication="https://maps.app.goo.gl/cWrt26NMwqvHCymc6"
+                    key={store.id}
+                    storeIndex={store.NumeroSucursal}
+                    imgSrc={`/img/local-ny.webp`}
+                    name={store.Nombre}
+                    description={store.Direccion}
+                    phone={store.NumeroTelefono}
+                    employees={employees
+                        .filter(employee => employee.NumeroSucursalAsignada === store.NumeroSucursal)
+                        .map(employee => employee.Persona.Nombre + ' ' + employee.Persona.PrimerApellido + ' ' + employee.Persona.SegundoApellido)
+                    }
                 />
+            ))}
             </div>
     );
 }
