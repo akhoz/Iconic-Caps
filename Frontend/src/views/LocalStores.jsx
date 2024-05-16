@@ -5,6 +5,7 @@ import axios from "axios";
 function LocalStores() {
     const employeesUri = "http://localhost:8000/empleados";
     const storesUri = "http://localhost:8000/sucursales";
+    let storeCount = 1;
 
     const [employees, setEmployees] = useState([]);
     useEffect(() => {
@@ -37,7 +38,7 @@ function LocalStores() {
             {stores.map(store => (
                 <Stores
                     key={store.id}
-                    storeIndex={store.NumeroSucursal}
+                    storeIndex={storeCount++}
                     imgSrc={`/img/local-ny.webp`}
                     name={store.Nombre}
                     description={store.Direccion}
