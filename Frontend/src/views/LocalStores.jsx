@@ -5,7 +5,6 @@ import axios from "axios";
 function LocalStores() {
     const employeesUri = "http://localhost:8000/empleados";
     const storesUri = "http://localhost:8000/sucursales";
-    const personasUri = "http://localhost:8000/personas";
 
     const [employees, setEmployees] = useState([]);
     useEffect(() => {
@@ -27,16 +26,6 @@ function LocalStores() {
         setStores(res.data);
     }
 
-    const employeesByStore = (storeNumber) => {
-        if (employees.filter(employee => employee.NumeroSucursalAsignada === storeNumber).length === 0) {
-            return [];
-        }
-        return employees
-            .filter(employee => employee.NumeroSucursalAsignada === storeNumber)
-            .map(employee => employee.CedulaEmpleado);
-    }
-
-    console.log(employeesByStore(1))
     return (
         <div className="w-full">
             <h1 className="text-3xl font-bold text-center mb-5">

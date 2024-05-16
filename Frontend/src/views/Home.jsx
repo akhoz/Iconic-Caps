@@ -8,6 +8,7 @@ import { SiNewbalance } from "react-icons/si";
 import { SiJordan } from "react-icons/si";
 
 function Home() {
+
   return (
       <div className="flex flex-col" data-aos="fade-up">
           <div className="flex flex-col md:flex-row">

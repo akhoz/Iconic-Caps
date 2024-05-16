@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
 import axios from 'axios'
 import { useState } from "react";
@@ -18,6 +18,7 @@ function LogIn() {
     const [rememberMe, setRememberMe] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
+    const navigate = useNavigate();
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
@@ -47,12 +48,12 @@ function LogIn() {
                 setCliente(clienteData);
                 if (clienteData.Contrasena === password) {
                     console.log('Acceso concedido');
-                    setAccess(true);
                     logIn(clienteData);
                     if (rememberMe) {
                         setCookie('username', username, { path: '/' });
                         console.log(`Cookie set: ${cookie.username}`);
                     }
+                    navigate('/Account');
                 } else {
                     console.log('Contraseña incorrecta');
                     setAccess(false);
@@ -107,12 +108,12 @@ function LogIn() {
                                 Remember Me
                             </p>
                         </div>
-                        <Link to={access ? `/Account` : ''}
+                        <div
                               className="flex items-center justify-center bg-black text-white font-bold p-2 rounded-md mb-5 transition-transform transform hover:scale-105">
                             <button onClick={handleLogInClick} className="w-full h-full">
                                 Log In
                             </button>
-                        </Link>
+                        </div>
                         <a
                             className="text-md text-gray-600 mb-2 transition-transform transform hover:scale-105"
                             href="#">
