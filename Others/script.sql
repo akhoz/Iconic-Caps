@@ -1,4 +1,5 @@
 create database IconicCaps;
+use IconicCaps;
 
 create table IconicCaps.Provedor (
     IdentificadorFiscal INT PRIMARY KEY AUTO_INCREMENT,
@@ -611,6 +612,11 @@ INSERT INTO IconicCaps.Compra (ModeloProducto, CedulaCliente) VALUES
     ('GP0', 208700210),
     ('UA35', 208700218);
 
+INSERT INTO IconicCaps.Persona (Cedula, Nombre, PrimerApellido, SegundoApellido, NumeroTelefono) VALUE
+    (108403221, 'Olivier', 'Giroud', 'Leao', '+506 82235641');
+
+INSERT INTO Empleado (CedulaEmpleado, NumeroSucursalAsignada) VALUE
+    (108403221, 7);
 
 
 -- Nuevas entradas del segundo proyecto
@@ -798,3 +804,20 @@ JOIN Pedido on GarantiaXPedido.NumeroFacturaPedido = Pedido.NumeroFactura
 JOIN Persona ON Pedido.CedulaCliente = Persona.Cedula;
 
 SELECT * FROM vista_garantias;
+
+-- Funciones
+
+DELIMITER //
+
+CREATE FUNCTION getContrasenaByUsuario(usuario VARCHAR(25)) RETURNS VARCHAR(35)
+    READS SQL DATA
+BEGIN
+    DECLARE contrasena VARCHAR(35);
+    SELECT Cliente.Contrasena INTO contrasena FROM Cliente WHERE Cliente.Usuario = usuario;
+    RETURN contrasena;
+END //
+
+DELIMITER ;
+
+
+SELECT getContrasenaByUsuario('nombre_usuario');
