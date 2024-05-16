@@ -1,6 +1,7 @@
 create database IconicCaps;
 use IconicCaps;
 
+
 create table IconicCaps.Provedor (
     IdentificadorFiscal INT PRIMARY KEY AUTO_INCREMENT,
     NombreEmpresa VARCHAR(25) NOT NULL,
@@ -48,14 +49,14 @@ create table IconicCaps.Empleado (
     CedulaEmpleado INT PRIMARY KEY,
     NumeroSucursalAsignada INT,
     FOREIGN KEY (CedulaEmpleado) references Persona (Cedula),
-    FOREIGN KEY (NumeroSucursalAsignada) references Sucursal (NumeroSucursal)
+    FOREIGN KEY (NumeroSucursalAsignada) references Sucursal (NumeroSucursal) ON DELETE SET NULL
 );
 
 create table IconicCaps.Repartidor (
     CedulaRepartidor INT PRIMARY KEY,
     NumeroSucursalAsignada INT,
     FOREIGN KEY (CedulaRepartidor) references Persona (Cedula),
-    FOREIGN KEY (NumeroSucursalAsignada) references Sucursal (NumeroSucursal)
+    FOREIGN KEY (NumeroSucursalAsignada) references Sucursal (NumeroSucursal) ON DELETE SET NULL
 );
 
 create table IconicCaps.Compra (
@@ -115,6 +116,9 @@ create table IconicCaps.EnvioXPedido (
     FOREIGN KEY (NumeroFacturaPedido) references Pedido (NumeroFactura),
     FOREIGN KEY (CedulaRepartidor) references Repartidor (CedulaRepartidor)
 );
+
+
+DELETE FROM IconicCaps.Sucursal WHERE NumeroSucursal = '2';
 
 insert into IconicCaps.Provedor (IdentificadorFiscal, NombreEmpresa, CorreoElectronico) values
     (98, 'Nike', 'nike@store.com'),
