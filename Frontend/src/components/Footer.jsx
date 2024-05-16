@@ -54,10 +54,11 @@ function Footer () {
                     Our Team
                 </Link>
                 <Link
-                    to="/LocalStores"
+                    to="/OurTeam"
                     onClick={handleButtonClick}>
-                    Visit Our Stores
+                    Our Team
                 </Link>
+
             </div>
             <div className="flex justify-center mb-5">
                 <p className="text-gray-400 text-xs">

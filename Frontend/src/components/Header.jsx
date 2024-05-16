@@ -32,8 +32,8 @@ function Header() {
                                     className="text-black transition-transform transform hover:scale-105">
                                     {user ? 'Account' : 'Log In'}
                                 </Link>
+                                <Link to="/LocalStores" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">Stores</Link>
                                 <Link to="/About" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">About</Link>
-                                <Link to="/OurTeam" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">Our Team</Link>
                             </ul>
                         </nav>
                     </div>

@@ -24,7 +24,7 @@ function Account() {
         setModalButtonText("Delete Comment");
     }
 
-    const handleLogOutClick = () => {
+    const handleLogOutClick =  () => {
         logOut();
         navigate('/');
         window.location.reload();
