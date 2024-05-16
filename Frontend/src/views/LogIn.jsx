@@ -13,7 +13,6 @@ function LogIn() {
     const [username, setUsername] = useState('x');
     const [cliente, setCliente] = useState(null);
     const [password, setPassword] = useState('');
-    const [access, setAccess] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const [errorTitle, setErrorTitle] = useState('');
@@ -56,14 +55,12 @@ function LogIn() {
                     navigate('/Account');
                 } else {
                     console.log('Contraseña incorrecta');
-                    setAccess(false);
                     setErrorTitle('Your password is incorrect');
                     setErrorMsg('Please try again and make sure your password is correct.');
                     setShowModal(true);
                 }
             } else {
                 console.log('No existe el usuario');
-                setAccess(false);
                 setErrorTitle('User not found');
                 setErrorMsg('The username you entered does not exist. Please try again or create an account.');
                 setShowModal(true);

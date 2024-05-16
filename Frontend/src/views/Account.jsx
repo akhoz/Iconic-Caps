@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import NoOrders from "../components/NoOrders.jsx";
 import {useUser} from "../contexts/UserContext.jsx";
 import UserComments from "../components/UserComments.jsx";
@@ -10,9 +10,7 @@ function Account() {
     const { user, logOut } = useUser();
     const [deleteAccount, setDeleteAccount] = useState(false);
 
-    const handleLogOutClick = () => {
-        logOut();
-    }
+    const navigate = useNavigate();
 
     const [showModal, setShowModal] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
@@ -24,6 +22,12 @@ function Account() {
         setModalTitle("Are you sure you want to delete this comment?");
         setModalDescription("This action cannot be undone. Your comment will be permanently deleted.");
         setModalButtonText("Delete Comment");
+    }
+
+    const handleLogOutClick = () => {
+        logOut();
+        navigate('/');
+        window.location.reload();
     }
 
     const handleCloseModal = () => {
@@ -59,12 +63,11 @@ function Account() {
                         className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125">
                         Go Back To Home
                     </Link>
-                    <Link
-                        to="/"
+                    <button
                         onClick={handleLogOutClick}
                         className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125">
                         Log Out
-                    </Link>
+                    </button>
                     <button
                         className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
                         onClick={handleDeleteAccount}>
