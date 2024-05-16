@@ -21,28 +21,30 @@ function Stores (props) {
                             {props.description}
                         </p>
                     </div>
-                    <div className="w-1/3 flex flex-col items-center justify-center md:items-start md:justify-start">
-                        <h3 className="text-xl font-semibold">
-                            Employees
-                        </h3>
-                        <div className='flex flex-col'>
-                            {props.employees.map((employee, index) => (
-                                <p
-                                    key={index}
-                                    className="text-center">
-                                    {employee}
-                                </p>
-                            ))}
+                    <div className={`flex ${storeIndex % 2 === 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-start md:w-1/2`}>
+                        <div className="w-1/2 flex flex-col items-center justify-center md:items-start md:justify-start">
+                            <h3 className="text-xl font-semibold">
+                                Employees
+                            </h3>
+                            <div className='flex flex-col'>
+                                {props.employees.map((employee, index) => (
+                                    <p
+                                        key={index}
+                                        className="text-center md:text-start">
+                                        {employee}
+                                    </p>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                    <div className="w-1/3 mt-5 md:mt-0">
-                        <div className="w-full">
-                            <h3 className="text-xl text-center font-semibold">Contact Us</h3>
-                            <p className="text-center">
-                                <ul>
-                                    <li>{props.phone}</li>
-                                </ul>
-                            </p>
+                        <div className="w-1/2 items-center justify-center md:items-start md:justify-start">
+                            <div className="w-full">
+                                <h3 className="text-xl text-center font-semibold">Contact Us</h3>
+                                <p className="text-center">
+                                    <ul>
+                                        <li>{props.phone}</li>
+                                    </ul>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

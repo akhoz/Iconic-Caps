@@ -39,8 +39,12 @@ function LocalStores() {
     console.log(employeesByStore(1))
     return (
         <div className="w-full">
-            <h1 className="text-3xl font-bold text-center mb-5">Our Stores</h1>
-            <p className="text-center mb-5 md:text-xl ml:text-xl">We have stores in different cities. Visit us!</p>
+            <h1 className="text-3xl font-bold text-center mb-5">
+                Our Stores
+            </h1>
+            <p className="text-center mb-6 md:text-xl ml:text-xl">
+                We have stores in different cities. Visit us!
+            </p>
             {stores.map(store => (
                 <Stores
                     key={store.id}
