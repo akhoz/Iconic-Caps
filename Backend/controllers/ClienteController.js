@@ -29,3 +29,45 @@ export const getCliente = async (req, res) => {
     }
 };
 
+export const createCliente = async (req, res) => {
+    try {
+        await ClienteModel.create(req.body)
+        res.json("Cliente creado con éxito")
+    } catch (error) {
+        res.json({message: error.message})
+    }
+};
+
+export const updateCliente = async (req, res) => {
+    try {
+        const cliente = await ClienteModel.update({
+            Usuario: req.body.Usuario,
+            Contraseña: req.body.Contraseña,
+            Correo: req.body.Correo,
+            Telefono: req.body.Telefono,
+            Direccion: req.body.Direccion
+        }, {
+            where: {
+                Usuario: req.params.Usuario
+            }
+        });
+        console.log(req.params.Usuario)
+        console.log("Cliente actualizado")
+        res.json("Cliente actualizado");
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const deleteCliente = async (req, res) => {
+    try {
+        await ClienteModel.destroy({
+            where: {
+                Usuario: req.params.Usuario
+            }
+        });
+        res.json("Cliente eliminado");
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};

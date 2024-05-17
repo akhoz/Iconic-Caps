@@ -25,6 +25,16 @@ export const getSucursal= async (req, res) => {
     }
 };
 
+export const createSucursal = async (req, res) => {
+    try {
+        await SucursalModel.create(req.body)
+        res.json("Sucursal creada con éxito")
+    } catch (error) {
+        res.json({message: error.message})
+    }
+}
+
+
 export const updateSucursal = async (req, res) => {
     try {
         const sucursal = await SucursalModel.update({
