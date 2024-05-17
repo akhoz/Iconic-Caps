@@ -118,3 +118,6 @@ create table IconicCaps.EnvioXPedido (
 
 ALTER TABLE Sucursal
 ADD Img VARCHAR(100);
+
+ALTER TABLE Sucursal
+ADD LinkGoogleMaps VARCHAR(100);

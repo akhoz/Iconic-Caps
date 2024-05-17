@@ -22,6 +22,10 @@ const SucursalModel = db.define('Sucursal', {
     Img: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    LinkGoogleMaps: {
+        type: DataTypes.STRING,
+        allowNull: false,
     }
 });
 

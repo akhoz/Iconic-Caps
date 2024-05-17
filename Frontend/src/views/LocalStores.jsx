@@ -47,6 +47,7 @@ function LocalStores() {
                         .filter(employee => employee.NumeroSucursalAsignada === store.NumeroSucursal)
                         .map(employee => employee.Persona.Nombre + ' ' + employee.Persona.PrimerApellido + ' ' + employee.Persona.SegundoApellido)
                     }
+                    location={store.LinkGoogleMaps}
                 />
             ))}
             </div>

@@ -24,25 +24,26 @@ insert into IconicCaps.Sucursal (Nombre, Direccion, NumeroTelefono) values
     ('Iconic California', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod libero nec sapien faucibus, nec consequat libero mollis.', '+1 279-7937'),
     ('Iconic New York', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod libero nec sapien faucibus, nec consequat libero mollis.', '+1 279-9232');
 
-insert into IconicCaps.Persona (Cedula, Nombre, PrimerApellido, SegundoApellido, NumeroTelefono) values
-    (208700187, 'Hector', 'Caravaca', 'Vargas', '+506 89757650'),
-    (208700188, 'Juan', 'Ramirez', 'Alvarez', '+506 89757651'),
-    (208700189, 'Pedro', 'Gonzalez', 'Lopez', '+506 89757652'),
-    (208700190, 'Maria', 'Martinez', 'Perez', '+506 89757653'),
-    (208700191, 'Ana', 'Hernandez', 'Gutierrez', '+506 89757654'),
-    (208700192, 'Luis', 'Diaz', 'Fernandez', '+506 89757655'),
-    (208700193, 'Carlos', 'Sanchez', 'Rodriguez', '+506 89757656'),
-    (208700194, 'Sofia', 'Lopez', 'Garcia', '+506 89757657'),
-    (208700195, 'Elena', 'Torres', 'Vazquez', '+506 89757658'),
-    (208700196, 'Pablo', 'Gomez', 'Sanchez', '+506 89757659'),
-    (208700197, 'Laura', 'Martin', 'Gonzalez', '+506 89757660'),
-    (208700198, 'Javier', 'Rodriguez', 'Diaz', '+506 89757661'),
-    (208700199, 'Daniela', 'Perez', 'Martinez', '+506 89757662'),
-    (208700200, 'Alejandro', 'Gutierrez', 'Hernandez', '+506 89757663'),
-    (208700201, 'Fernande', 'Fernandez', 'Lopez', '+506 89757664'),
-    (208700202, 'Roberto', 'Vazquez', 'Torres', '+506 89757665'),
-    (208700203, 'Carmen', 'Sanchez', 'Gomez', '+506 89757666'),
-    (208700204, 'Diego', 'Garcia', 'Martin', '+506 89757667');
+INSERT INTO IconicCaps.Persona (Cedula, Nombre, PrimerApellido, SegundoApellido, Email) VALUES
+    (208700187, 'Hector', 'Caravaca', 'Vargas', 'email@example.com'),
+    (208700188, 'Juan', 'Ramirez', 'Alvarez', 'email@example.com'),
+    (208700189, 'Pedro', 'Gonzalez', 'Lopez', 'email@example.com'),
+    (208700190, 'Maria', 'Martinez', 'Perez', 'email@example.com'),
+    (208700191, 'Ana', 'Hernandez', 'Gutierrez', 'email@example.com'),
+    (208700192, 'Luis', 'Diaz', 'Fernandez', 'email@example.com'),
+    (208700193, 'Carlos', 'Sanchez', 'Rodriguez', 'email@example.com'),
+    (208700194, 'Sofia', 'Lopez', 'Garcia', 'email@example.com'),
+    (208700195, 'Elena', 'Torres', 'Vazquez', 'email@example.com'),
+    (208700196, 'Pablo', 'Gomez', 'Sanchez', 'email@example.com'),
+    (208700197, 'Laura', 'Martin', 'Gonzalez', 'email@example.com'),
+    (208700198, 'Javier', 'Rodriguez', 'Diaz', 'email@example.com'),
+    (208700199, 'Daniela', 'Perez', 'Martinez', 'email@example.com'),
+    (208700200, 'Alejandro', 'Gutierrez', 'Hernandez', 'email@example.com'),
+    (208700201, 'Fernande', 'Fernandez', 'Lopez', 'email@example.com'),
+    (208700202, 'Roberto', 'Vazquez', 'Torres', 'email@example.com'),
+    (208700203, 'Carmen', 'Sanchez', 'Gomez', 'email@example.com'),
+    (208700204, 'Diego', 'Garcia', 'Martin', 'email@example.com');
+
 
 insert into IconicCaps.Cliente (CedulaCliente, Usuario, Contrasena) values
     (208700187, 'HectorPro69', 'GatoSalvaje111'),
@@ -180,21 +181,22 @@ UPDATE Comentario
 SET Estrellas = '3'
 WHERE IdComentario = 9;
 
-insert into IconicCaps.Persona (Cedula, Nombre, PrimerApellido, SegundoApellido, NumeroTelefono) values
-    (208700205, 'Gabriela', 'Fernandez', 'Lopez', '+506 89757668'),
-    (208700206, 'Ricardo', 'Morales', 'Castro', '+506 89757669'),
-    (208700207, 'Isabel', 'Chavez', 'Soto', '+506 89757670'),
-    (208700208, 'Santiago', 'Rojas', 'Jimenez', '+506 89757671'),
-    (208700209, 'Valeria', 'Mendez', 'Campos', '+506 89757672'),
-    (208700210, 'Federico', 'Vargas', 'Araya', '+506 89757673'),
-    (208700211, 'Diana', 'Ortiz', 'Mora', '+506 89757674'),
-    (208700212, 'Alejandra', 'Fuentes', 'Solano', '+506 89757675'),
-    (208700213, 'Jorge', 'Arias', 'Castillo', '+506 89757676'),
-    (208700214, 'Natalia', 'Cordero', 'Guzman', '+506 89757677'),
-    (208700215, 'Mauricio', 'Herrera', 'Alfaro', '+506 89757678'),
-    (208700216, 'Victoria', 'Salazar', 'Morales', '+506 89757679'),
-    (208700217, 'Andres', 'Campos', 'Umana', '+506 89757680'),
-    (208700218, 'Lucia', 'Morales', 'Vargas', '+506 89757681');
+INSERT INTO IconicCaps.Persona (Cedula, Nombre, PrimerApellido, SegundoApellido, Email) VALUES
+    (208700205, 'Gabriela', 'Fernandez', 'Lopez', 'email@example.com'),
+    (208700206, 'Ricardo', 'Morales', 'Castro', 'email@example.com'),
+    (208700207, 'Isabel', 'Chavez', 'Soto', 'email@example.com'),
+    (208700208, 'Santiago', 'Rojas', 'Jimenez', 'email@example.com'),
+    (208700209, 'Valeria', 'Mendez', 'Campos', 'email@example.com'),
+    (208700210, 'Federico', 'Vargas', 'Araya', 'email@example.com'),
+    (208700211, 'Diana', 'Ortiz', 'Mora', 'email@example.com'),
+    (208700212, 'Alejandra', 'Fuentes', 'Solano', 'email@example.com'),
+    (208700213, 'Jorge', 'Arias', 'Castillo', 'email@example.com'),
+    (208700214, 'Natalia', 'Cordero', 'Guzman', 'email@example.com'),
+    (208700215, 'Mauricio', 'Herrera', 'Alfaro', 'email@example.com'),
+    (208700216, 'Victoria', 'Salazar', 'Morales', 'email@example.com'),
+    (208700217, 'Andres', 'Campos', 'Umana', 'email@example.com'),
+    (208700218, 'Lucia', 'Morales', 'Vargas', 'email@example.com');
+
 
 insert into IconicCaps.Cliente (CedulaCliente, Usuario, Contrasena) values
     (208700205, 'GabrielaCool', 'Perritos123'),
@@ -228,21 +230,21 @@ insert into IconicCaps.Sucursal (Nombre, Direccion, NumeroTelefono) values
     ('Iconic Seattle', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod libero nec sapien faucibus, nec consequat libero mollis.', '+1 321-142-4896'),
     ('Iconic Los Angeles', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod libero nec sapien faucibus, nec consequat libero mollis.', '+1 213-123-4567');
 
-insert into IconicCaps.Persona (Cedula, Nombre, PrimerApellido, SegundoApellido, NumeroTelefono) values
-    (208700219, 'Valentino', 'Ramirez', 'Garcia', '+506 89757682'),
-    (208700220, 'Mariana', 'Gonzalez', 'Lopez', '+506 89757683'),
-    (208700221, 'Daniel', 'Martinez', 'Perez', '+506 89757684'),
-    (208700222, 'Luciana', 'Hernandez', 'Gutierrez', '+506 89757685'),
-    (208700223, 'Santiago', 'Alvarez', 'Sanchez', '+506 89757686'),
-    (208700224, 'Abril', 'Lopez', 'Rodriguez', '+506 89757687'),
-    (208700225, 'Felipe', 'Sanchez', 'Fernandez', '+506 89757688'),
-    (208700226, 'Valeria', 'Gomez', 'Torres', '+506 89757689'),
-    (208700227, 'Matias', 'Perez', 'Alvarez', '+506 89757690'),
-    (208700228, 'Catalina', 'Gutierrez', 'Vazquez', '+506 89757691'),
-    (208700229, 'Maximiliano', 'Fernandez', 'Diaz', '+506 89757692'),
-    (208700230, 'Renata', 'Torres', 'Martinez', '+506 89757693'),
-    (208700231, 'Diego', 'Rodriguez', 'Hernandez', '+506 89757694'),
-    (208700232, 'Antonia', 'Martinez', 'Gomez', '+506 89757695');
+INSERT INTO IconicCaps.Persona (Cedula, Nombre, PrimerApellido, SegundoApellido, Email) VALUES
+    (208700219, 'Valentino', 'Ramirez', 'Garcia', 'email@example.com'),
+    (208700220, 'Mariana', 'Gonzalez', 'Lopez', 'email@example.com'),
+    (208700221, 'Daniel', 'Martinez', 'Perez', 'email@example.com'),
+    (208700222, 'Luciana', 'Hernandez', 'Gutierrez', 'email@example.com'),
+    (208700223, 'Santiago', 'Alvarez', 'Sanchez', 'email@example.com'),
+    (208700224, 'Abril', 'Lopez', 'Rodriguez', 'email@example.com'),
+    (208700225, 'Felipe', 'Sanchez', 'Fernandez', 'email@example.com'),
+    (208700226, 'Valeria', 'Gomez', 'Torres', 'email@example.com'),
+    (208700227, 'Matias', 'Perez', 'Alvarez', 'email@example.com'),
+    (208700228, 'Catalina', 'Gutierrez', 'Vazquez', 'email@example.com'),
+    (208700229, 'Maximiliano', 'Fernandez', 'Diaz', 'email@example.com'),
+    (208700230, 'Renata', 'Torres', 'Martinez', 'email@example.com'),
+    (208700231, 'Diego', 'Rodriguez', 'Hernandez', 'email@example.com'),
+    (208700232, 'Antonia', 'Martinez', 'Gomez', 'email@example.com');
 
 insert into IconicCaps.Empleado (CedulaEmpleado, NumeroSucursalAsignada) values
     (208700219, 7),
@@ -260,21 +262,21 @@ insert into IconicCaps.Empleado (CedulaEmpleado, NumeroSucursalAsignada) values
     (208700231, 19),
     (208700232, 20);
 
-insert into IconicCaps.Persona (Cedula, Nombre, PrimerApellido, SegundoApellido, NumeroTelefono) values
-    (208700233, 'Oliver', 'Smith', 'Johnson', '+506 89757668'),
-    (208700234, 'Sophia', 'Brown', 'Williams', '+506 89757669'),
-    (208700235, 'Liam', 'Miller', 'Jones', '+506 89757670'),
-    (208700236, 'Emma', 'Davis', 'Taylor', '+506 89757671'),
-    (208700237, 'Noah', 'Wilson', 'Anderson', '+506 89757672'),
-    (208700238, 'Olivia', 'Moore', 'Jackson', '+506 89757673'),
-    (208700239, 'Ethan', 'Taylor', 'White', '+506 89757674'),
-    (208700240, 'Ava', 'Johnson', 'Harris', '+506 89757675'),
-    (208700241, 'William', 'Martinez', 'Clark', '+506 89757676'),
-    (208700242, 'Sophie', 'Jones', 'Lewis', '+506 89757677'),
-    (208700243, 'Mason', 'Garcia', 'Hill', '+506 89757678'),
-    (208700244, 'Charlotte', 'Brown', 'Robinson', '+506 89757679'),
-    (208700245, 'Logan', 'Rodriguez', 'Walker', '+506 89757680'),
-    (208700246, 'Amelia', 'Gomez', 'Hall', '+506 89757681');
+INSERT INTO IconicCaps.Persona (Cedula, Nombre, PrimerApellido, SegundoApellido, Email) VALUES
+    (208700233, 'Oliver', 'Smith', 'Johnson', 'email@example.com'),
+    (208700234, 'Sophia', 'Brown', 'Williams', 'email@example.com'),
+    (208700235, 'Liam', 'Miller', 'Jones', 'email@example.com'),
+    (208700236, 'Emma', 'Davis', 'Taylor', 'email@example.com'),
+    (208700237, 'Noah', 'Wilson', 'Anderson', 'email@example.com'),
+    (208700238, 'Olivia', 'Moore', 'Jackson', 'email@example.com'),
+    (208700239, 'Ethan', 'Taylor', 'White', 'email@example.com'),
+    (208700240, 'Ava', 'Johnson', 'Harris', 'email@example.com'),
+    (208700241, 'William', 'Martinez', 'Clark', 'email@example.com'),
+    (208700242, 'Sophie', 'Jones', 'Lewis', 'email@example.com'),
+    (208700243, 'Mason', 'Garcia', 'Hill', 'email@example.com'),
+    (208700244, 'Charlotte', 'Brown', 'Robinson', 'email@example.com'),
+    (208700245, 'Logan', 'Rodriguez', 'Walker', 'email@example.com'),
+    (208700246, 'Amelia', 'Gomez', 'Hall', 'email@example.com');
 
 insert into IconicCaps.Repartidor (CedulaRepartidor, NumeroSucursalAsignada) values
     (208700233, 7),
@@ -496,8 +498,8 @@ INSERT INTO IconicCaps.Compra (ModeloProducto, CedulaCliente) VALUES
     ('GP0', 208700210),
     ('UA35', 208700218);
 
-INSERT INTO IconicCaps.Persona (Cedula, Nombre, PrimerApellido, SegundoApellido, NumeroTelefono) VALUE
-    (108403221, 'Olivier', 'Giroud', 'Leao', '+506 82235641');
+INSERT INTO IconicCaps.Persona (Cedula, Nombre, PrimerApellido, SegundoApellido, Email) VALUE
+    (108403221, 'Olivier', 'Giroud', 'Leao', 'email@example.com');
 
 INSERT INTO Empleado (CedulaEmpleado, NumeroSucursalAsignada) VALUE
     (108403221, 7);
@@ -580,4 +582,86 @@ WHERE sucursal.Nombre = 'Iconic Vienna';
 
 UPDATE sucursal
 SET Img = 'zurich.png'
+WHERE sucursal.Nombre = 'Iconic Zurich';
+
+
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/95HupBpJyGQ82i4BA'
+WHERE sucursal.Nombre = 'Iconic San Jose';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/q8Cfj6jK8jf6mXV47'
+WHERE sucursal.Nombre = 'Iconic Atlanta';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/k2SkhkT7Qe4tn4tA8'
+WHERE sucursal.Nombre = 'Iconic Barcelona';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/Lvzs5v5fHoqFzMN46'
+WHERE sucursal.Nombre = 'Iconic Buenos Aires';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/VbHBS82rH85VevhY8'
+WHERE sucursal.Nombre = 'Iconic California';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/H7F2GWi5ctwUx5Bi6'
+WHERE sucursal.Nombre = 'Iconic Dubai';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/st9g4w8GxMEDB5V16'
+WHERE sucursal.Nombre = 'Iconic Hong Kong';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/6sZs7w66VNYmgAt6A'
+WHERE sucursal.Nombre = 'Iconic Los Angeles';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/yF4evW1C6zai61zL9'
+WHERE sucursal.Nombre = 'Iconic Madrid';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/xAzS2FrqHyRmZ5ua7'
+WHERE sucursal.Nombre = 'Iconic Manchester';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/npAnWLUKKpWQFKv6A'
+WHERE sucursal.Nombre = 'Iconic Milan';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/nnk1QMF8GsAsW9hE7'
+WHERE sucursal.Nombre = 'Iconic New York';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/5kae4UhfrZtjv1gYA '
+WHERE sucursal.Nombre = 'Iconic Paris';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/suiE3UyVxJuprupw9'
+WHERE sucursal.Nombre = 'Iconic Rome';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/os21V9LQdL18FF747'
+WHERE sucursal.Nombre = 'Iconic Seattle';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/qHyxtbgY9fTt8DDm7'
+WHERE sucursal.Nombre = 'Iconic Singapore';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/U9mEJ4MqupdXQDd38'
+WHERE sucursal.Nombre = 'Iconic Sydney';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/NdbmQo9V6e8QvLjb7'
+WHERE sucursal.Nombre = 'Iconic Tokyo';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/5spJq9imTzcGcncB9'
+WHERE sucursal.Nombre = 'Iconic Vienna';
+
+UPDATE sucursal
+SET LinkGoogleMaps = 'https://maps.app.goo.gl/a3G99sWNAvjem2kv9'
 WHERE sucursal.Nombre = 'Iconic Zurich';
