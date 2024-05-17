@@ -6,7 +6,7 @@ const PersonaModel = db.define('Persona', {
     Nombre: {type: DataTypes.STRING},
     PrimerApellido: {type: DataTypes.STRING},
     SegundoApellido: {type: DataTypes.STRING},
-    NumeroTelefono: {type: DataTypes.STRING}
+    Email: {type: DataTypes.STRING}
 });
 
 export default PersonaModel;
