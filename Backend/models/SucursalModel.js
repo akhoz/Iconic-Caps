@@ -18,6 +18,10 @@ const SucursalModel = db.define('Sucursal', {
     NumeroTelefono: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    Img: {
+        type: DataTypes.STRING,
+        allowNull: false,
     }
 });
 
