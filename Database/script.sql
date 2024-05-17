@@ -115,3 +115,6 @@ create table IconicCaps.EnvioXPedido (
     FOREIGN KEY (NumeroFacturaPedido) references Pedido (NumeroFactura) ON DELETE CASCADE,
     FOREIGN KEY (CedulaRepartidor) references Repartidor (CedulaRepartidor) ON DELETE SET NULL
 );
+
+ALTER TABLE Sucursal
+ADD Img VARCHAR(100);

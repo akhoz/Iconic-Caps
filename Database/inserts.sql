@@ -501,3 +501,83 @@ INSERT INTO IconicCaps.Persona (Cedula, Nombre, PrimerApellido, SegundoApellido,
 
 INSERT INTO Empleado (CedulaEmpleado, NumeroSucursalAsignada) VALUE
     (108403221, 7);
+
+UPDATE sucursal
+SET Img = 'san-jose.png'
+WHERE sucursal.Nombre = 'Iconic San Jose';
+
+UPDATE sucursal
+SET Img = 'atlanta.png'
+WHERE sucursal.Nombre = 'Iconic Atlanta';
+
+UPDATE sucursal
+SET Img = 'barcelona.png'
+WHERE sucursal.Nombre = 'Iconic Barcelona';
+
+UPDATE sucursal
+SET Img = 'buenos-aires.png'
+WHERE sucursal.Nombre = 'Iconic Buenos Aires';
+
+UPDATE sucursal
+SET Img = 'california.png'
+WHERE sucursal.Nombre = 'Iconic California';
+
+UPDATE sucursal
+SET Img = 'dubai.png'
+WHERE sucursal.Nombre = 'Iconic Dubai';
+
+UPDATE sucursal
+SET Img = 'hong-kong.png'
+WHERE sucursal.Nombre = 'Iconic Hong Kong';
+
+UPDATE sucursal
+SET Img = 'los-angeles.png'
+WHERE sucursal.Nombre = 'Iconic Los Angeles';
+
+UPDATE sucursal
+SET Img = 'madrid.png'
+WHERE sucursal.Nombre = 'Iconic Madrid';
+
+UPDATE sucursal
+SET Img = 'manchester.png'
+WHERE sucursal.Nombre = 'Iconic Manchester';
+
+UPDATE sucursal
+SET Img = 'milan.png'
+WHERE sucursal.Nombre = 'Iconic Milan';
+
+UPDATE sucursal
+SET Img = 'new-york.png'
+WHERE sucursal.Nombre = 'Iconic New York';
+
+UPDATE sucursal
+SET Img = 'paris.png'
+WHERE sucursal.Nombre = 'Iconic Paris';
+
+UPDATE sucursal
+SET Img = 'roma.png'
+WHERE sucursal.Nombre = 'Iconic Rome';
+
+UPDATE sucursal
+SET Img = 'seattle.png'
+WHERE sucursal.Nombre = 'Iconic Seattle';
+
+UPDATE sucursal
+SET Img = 'singapore.png'
+WHERE sucursal.Nombre = 'Iconic Singapore';
+
+UPDATE sucursal
+SET Img = 'sydney.png'
+WHERE sucursal.Nombre = 'Iconic Sydney';
+
+UPDATE sucursal
+SET Img = 'tokyo.png'
+WHERE sucursal.Nombre = 'Iconic Tokyo';
+
+UPDATE sucursal
+SET Img = 'vienna.png'
+WHERE sucursal.Nombre = 'Iconic Vienna';
+
+UPDATE sucursal
+SET Img = 'zurich.png'
+WHERE sucursal.Nombre = 'Iconic Zurich';
