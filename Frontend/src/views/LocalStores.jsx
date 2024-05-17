@@ -39,7 +39,7 @@ function LocalStores() {
                 <Stores
                     key={store.id}
                     storeIndex={storeCount++}
-                    imgSrc={`/img/local-ny.webp`}
+                    imgSrc={`/img/stores/${store.Img}`}
                     name={store.Nombre}
                     description={store.Direccion}
                     phone={store.NumeroTelefono}
