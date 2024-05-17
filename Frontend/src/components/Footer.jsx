@@ -53,12 +53,6 @@ function Footer () {
                     onClick={handleButtonClick}>
                     Our Team
                 </Link>
-                <Link
-                    to="/OurTeam"
-                    onClick={handleButtonClick}>
-                    Our Team
-                </Link>
-
             </div>
             <div className="flex justify-center mb-5">
                 <p className="text-gray-400 text-xs">

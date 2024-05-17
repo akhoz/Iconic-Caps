@@ -4,7 +4,9 @@ function Stores (props) {
     const storeIndex = props.storeIndex;
 
     return (
-        <div className={`flex justify-center items-center md:items-start md:justify-start ${storeIndex % 2 === 0 ? 'bg-white text-black' : 'bg-black text-white'} relative py-5 md:py-10 lg:py-20`}>
+        <div className={`flex justify-center items-center md:items-start md:justify-start 
+        ${storeIndex % 2 === 0 ? 'bg-white text-black' : 'bg-black text-white'}
+         relative py-5 md:py-10 lg:py-20`} data-aos="fade-up">
             <div
                 className={`flex w-full flex-col items-center justify-center mb-10 md:mb-0
                 ${storeIndex % 2 === 0 ? 'md:flex-row-reverse text-right bg-white text-black' : 'md:flex-row text-left bg-black text-white'}`}>

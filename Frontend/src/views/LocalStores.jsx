@@ -29,10 +29,10 @@ function LocalStores() {
 
     return (
         <div className="w-full">
-            <h1 className="text-3xl font-bold text-center mb-5">
+            <h1 className="text-3xl font-bold text-center mb-5" data-aos="fade-up">
                 Our Stores
             </h1>
-            <p className="text-center mb-6 md:text-xl ml:text-xl">
+            <p className="text-center mb-6 md:text-xl ml:text-xl" data-aos="fade-up">
                 We have stores in different cities. Visit us!
             </p>
             {stores.map(store => (
