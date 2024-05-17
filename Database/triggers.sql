@@ -1,9 +1,9 @@
 use iconiccaps;
 
-
 -- Triggers de listaproductospedidos ----------------------------------------
 
 -- Insertar (verifica existencias)
+DELIMITER //
 CREATE TRIGGER verificar_stock
 BEFORE INSERT ON listaproductospedidos
 FOR EACH ROW
@@ -16,9 +16,11 @@ BEGIN
     SIGNAL SQLSTATE '55000'
     SET MESSAGE_TEXT = 'Se estan solicitando mas productos de los que hay en stock';
     end if;
-END;
+END //
+DELIMITER ;
 
 -- Actualizar (verifica existencias)
+DELIMITER //
 CREATE TRIGGER verificar_stock_actualizar
 BEFORE UPDATE ON listaproductospedidos
 FOR EACH ROW
@@ -31,9 +33,11 @@ BEGIN
     SIGNAL SQLSTATE '55000'
     SET MESSAGE_TEXT = 'Se estan solicitando mas productos de los que hay en stock';
     end if;
-END;
+END //
+DELIMITER ;
 
 -- Eliminar (eliminar pedido si se eliminan todos los productos asociados a una factura)
+DELIMITER //
 CREATE TRIGGER eliminar_pedido
 AFTER DELETE ON listaproductospedidos
 FOR EACH ROW
@@ -50,11 +54,13 @@ BEGIN
     DELETE FROM Pedido
     WHERE NumeroFactura = OLD.NumeroFacturaPedido;
     end if;
-END;
+END //
+DELIMITER ;
 
 -- Triggers de Comentario ----------------------------------------
 
 -- Insertar (verifica rango de estrellas)
+DELIMITER //
 CREATE TRIGGER verificar_estrellas
 BEFORE INSERT ON Comentario
 FOR EACH ROW
@@ -63,9 +69,11 @@ BEGIN
     SIGNAL SQLSTATE '55000'
     SET MESSAGE_TEXT = 'Las estrellas deben estar entre 0 y 5';
     end if;
-END;
+END //
+DELIMITER ;
 
 -- Actualizar (verifica rango de estrellas)
+DELIMITER //
 CREATE TRIGGER verificar_estrellas_actualizar
 BEFORE UPDATE ON Comentario
 FOR EACH ROW
@@ -74,13 +82,15 @@ BEGIN
     SIGNAL SQLSTATE '55000'
     SET MESSAGE_TEXT = 'Las estrellas deben estar entre 0 y 5';
     end if;
-END;
+END //
+DELIMITER ;
 
 -- FALTA ELIMINAR
 
 -- Triggers de Compra ----------------------------------------
 
 -- Insertar (verifica si el producto existe)
+DELIMITER //
 CREATE TRIGGER verificar_producto_existente
 BEFORE INSERT ON Compra
 FOR EACH ROW
@@ -93,9 +103,11 @@ BEGIN
     SIGNAL SQLSTATE '55000'
     SET MESSAGE_TEXT = 'El producto no existe';
     end if;
-END;
+END //
+DELIMITER ;
 
 -- Actualizar (verifica si el producto existe)
+DELIMITER //
 CREATE TRIGGER verificar_producto_existente_actualizar
 BEFORE UPDATE ON Compra
 FOR EACH ROW
@@ -108,9 +120,11 @@ BEGIN
     SIGNAL SQLSTATE '55000'
     SET MESSAGE_TEXT = 'El producto no existe';
     end if;
-END;
+END //
+DELIMITER ;
 
 -- Eliminar (si se eliminan todas las compras de un producto de un usuario, se elimina tambien sus comentarios de ese producto)
+DELIMITER //
 CREATE TRIGGER eliminar_comentarios
 AFTER DELETE ON Compra
 FOR EACH ROW
@@ -123,4 +137,17 @@ BEGIN
     DELETE FROM Comentario
     WHERE ModeloProducto = OLD.ModeloProducto AND CedulaCliente = OLD.CedulaCliente;
     end if;
-END;
+END //
+DELIMITER ;
+
+-- Trigger adicional
+DELIMITER //
+CREATE TRIGGER actualizar_stock
+AFTER INSERT ON listaproductospedidos
+FOR EACH ROW
+BEGIN
+    UPDATE producto
+    SET ExistenciasDisponibles = ExistenciasDisponibles -  NEW.CantidadProducto
+    WHERE producto.Modelo = NEW.ModeloProducto;
+END //
+DELIMITER ;
