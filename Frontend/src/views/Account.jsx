@@ -4,11 +4,13 @@ import {useUser} from "../contexts/UserContext.jsx";
 import UserComments from "../components/UserComments.jsx";
 import DeleteAccountModal from "../components/DeleteAccountModal.jsx";
 import DeleteCommentModal from "../components/DeleteCommentModal.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Order from "../components/Order.jsx";
+import axios from "axios";
 
 function Account() {
     const { user, logOut } = useUser();
+    const URI = `http://localhost:8000/consultas/pedidos/${user.CedulaCliente}`;
 
     const navigate = useNavigate();
 
@@ -17,6 +19,41 @@ function Account() {
     const [modalTitle, setModalTitle] = useState("");
     const [modalDescription, setModalDescription] = useState("");
     const [modalButtonText, setModalButtonText] = useState("");
+
+    const [pedidos, setPedidos] = useState([]);
+    useEffect( ()=>{
+        getPedidos()
+    });
+
+    const getPedidos = async () => {
+        const res = await axios.get(URI);
+        const pedidosData = res.data;
+
+        const pedidosAgrupados = {};
+        pedidosData.forEach(pedido => {
+            if (pedidosAgrupados.hasOwnProperty(pedido.NumeroFactura)) {
+                pedidosAgrupados[pedido.NumeroFactura].push({
+                    Modelo: pedido.ModeloProducto,
+                    Cantidad: pedido.CantidadProducto
+                });
+            } else {
+                pedidosAgrupados[pedido.NumeroFactura] = [{
+                    Modelo: pedido.ModeloProducto,
+                    Cantidad: pedido.CantidadProducto
+                }];
+            }
+        });
+
+        const pedidosAgrupadosArray = Object.keys(pedidosAgrupados).map(numeroFactura => ({
+            NumeroFactura: parseInt(numeroFactura),
+            ModeloProducto: pedidosAgrupados[numeroFactura],
+            Estado: pedidosData.find(pedido => pedido.NumeroFactura === parseInt(numeroFactura)).Estado,
+            FechaDeCompra: pedidosData.find(pedido => pedido.NumeroFactura === parseInt(numeroFactura)).FechaDeCompra,
+            Repartidor: pedidosData.find(pedido => pedido.NumeroFactura === parseInt(numeroFactura)).Repartidor
+        }));
+        setPedidos(pedidosAgrupadosArray);
+    }
+
 
     const handleLogOutClick =  () => {
         logOut();
@@ -76,7 +113,8 @@ function Account() {
                         Delete Account
                     </button>
                 </div>
-                <NoOrders/>
+                {pedidos.length === 0 && <NoOrders/>}
+                {pedidos.length > 0 &&
                 <div className="flex flex-col items-center justify-center w-10/12 mt-20">
                     <h1 className="text-2xl font-bold mb-14">
                         Your Orders
@@ -99,15 +137,17 @@ function Account() {
                         </p>
                     </div>
                     <hr className="w-full border-b border-gray-100 xl:mb-8"/>
-                </div>
-                <Order
-                    model={'AD5'}
-                    quantity={2}
-                    status={'Pending'}
-                    orderNumber={123456}
-                    purchaseDate={'01/01/2022'}
-                    deliverer={'Messi Rondaldo Mbappe'}
-                />
+                </div>}
+                {pedidos.map(pedido => (
+                    <Order
+                        key={pedido.NumeroFactura}
+                        modelos={pedido.ModeloProducto}
+                        status={pedido.Estado}
+                        orderNumber={pedido.NumeroFactura}
+                        purchaseDate={pedido.FechaDeCompra}
+                        deliverer={pedido.Repartidor}
+                    />
+                ))}
                 <UserComments handleClickComment={handleClickComment}/>
             </div>
             {showAccountModal && (

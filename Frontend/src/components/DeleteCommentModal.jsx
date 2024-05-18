@@ -4,13 +4,15 @@ import {useComments} from "../contexts/CommentsContext.jsx";
 import {useNavigate} from "react-router-dom";
 
 function DeleteCommentModal(props) {
-    const { clickedComment  } = useComments();
+    const { clickedComment, deleteComment } = useComments();
     const navigate = useNavigate();
     const URI = `http://localhost:8000/comentarios/${clickedComment}`;
 
-    const handleButtonClick = () => {
-        console.log(clickedComment)
-        navigate(URI)
+    const handleButtonClick = async () => {
+        props.handleCloseModal();
+        await fetch(URI, {
+            method: 'DELETE',
+        });
     };
 
     return (

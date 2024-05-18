@@ -6,8 +6,13 @@ const CommentsContext = createContext();
 export const CommentsProvider = ({children}) => {
     const [clickedComment, setClickedComment] = useState(null);
 
+    const deleteComment = () => {
+        setClickedComment(null);
+        console.log(clickedComment)
+    }
+
     return (
-        <CommentsContext.Provider value={{ clickedComment, setClickedComment }}>
+        <CommentsContext.Provider value={{ clickedComment, setClickedComment, deleteComment }}>
             {children}
         </CommentsContext.Provider>
     );

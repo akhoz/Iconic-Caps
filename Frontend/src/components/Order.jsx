@@ -5,13 +5,17 @@ function Order(props) {
     return (
         <div className="flex w-10/12 flex-col">
             <div className="flex w-full flex-row justify-between items-center">
-                <div className="flex flex-row items-start text-center w-fit">
-                    <h2 className="text-lg xl:text-xl">
-                        {props.model}
-                    </h2>
-                    <p className="text-lg ml-5 xl:text-xl">
-                        {props.quantity}
-                    </p>
+                <div className="flex flex-col items-start text-center w-fit">
+                    {props.modelos.map((modeloCantidad, index) => (
+                        <div key={index} className="flex flex-row items-start">
+                            <h2 className="text-lg xl:text-xl">
+                                {modeloCantidad.Modelo}
+                            </h2>
+                            <p className="text-lg ml-5 xl:text-xl">
+                                {modeloCantidad.Cantidad}
+                            </p>
+                        </div>
+                    ))}
                 </div>
                 <p className="text-black w-fit xl:text-lg">
                     {props.status}
@@ -35,8 +39,10 @@ function Order(props) {
 }
 
 Order.propTypes = {
-    model: PropTypes.string,
-    quantity: PropTypes.number,
+    modelos: PropTypes.arrayOf(PropTypes.shape({
+        Modelo: PropTypes.string,
+        Cantidad: PropTypes.number
+    })),
     status: PropTypes.string,
     orderNumber: PropTypes.number,
     purchaseDate: PropTypes.string,
