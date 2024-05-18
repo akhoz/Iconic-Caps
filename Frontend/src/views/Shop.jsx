@@ -29,7 +29,7 @@ function Shop () {
             <div className="flex justify-center w-full items-center mb-20 lg:mx-2 xl:mx-0" data-aos="fade-up">
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-20">
                     {availableProducts.map(producto => (
-                        <Link to={`/Product/${producto.Modelo}`} key={producto.id} className="w-fit">
+                        <Link to={`/Product/${producto.Modelo}`} key={producto.Modelo} className="w-fit">
                             <Product
                                 imgSrc={`/img/caps/${producto.Img}`}
                                 imgAlt={producto.Img}

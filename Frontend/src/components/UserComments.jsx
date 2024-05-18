@@ -3,11 +3,14 @@ import { useEffect, useState } from 'react';
 import {useUser} from "../contexts/UserContext.jsx";
 import Stars from "./Stars.jsx";
 import PropTypes from "prop-types";
+import {useComments} from "../contexts/CommentsContext.jsx";
 
 function UserComments(props) {
     const { user } = useUser();
     const URI = `http://localhost:8000/comentarios/cedula/${user.CedulaCliente}`
     const [comentarios, setComentarios] = useState([])
+    const { clickedComment, setClickedComment } = useComments();
+
     useEffect( ()=>{
         getComentarioByCedula()
     },[])
@@ -16,6 +19,8 @@ function UserComments(props) {
         const res = await axios.get(URI)
         setComentarios(res.data)
     }
+
+
 
     return (
         <>
@@ -30,9 +35,12 @@ function UserComments(props) {
                     <div className="grid grid-cols-1 gap-x-10 gap-y-20 mx-8 w-full md:grid-cols-2 lg:grid-cols-3">
                         {comentarios.map((comentario) => (
                             <button
-                                key={comentario.id}
+                                key={comentario.IdComentario}
                                 className="transition-transform transform hover:scale-105"
-                                onClick={props.handleClickComment}>
+                                onClick={() => {
+                                    props.handleClickComment(comentario.IdComentario);
+                                    setClickedComment(comentario.IdComentario);
+                                }}>
                                 <div className="flex flex-row justify-between items-center">
                                     <h2 className="font-bold text-lg">
                                         {comentario.ModeloProducto}

@@ -15,6 +15,7 @@ import LocalStores from "./views/LocalStores.jsx";
 import ProductView from "./views/ProductView.jsx";
 import Checkout from "./views/Checkout.jsx";
 import {useUser} from "./contexts/UserContext.jsx";
+import {CommentsProvider} from "./contexts/CommentsContext.jsx";
 
 function App() {
     const URI = 'http://localhost:8000/productos/'
@@ -45,7 +46,7 @@ function App() {
 
                     <Route path="/LogIn" element={<LogIn/>}/>
                     <Route path="/SignUp" element={<SignUp/>}/>
-                    <Route path="/Account" element={<Account/>}/>
+                    <Route path="/Account" element={<AccountWithCommentsProvider/>}/>
                     <Route path="/Checkout" element={<Checkout/>}/>
                 </Routes>
             </Router>
@@ -64,6 +65,14 @@ function HeaderFooterLayout({ children }) {
 
             <Footer/>
         </>
+    );
+}
+
+function AccountWithCommentsProvider() {
+    return (
+        <CommentsProvider>
+            <Account/>
+        </CommentsProvider>
     );
 }
 

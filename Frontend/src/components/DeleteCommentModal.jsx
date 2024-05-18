@@ -1,9 +1,16 @@
 import { IoClose } from "react-icons/io5";
 import PropTypes from "prop-types";
+import {useComments} from "../contexts/CommentsContext.jsx";
+import {useNavigate} from "react-router-dom";
 
 function DeleteCommentModal(props) {
-    const handleButtonClick = () => {
+    const { clickedComment  } = useComments();
+    const navigate = useNavigate();
+    const URI = `http://localhost:8000/comentarios/${clickedComment}`;
 
+    const handleButtonClick = () => {
+        console.log(clickedComment)
+        navigate(URI)
     };
 
     return (
