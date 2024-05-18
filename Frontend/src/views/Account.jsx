@@ -7,7 +7,7 @@ import DeleteCommentModal from "../components/DeleteCommentModal.jsx";
 import {useEffect, useState} from "react";
 import Order from "../components/Order.jsx";
 import axios from "axios";
-
+import ModifyUsernameModal from "../components/ModifyUsernameModal.jsx";
 function Account() {
     const { user, logOut } = useUser();
     const URI = `http://localhost:8000/consultas/pedidos/${user.CedulaCliente}`;
@@ -64,6 +64,7 @@ function Account() {
     const handleCloseModal = () => {
         setShowAccountModal(false);
         setShowCommentModal(false);
+        setShowModifyUsernameModal(false);
     }
 
     const handleDeleteAccount = () => {
@@ -80,6 +81,11 @@ function Account() {
         setModalButtonText("Delete Comment");
     }
 
+    const [showModifyUsernameModal, setShowModifyUsernameModal] = useState(false)
+    const handleModifyUsername = () => {
+        setShowModifyUsernameModal(true);
+    }
+
     return (
         <>
             <div className="flex flex-col w-full items-center justify-center" data-aos="fade-up">
@@ -91,7 +97,9 @@ function Account() {
                 </div>
                 <div
                     className="flex flex-col justify-between items-center w-full py-6 bg-black text-white text-md space-y-5 md:px-14 md:space-y-0 md:flex-row lg:px-20 xl:px-40">
-                    <button className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125">
+                    <button
+                        className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
+                        onClick={handleModifyUsername}>
                         Modify Username
                     </button>
                     <button className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125">
@@ -180,6 +188,18 @@ function Account() {
             {showCommentModal && (
                 <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
+            {showModifyUsernameModal && (
+                <div className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <ModifyUsernameModal
+                        handleCloseModal={handleCloseModal}
+                        user={user}/>
+                </div>
+
+            )}
+            {showModifyUsernameModal && (
+                    <div className="fixed inset-0 w-screen h-screen bg-black z-30 opacity-80">
+                    </div>
+                )}
         </>
     );
 }
