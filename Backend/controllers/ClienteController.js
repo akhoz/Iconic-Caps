@@ -42,7 +42,7 @@ export const updateCliente = async (req, res) => {
     try {
         const cliente = await ClienteModel.update({
             Usuario: req.body.Usuario,
-            Contraseña: req.body.Contraseña,
+            Contrasena: req.body.Contrasena,
             Correo: req.body.Correo,
             Telefono: req.body.Telefono,
             Direccion: req.body.Direccion

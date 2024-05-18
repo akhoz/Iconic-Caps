@@ -20,7 +20,7 @@ const ClienteModel = db.define('Cliente', {
         allowNull: false,
     },
 }, {
-    tableName: 'Clientes', // Nombre de la tabla
+    tableName: 'Cliente', // Nombre de la tabla
     timestamps: false,
 });
 
