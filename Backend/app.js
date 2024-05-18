@@ -7,6 +7,11 @@ import clienteRoutes from './routes/Clienteroutes.js'
 import comentatioRoutes from './routes/Comentarioroutes.js'
 import empleadoRoutes from './routes/Empleadoroutes.js'
 import sucursalRoutes from './routes/Sucursalroutes.js'
+import repartidorRoutes from './routes/Repartidorroutes.js'
+import pedidoRoutes from './routes/Pedidoroutes.js'
+import listaProductosRoutes from './routes/Listaproductosroutes.js'
+import envioxpedidoRoutes from './routes/Envioxpedidoroutes.js'
+import consultaRoutes from './routes/Consultaroutes.js'
 const app = express()
 
 app.use(cors())
@@ -16,6 +21,11 @@ app.use('/clientes',clienteRoutes)
 app.use('/comentarios',comentatioRoutes)
 app.use('/empleados', empleadoRoutes)
 app.use('/sucursales', sucursalRoutes)
+app.use('/repartidores', repartidorRoutes)
+app.use('/pedidos', pedidoRoutes)
+app.use('/listaProductos', listaProductosRoutes)
+app.use('/envioxpedido', envioxpedidoRoutes)
+app.use('/consultas', consultaRoutes)
 
 
 try {
