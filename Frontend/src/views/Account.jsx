@@ -120,19 +120,19 @@ function Account() {
                         Your Orders
                     </h1>
                     <div className="flex flex-row justify-between w-full font-bold">
-                        <p>
+                        <p className="w-1/5 text-center">
                             Products
                         </p>
-                        <p>
+                        <p className="w-1/5 text-center">
                             Status
                         </p>
-                        <p>
+                        <p className="w-1/5 text-center">
                             Order Number
                         </p>
-                        <p>
+                        <p className="w-1/5 text-center">
                             Purchase Date
                         </p>
-                        <p>
+                        <p className="w-1/5 text-center">
                             Deliverer
                         </p>
                     </div>
