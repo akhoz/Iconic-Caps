@@ -34,7 +34,7 @@ create table IconicCaps.Persona (
     Nombre VARCHAR(25) NOT NULL,
     PrimerApellido VARCHAR(25) NOT NULL,
     SegundoApellido VARCHAR(25) NOT NULL,
-    NumeroTelefono VARCHAR(25) NOT NULL
+    Email VARCHAR(25) NOT NULL
 );
 
 create table IconicCaps.Cliente (
