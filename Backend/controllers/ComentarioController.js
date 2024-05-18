@@ -42,6 +42,19 @@ export const getComentarioByCedula = async (req, res) => {
     }
 };
 
+export const getCometarioById = async (req, res) => {
+    try {
+        const comentario = await ComentarioModel.findOne({
+            where: {
+                IdComentario: req.params.IdComentario
+            }
+        });
+        res.json(comentario);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
 export const createComentario = async (req, res) => {
     try {
         await ComentarioModel.create(req.body)
