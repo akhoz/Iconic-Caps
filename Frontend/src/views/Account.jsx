@@ -8,6 +8,8 @@ import {useEffect, useState} from "react";
 import Order from "../components/Order.jsx";
 import axios from "axios";
 import ModifyUsernameModal from "../components/ModifyUsernameModal.jsx";
+import ModifyPasswordModal from "../components/ModifyPasswordModal.jsx";
+
 function Account() {
     const { user, logOut } = useUser();
     const URI = `http://localhost:8000/consultas/pedidos/${user.CedulaCliente}`;
@@ -65,6 +67,7 @@ function Account() {
         setShowAccountModal(false);
         setShowCommentModal(false);
         setShowModifyUsernameModal(false);
+        setShowModifyPasswordModal(false);
     }
 
     const handleDeleteAccount = () => {
@@ -86,6 +89,11 @@ function Account() {
         setShowModifyUsernameModal(true);
     }
 
+    const [showModifyPasswordModal, setShowModifyPasswordModal] = useState(false)
+    const handleModifyPassword = () => {
+        setShowModifyPasswordModal(true);
+    }
+
     return (
         <>
             <div className="flex flex-col w-full items-center justify-center" data-aos="fade-up">
@@ -102,7 +110,9 @@ function Account() {
                         onClick={handleModifyUsername}>
                         Modify Username
                     </button>
-                    <button className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125">
+                    <button
+                        className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
+                        onClick={handleModifyPassword}>
                         Change Password
                     </button>
                     <Link
@@ -200,6 +210,18 @@ function Account() {
                     <div className="fixed inset-0 w-screen h-screen bg-black z-30 opacity-80">
                     </div>
                 )}
+            {showModifyPasswordModal && (
+                <div className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <ModifyPasswordModal
+                        handleCloseModal={handleCloseModal}
+                        user={user}/>
+                </div>
+
+            )}
+            {showModifyPasswordModal && (
+                <div className="fixed inset-0 w-screen h-screen bg-black z-30 opacity-80">
+                </div>
+            )}
         </>
     );
 }

@@ -51,7 +51,8 @@ function ModifyUsernameModal(props) {
 
         logOut();
         removeCookie('username', { path: '/' });
-        navigate('/LogIn');
+        navigate('/');
+        window.location.reload();
     }
 
     return (
@@ -60,7 +61,7 @@ function ModifyUsernameModal(props) {
                 Write your new username below
             </h1>
             <p className="text-lg mt-3">
-                Notice that if you change your username, you will have to log in again.
+                Notice that if you modify your username, you will have to log in again.
             </p>
             <input
                 type="text"

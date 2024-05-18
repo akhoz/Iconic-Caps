@@ -83,7 +83,7 @@ function LogIn() {
                         <input
                             type="text"
                             id="text"
-                            className="border-0 border-b-2 border-black p-1 my-5 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0"
+                            className="border-0 border-b-2 w-full border-black p-1 my-5 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0"
                             placeholder="Username"
                             onChange={handleUsernameChange}
                         />

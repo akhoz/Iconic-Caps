@@ -4,8 +4,8 @@ import ProductoModel from "../models/ProductoModel.js";
 
 export const getAllComentarios = async (req, res) => {
     try {
-         const comentarios = await ComentarioModel.findAll({include : [{model: ProductoModel}, {model: ClienteModel}]})
-         res.json(comentarios)
+        const comentarios = await ComentarioModel.findAll({include : [{model: ProductoModel}, {model: ClienteModel}]})
+        res.json(comentarios)
 
     } catch (error) {
         res.json({message: error.message})

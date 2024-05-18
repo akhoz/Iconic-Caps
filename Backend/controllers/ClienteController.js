@@ -55,6 +55,23 @@ export const updateUsuarioCliente = async (req, res) => {
     }
 };
 
+export const updateContrasenaCliente = async (req, res) => {
+    try {
+        const cliente = await ClienteModel.update({
+            Contrasena: req.body.Contrasena
+        }, {
+            where: {
+                Usuario: req.params.Usuario
+            }
+        });
+        console.log(req.params.Usuario);
+        console.log("Cliente actualizado");
+        res.json("Cliente actualizado");
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
 export const deleteCliente = async (req, res) => {
     try {
         await ClienteModel.destroy({
