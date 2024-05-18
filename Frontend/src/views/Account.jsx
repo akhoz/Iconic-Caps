@@ -119,7 +119,7 @@ function Account() {
                     <h1 className="text-2xl font-bold mb-14">
                         Your Orders
                     </h1>
-                    <div className="flex flex-row justify-between w-full font-bold">
+                    <div className="flex flex-row justify-between w-full font-bold text-xs md:text-lg xl:text-xl">
                         <p className="w-1/5 text-center">
                             Products
                         </p>

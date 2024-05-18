@@ -7,11 +7,11 @@ function Order(props) {
             <div className="flex w-full flex-row justify-between items-center">
                 <div className="flex flex-col items-center justify-center text-center w-1/5">
                     {props.modelos.map((modeloCantidad, index) => (
-                        <div key={index} className="flex flex-row items-center justify-center">
-                            <h2 className="text-lg xl:text-xl">
-                                {modeloCantidad.Modelo}
+                        <div key={index} className="flex flex-row items-center justify-center space-x-1">
+                            <h2 className="text-xs md:text-lg xl:text-xl">
+                                {`${modeloCantidad.Modelo}`}
                             </h2>
-                            <p className="text-lg ml-5 xl:text-xl">
+                            <p className="text-xs md:text-lg xl:text-xl">
                                 <span className="text-xs">x</span>
                                 {`${modeloCantidad.Cantidad}`}
                             </p>
@@ -19,21 +19,23 @@ function Order(props) {
                     ))}
                 </div>
                 <div className="flex flex-row justify-between w-3/5 items-center">
-                    <p className="text-black w-1/3 text-center xl:text-lg">
+                    <p className="text-black w-1/3 text-center text-xs md:text-lg xl:text-xl">
                         {props.status}
                     </p>
-                    <p className="text-black w-1/3 text-center xl:text-lg">
+                    <p className="text-black w-1/3 text-center text-xs md:text-lg xl:text-xl">
                         {props.orderNumber}
                     </p>
-                    <p className="text-black w-1/3 text-center xl:text-lg">
+                    <p className="text-black w-1/3 text-center text-xs md:text-lg xl:text-xl">
                         {props.purchaseDate}
                     </p>
                 </div>
-                <div className="flex flex-row items-center justify-between text-black w-1/5 xl:text-lg">
+                <div className="flex flex-row items-center justify-between text-black w-1/5 text-xs md:text-lg xl:text-xl">
                     <p className="w-11/12 text-center">
                         {props.deliverer}
                     </p>
-                    <MdCancel className="text-lg 1/12"/>
+                    <button className="ml-3 md:ml-0 1/12 duration-500 hover:text-red-500">
+                    <MdCancel/>
+                    </button>
                 </div>
             </div>
             <hr className="w-full border-b border-gray-100 xl:mt-10 xl:mb-14"/>
