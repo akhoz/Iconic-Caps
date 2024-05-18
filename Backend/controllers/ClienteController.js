@@ -38,14 +38,10 @@ export const createCliente = async (req, res) => {
     }
 };
 
-export const updateCliente = async (req, res) => {
+export const updateUsuarioCliente = async (req, res) => {
     try {
         const cliente = await ClienteModel.update({
-            Usuario: req.body.Usuario,
-            Contrasena: req.body.Contrasena,
-            Correo: req.body.Correo,
-            Telefono: req.body.Telefono,
-            Direccion: req.body.Direccion
+            Usuario: req.body.Usuario
         }, {
             where: {
                 Usuario: req.params.Usuario

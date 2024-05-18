@@ -6,7 +6,8 @@ export const getInformacionPedidosByCliente = async (CedulaClienteConsultado) =>
             pedido.NumeroFactura, 
             listaproductospedidos.ModeloProducto, 
             listaproductospedidos.CantidadProducto, 
-            envioxpedido.Estado, 
+            envioxpedido.Estado,
+            FechaDeCompra,
             CONCAT(persona.Nombre, ' ', persona.PrimerApellido, ' ', persona.SegundoApellido) AS Repartidor 
         FROM pedido
         JOIN listaproductospedidos ON pedido.NumeroFactura = listaproductospedidos.NumeroFacturaPedido
