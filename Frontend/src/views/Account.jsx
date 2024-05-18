@@ -2,27 +2,21 @@ import {Link, useNavigate} from "react-router-dom";
 import NoOrders from "../components/NoOrders.jsx";
 import {useUser} from "../contexts/UserContext.jsx";
 import UserComments from "../components/UserComments.jsx";
-import DeleteModal from "../components/DeleteModal.jsx";
+import DeleteAccountModal from "../components/DeleteAccountModal.jsx";
+import DeleteCommentModal from "../components/DeleteCommentModal.jsx";
 import {useState} from "react";
 import Order from "../components/Order.jsx";
 
 function Account() {
     const { user, logOut } = useUser();
-    const [deleteAccount, setDeleteAccount] = useState(false);
 
     const navigate = useNavigate();
 
-    const [showModal, setShowModal] = useState(false);
+    const [showAccountModal, setShowAccountModal] = useState(false);
+    const [showCommentModal, setShowCommentModal] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [modalDescription, setModalDescription] = useState("");
     const [modalButtonText, setModalButtonText] = useState("");
-
-    const handleClickComment = () => {
-        setShowModal(true);
-        setModalTitle("Are you sure you want to delete this comment?");
-        setModalDescription("This action cannot be undone. Your comment will be permanently deleted.");
-        setModalButtonText("Delete Comment");
-    }
 
     const handleLogOutClick =  () => {
         logOut();
@@ -31,16 +25,24 @@ function Account() {
     }
 
     const handleCloseModal = () => {
-        setShowModal(false);
+        setShowAccountModal(false);
+        setShowCommentModal(false);
     }
 
     const handleDeleteAccount = () => {
-        setShowModal(true);
+        setShowAccountModal(true);
         setModalTitle("Are you sure you want to delete your account?");
         setModalDescription("This action cannot be undone. Your account will be permanently deleted.");
         setModalButtonText("Delete Account");
-        setDeleteAccount(true);
     }
+
+    const handleClickComment = () => {
+        setShowCommentModal(true);
+        setModalTitle("Are you sure you want to delete this comment?");
+        setModalDescription("This action cannot be undone. Your comment will be permanently deleted.");
+        setModalButtonText("Delete Comment");
+    }
+
     return (
         <>
             <div className="flex flex-col w-full items-center justify-center" data-aos="fade-up">
@@ -108,20 +110,34 @@ function Account() {
                 />
                 <UserComments handleClickComment={handleClickComment}/>
             </div>
-            {showModal && (
+            {showAccountModal && (
                 <div
                     className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
-                    <DeleteModal
+                    <DeleteAccountModal
                         modalTitle={modalTitle}
                         modalDescription={modalDescription}
                         modalButtonText={modalButtonText}
                         handleCloseModal={handleCloseModal}
-                        deleteAccount={deleteAccount}
                     />
                 </div>
 
             )}
-            {showModal && (
+            {showAccountModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
+            )}
+            {showCommentModal && (
+                <div
+                    className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <DeleteCommentModal
+                        modalTitle={modalTitle}
+                        modalDescription={modalDescription}
+                        modalButtonText={modalButtonText}
+                        handleCloseModal={handleCloseModal}
+                    />
+                </div>
+
+            )}
+            {showCommentModal && (
                 <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
         </>

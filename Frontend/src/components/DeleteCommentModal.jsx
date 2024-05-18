@@ -1,15 +1,9 @@
 import { IoClose } from "react-icons/io5";
 import PropTypes from "prop-types";
-import { useCookies } from "react-cookie";
 
-function DeleteModal(props) {
-    const [cookie, setCookie, removeCookie] = useCookies(['username']);
-
+function DeleteCommentModal(props) {
     const handleButtonClick = () => {
-        if (props.deleteAccount) {
-            removeCookie('username', { path: '/' });
-            props.handleCloseModal();
-        }
+
     };
 
     return (
@@ -34,12 +28,11 @@ function DeleteModal(props) {
     );
 }
 
-DeleteModal.propTypes = {
+DeleteCommentModal.propTypes = {
     modalTitle: PropTypes.string.isRequired,
     modalDescription: PropTypes.string.isRequired,
     modalButtonText: PropTypes.string.isRequired,
     handleCloseModal: PropTypes.func.isRequired,
-    deleteAccount: PropTypes.bool
 };
 
-export default DeleteModal;
+export default DeleteCommentModal;
