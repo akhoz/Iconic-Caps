@@ -72,7 +72,7 @@ function ModifyUsernameModal(props) {
                 onChange={handleNewUsernameChange}
             />
             {invalidUsername && <p className="text-red-500 text-sm" data-aos="zoom-in" data-aos-duration="500">Please enter a valid username</p>}
-            {usernameAlreadyExists && <p className="text-red-500 text-sm">This username is already taken</p>}
+            {usernameAlreadyExists && <p className="text-red-500 text-sm" data-aos="zoom-in" data-aos-duration="500">This username is already taken</p>}
             <div className={`flex items-center justify-center mt-6 bg-black text-white p-2 rounded-md mb-5 duration-500
             ${invalidUsername || usernameAlreadyExists ? 'hover:bg-red-500 hover:text-white hover:border hover:border-red-500' : 'hover:bg-white hover:text-black hover:border hover:border-black'}`}>
                 <button className="w-full h-full" onClick={handleModifyUsername}>

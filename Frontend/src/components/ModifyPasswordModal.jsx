@@ -95,7 +95,7 @@ function ModifyPasswordModal(props) {
             {invalidPassword &&
                 <p className="text-red-500 text-sm" data-aos="zoom-in" data-aos-duration="500">Please enter a valid
                     password</p>}
-            {passwordsDontMatch && <p className="text-red-500 text-sm">The passwords don't match</p>}
+            {passwordsDontMatch && <p className="text-red-500 text-sm" data-aos="zoom-in" data-aos-duration="500">The passwords don't match</p>}
             <div className={`flex items-center justify-center mt-6 bg-black text-white p-2 rounded-md mb-5 duration-500
             ${invalidPassword || passwordsDontMatch ? 'hover:bg-red-500 hover:text-white hover:border hover:border-red-500' : 'hover:bg-white hover:text-black hover:border hover:border-black'}`}>
                 <button className="w-full h-full" onClick={handleModifyUsername}>
