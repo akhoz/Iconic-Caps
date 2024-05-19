@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { MdCancel } from "react-icons/md";
 import {useEffect, useState} from "react";
+import axios from "axios";
 
 function Order(props) {
     const [status, setStatus] = useState(props.status);
@@ -16,6 +17,15 @@ function Order(props) {
     useEffect(() => {
         traduceStatus(props.status);
     });
+
+
+    const handleCancelOrder = async () => {
+        const res = await axios.put(`http://localhost:8000/envioxpedido/${props.orderNumber}`, {
+            Estado: "Cancelado"
+        });
+        console.log(res.data);
+        setStatus("Canceled");
+    }
 
     return (
         <div className="flex w-10/12 flex-col">
@@ -51,7 +61,7 @@ function Order(props) {
                     <button
                         className={`ml-3 md:ml-0 1/12 duration-500 hover:text-red-500
                         ${status === "Delivered" ? "hidden" : ""}`}
-                        onClick={props.cancelOrder}>
+                        onClick={handleCancelOrder}>
                         <MdCancel/>
                     </button>
                 </div>
@@ -70,7 +80,6 @@ Order.propTypes = {
     orderNumber: PropTypes.number,
     purchaseDate: PropTypes.string,
     deliverer: PropTypes.string,
-    cancelOrder: PropTypes.func,
 }
 
 export default Order;
