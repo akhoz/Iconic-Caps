@@ -11,6 +11,7 @@ function SignUp () {
     const [newCedula, setNewCedula] = useState(0);
     const [newUsername, setNewUsername] = useState("");
     const [newEmail, setNewEmail] = useState("");
+    const [newPassword, setNewPassword] = useState("");
     const [nombre, setNombre] = useState("");
     const [primerApellido, setPrimerApellido] = useState("");
     const [segundoApellido, setSegundoApellido] = useState("");
@@ -29,8 +30,10 @@ function SignUp () {
     const [usernameAlreadyExists, setUsernameAlreadyExists] = useState(false);
     const [emailAlreadyExists, setEmailAlreadyExists] = useState(false);
     const [invalidEmail, setInvalidEmail] = useState(false);
+    const [invalidPassword, setInvalidPassword] = useState(false);
 
     const [secondPart, setSecondPart] = useState(false);
+    const [termsAccepted, setTermsAccepted] = useState(false);
 
     const handleNewNameChange = (event) => {
         setNewName(event.target.value);
@@ -56,6 +59,16 @@ function SignUp () {
         setEmailAlreadyExists(false);
     }
 
+    const handleNewPasswordChange = (event) => {
+        setNewPassword(event.target.value);
+
+    }
+
+    const handleTermsAccepted = () => {
+        setTermsAccepted(!termsAccepted);
+
+    }
+
     useEffect(() => {
         getExistingUsernames();
     })
@@ -79,17 +92,20 @@ function SignUp () {
     }
 
     const handleContinue = () => {
-        if (newName === "") {
+        if (newName === "" || !newName.replace(/\s/g, '').length > 2 || newName.split(' ').length - 1 !== 2 ) {
             setInvalidName(true);
             return;
         }
+        setNombre(newName.split(' ')[0]);
+        setPrimerApellido(newName.split(' ')[1]);
+        setSegundoApellido(newName.split(' ')[2]);
         setInvalidName(false);
         if (currentNames.includes(newName.replace(/\s/g, ''))) {
             setNameAlreadyExists(true);
             return;
         }
         setNameAlreadyExists(false);
-        if (newCedula === 0) {
+        if (newCedula === 0 || newCedula.toString().length !== 9) {
             setInvalidCedula(true);
             return;
         }
@@ -119,7 +135,7 @@ function SignUp () {
             return;
         }
         setUsernameAlreadyExists(false);
-        if (newEmail === "") {
+        if (newEmail === "" || !newEmail.includes('@') || !newEmail.includes('.')) {
             setInvalidEmail(true);
             return;
         }
@@ -129,6 +145,14 @@ function SignUp () {
             return;
         }
         setEmailAlreadyExists(false);
+        if (newPassword === "") {
+            setInvalidPassword(true);
+            return;
+        }
+        setInvalidPassword(false);
+        if (!termsAccepted) {
+            return;
+        }
 
         navigate('/LogIn')
     }
@@ -208,14 +232,18 @@ function SignUp () {
                     <input
                         type="password"
                         id="password"
-                        className="border-0 border-b-2 border-black p-1 mt-5 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0"
+                        className={`border-0 border-b-2 p-1 mt-5 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0
+                        ${invalidPassword ? 'border-red-500' : 'border-black'}`}
                         placeholder="Password"
+                        onChange={handleNewPasswordChange}
                     />
-                    <div className="flex flex-row items-center my-5">
+                    {invalidPassword && <p className="text-red-500 text-sm" data-aos="zoom-in" data-aos-duration="500">Please enter a valid password</p>}
+                    <div className={`flex flex-row items-center my-5 ${!termsAccepted ? 'text-red-500' : ''}`}>
                         <input
                             type="checkbox"
                             id="checkbox"
                             className="border-1 border-black text-black focus:ring-0"
+                            onChange={handleTermsAccepted}
                         />
                         <p className="text-md text-gray-600 pl-3">
                             I accept the Terms and Conditions
