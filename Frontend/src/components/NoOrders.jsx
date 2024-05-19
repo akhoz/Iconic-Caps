@@ -3,7 +3,7 @@ import { FaShippingFast } from "react-icons/fa";
 
 function NoOrders() {
     return (
-        <div className="flex flex-col items-center justify-between w-full px-14 my-16 md:flex-row md:px-28 md:my-20 lg:px-40 lg:my-24 xl:px-60">
+        <div className="flex flex-col items-center justify-between w-full px-14 my-16 md:flex-row md:px-28 md:my-20 lg:px-40 lg:mt-24 lg:mb-8 xl:px-60">
             <div className="flex flex-col justify-center items-center w-full md:items-start">
                 <h2 className="w-full text-center font-bold text-2xl md:text-start md:text-3xl">
                     You don't have any orders yet

@@ -163,6 +163,13 @@ function SignUp () {
             Email: newEmail
         });
         console.log(res.data);
+
+        const res2 = await axios.post('http://localhost:8000/clientes', {
+            CedulaCliente: newCedula,
+            Usuario: newUsername,
+            Contrasena: newPassword
+        });
+        console.log(res2.data);
         navigate('/LogIn')
     }
 

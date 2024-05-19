@@ -68,7 +68,7 @@ function Header() {
                         <Link to="/" onClick={() => { handleButtonClick(); handleLinkClick(); }} className="text-black">Home</Link>
                         <Link to="/Shop" onClick={() => { handleButtonClick(); handleLinkClick(); }} className="text-black">Shop</Link>
                         <Link to="/About" onClick={() => { handleButtonClick(); handleLinkClick(); }} className="text-black">About</Link>
-                        <Link to="/LogIn" onClick={() => { handleButtonClick(); handleLinkClick(); }} className="text-black">Log In</Link>
+                        <Link to={`${user ? '/Account' : '/LogIn'}`} onClick={() => { handleButtonClick(); handleLinkClick(); }} className="text-black">{user ? 'Account' : 'Log In'}</Link>
                         <Link to="/OurTeam" onClick={() => { handleButtonClick(); handleLinkClick(); }} className="text-black">Our Team</Link>
                     </ul>
                     <Bag/>
