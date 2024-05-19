@@ -154,6 +154,15 @@ function SignUp () {
             return;
         }
 
+        console.log(newCedula, nombre, primerApellido, segundoApellido, newEmail, newUsername, newPassword );
+        const res = await axios.post('http://localhost:8000/personas', {
+            Cedula: newCedula,
+            Nombre: nombre,
+            PrimerApellido: primerApellido,
+            SegundoApellido: segundoApellido,
+            Email: newEmail
+        });
+        console.log(res.data);
         navigate('/LogIn')
     }
 
