@@ -13,6 +13,7 @@ function DeleteCommentModal(props) {
         await fetch(URI, {
             method: 'DELETE',
         });
+        window.location.reload();
     };
 
     return (

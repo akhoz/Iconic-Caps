@@ -12,7 +12,7 @@ import ModifyPasswordModal from "../components/ModifyPasswordModal.jsx";
 
 function Account() {
     const { user, logOut } = useUser();
-    const URI = `http://localhost:8000/consultas/pedidos/${user.CedulaCliente}`;
+    const URI = `http://localhost:8000/consultas/pedidos/${user?.CedulaCliente}`;
 
     const navigate = useNavigate();
 
@@ -26,8 +26,10 @@ function Account() {
     const [pedidosEnProceso, setPedidosEnProceso] = useState([]);
 
     useEffect( ()=>{
-        getPedidos()
-    });
+        if (user) {
+            getPedidos()
+        }
+    }, [user]);
 
     const getPedidos = async () => {
         const res = await axios.get(URI);
@@ -100,8 +102,10 @@ function Account() {
         setShowModifyPasswordModal(true);
     }
 
+
     return (
         <>
+            {user &&
             <div className="flex flex-col w-full items-center justify-center" data-aos="fade-up">
                 <div className="flex items-center justify-center bg-account bg-cover bg-no-repeat w-full h-72 relative">
                     <h1 className="text-5xl text-center text-white z-10">
@@ -208,6 +212,7 @@ function Account() {
                 ))}
                 <UserComments handleClickComment={handleClickComment}/>
             </div>
+            }
             {showAccountModal && (
                 <div
                     className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">

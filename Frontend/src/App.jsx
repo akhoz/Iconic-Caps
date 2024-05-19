@@ -33,8 +33,8 @@ function App() {
 
     const [productos, setProducto] = useState([])
     useEffect( ()=>{
-        getProductos()
-    },[])
+        getProductos();
+    })
 
     const getProductos = async () => {
         const res = await axios.get(URI)
