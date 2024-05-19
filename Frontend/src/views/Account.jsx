@@ -13,7 +13,6 @@ import ModifyPasswordModal from "../components/ModifyPasswordModal.jsx";
 function Account() {
     const { user, logOut } = useUser();
     const URI = `http://localhost:8000/consultas/pedidos/${user?.CedulaCliente}`;
-
     const navigate = useNavigate();
 
     const [showAccountModal, setShowAccountModal] = useState(false);

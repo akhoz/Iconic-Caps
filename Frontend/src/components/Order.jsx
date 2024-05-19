@@ -19,7 +19,7 @@ function Order(props) {
 
     return (
         <div className="flex w-10/12 flex-col">
-            <div className="flex w-full flex-row justify-between items-center">
+            <div className="flex w-full flex-row justify-between items-center py-5">
                 <div className="flex flex-col items-center justify-center text-center w-1/5">
                     {props.modelos.map((modeloCantidad, index) => (
                         <div key={index} className="flex flex-row items-center justify-center space-x-1">

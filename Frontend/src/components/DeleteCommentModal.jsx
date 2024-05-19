@@ -13,7 +13,9 @@ function DeleteCommentModal(props) {
         await fetch(URI, {
             method: 'DELETE',
         });
+        const scrollPosition = window.scrollY;
         window.location.reload();
+        window.scrollTo(0, scrollPosition);
     };
 
     return (
