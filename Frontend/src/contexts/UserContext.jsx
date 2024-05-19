@@ -11,11 +11,13 @@ export const UserProvider = ({children}) => {
 
     const logIn = (userData) => {
         setUser(userData);
+        sessionStorage.setItem('user', JSON.stringify(userData));
     }
 
     const logOut = () => {
         setUser(null);
         removeCookie('username', { path: '/' });
+        sessionStorage.removeItem('user');
     }
 
     const checkCookies = async () => {

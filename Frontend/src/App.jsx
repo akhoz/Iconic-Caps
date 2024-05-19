@@ -21,7 +21,15 @@ function App() {
     const URI = 'http://localhost:8000/productos/'
     const { user, logIn, logOut, checkCookies } = useUser();
 
-    checkCookies();
+    useEffect(() => {
+        const storedUser = sessionStorage.getItem('user');
+        if (storedUser) {
+            logIn(JSON.parse(storedUser));
+        } else {
+            checkCookies();
+        }
+    }, [logIn, checkCookies]);
+
 
     const [productos, setProducto] = useState([])
     useEffect( ()=>{
