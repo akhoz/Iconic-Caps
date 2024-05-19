@@ -22,7 +22,9 @@ function Account() {
     const [modalDescription, setModalDescription] = useState("");
     const [modalButtonText, setModalButtonText] = useState("");
 
-    const [pedidos, setPedidos] = useState([]);
+    const [pedidosEntregados, setPedidosEntregados] = useState([]);
+    const [pedidosEnProceso, setPedidosEnProceso] = useState([]);
+
     useEffect( ()=>{
         getPedidos()
     });
@@ -53,7 +55,11 @@ function Account() {
             FechaDeCompra: pedidosData.find(pedido => pedido.NumeroFactura === parseInt(numeroFactura)).FechaDeCompra,
             Repartidor: pedidosData.find(pedido => pedido.NumeroFactura === parseInt(numeroFactura)).Repartidor
         }));
-        setPedidos(pedidosAgrupadosArray);
+
+        const pedidosEntregadosArray = pedidosAgrupadosArray.filter(pedido => pedido.Estado === "Entregado");
+        const pedidosEnProcesoArray = pedidosAgrupadosArray.filter(pedido => pedido.Estado === "En proceso");
+        setPedidosEntregados(pedidosEntregadosArray);
+        setPedidosEnProceso(pedidosEnProcesoArray);
     }
 
 
@@ -131,32 +137,66 @@ function Account() {
                         Delete Account
                     </button>
                 </div>
-                {pedidos.length === 0 && <NoOrders/>}
-                {pedidos.length > 0 &&
-                <div className="flex flex-col items-center justify-center w-10/12 mt-20">
-                    <h1 className="text-2xl font-bold mb-14">
-                        Your Orders
-                    </h1>
-                    <div className="flex flex-row justify-between w-full font-bold text-xs md:text-lg xl:text-xl">
-                        <p className="w-1/5 text-center">
-                            Products
-                        </p>
-                        <p className="w-1/5 text-center">
-                            Status
-                        </p>
-                        <p className="w-1/5 text-center">
-                            Order Number
-                        </p>
-                        <p className="w-1/5 text-center">
-                            Purchase Date
-                        </p>
-                        <p className="w-1/5 text-center">
-                            Deliverer
-                        </p>
-                    </div>
-                    <hr className="w-full border-b border-gray-100 xl:mb-8"/>
-                </div>}
-                {pedidos.map(pedido => (
+                {pedidosEntregados.length === 0 && pedidosEnProceso.length === 0 && <NoOrders/>}
+                {pedidosEnProceso.length > 0 &&
+                    <div className="flex flex-col items-center justify-center w-10/12 mt-20">
+                        <h1 className="text-2xl font-bold mb-14">
+                            Your Pending Orders
+                        </h1>
+                        <div className="flex flex-row justify-between w-full font-bold text-xs md:text-lg xl:text-xl">
+                            <p className="w-1/5 text-center">
+                                Products
+                            </p>
+                            <p className="w-1/5 text-center">
+                                Status
+                            </p>
+                            <p className="w-1/5 text-center">
+                                Order Number
+                            </p>
+                            <p className="w-1/5 text-center">
+                                Purchase Date
+                            </p>
+                            <p className="w-1/5 text-center">
+                                Deliverer
+                            </p>
+                        </div>
+                        <hr className="w-full border-b border-gray-100 xl:mb-8"/>
+                    </div>}
+                {pedidosEnProceso.map(pedido => (
+                    <Order
+                        key={pedido.NumeroFactura}
+                        modelos={pedido.ModeloProducto}
+                        status={pedido.Estado}
+                        orderNumber={pedido.NumeroFactura}
+                        purchaseDate={pedido.FechaDeCompra}
+                        deliverer={pedido.Repartidor}
+                    />
+                ))}
+                {pedidosEntregados.length > 0 &&
+                    <div className="flex flex-col items-center justify-center w-10/12 mt-20">
+                        <h1 className="text-2xl font-bold mb-14">
+                            Your Previous Orders
+                        </h1>
+                        <div className="flex flex-row justify-between w-full font-bold text-xs md:text-lg xl:text-xl">
+                            <p className="w-1/5 text-center">
+                                Products
+                            </p>
+                            <p className="w-1/5 text-center">
+                                Status
+                            </p>
+                            <p className="w-1/5 text-center">
+                                Order Number
+                            </p>
+                            <p className="w-1/5 text-center">
+                                Purchase Date
+                            </p>
+                            <p className="w-1/5 text-center">
+                                Deliverer
+                            </p>
+                        </div>
+                        <hr className="w-full border-b border-gray-100 xl:mb-8"/>
+                    </div>}
+                {pedidosEntregados.map(pedido => (
                     <Order
                         key={pedido.NumeroFactura}
                         modelos={pedido.ModeloProducto}
@@ -207,9 +247,9 @@ function Account() {
 
             )}
             {showModifyUsernameModal && (
-                    <div className="fixed inset-0 w-screen h-screen bg-black z-30 opacity-80">
-                    </div>
-                )}
+                <div className="fixed inset-0 w-screen h-screen bg-black z-30 opacity-80">
+                </div>
+            )}
             {showModifyPasswordModal && (
                 <div className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
                     <ModifyPasswordModal
@@ -227,4 +267,3 @@ function Account() {
 }
 
 export default Account;
-

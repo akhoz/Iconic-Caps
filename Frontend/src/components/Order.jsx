@@ -1,7 +1,22 @@
 import PropTypes from "prop-types";
 import { MdCancel } from "react-icons/md";
+import {useEffect, useState} from "react";
 
 function Order(props) {
+    const [status, setStatus] = useState(props.status);
+
+    const traduceStatus = (status) => {
+        if (status === "Entregado") {
+            setStatus("Delivered");
+        } else if (status === "En proceso") {
+            setStatus("In process");
+        }
+    }
+
+    useEffect(() => {
+        traduceStatus(props.status);
+    });
+
     return (
         <div className="flex w-10/12 flex-col">
             <div className="flex w-full flex-row justify-between items-center">
@@ -20,7 +35,7 @@ function Order(props) {
                 </div>
                 <div className="flex flex-row justify-between w-3/5 items-center">
                     <p className="text-black w-1/3 text-center text-xs md:text-lg xl:text-xl">
-                        {props.status}
+                        {status}
                     </p>
                     <p className="text-black w-1/3 text-center text-xs md:text-lg xl:text-xl">
                         {props.orderNumber}
@@ -33,8 +48,11 @@ function Order(props) {
                     <p className="w-11/12 text-center">
                         {props.deliverer}
                     </p>
-                    <button className="ml-3 md:ml-0 1/12 duration-500 hover:text-red-500">
-                    <MdCancel/>
+                    <button
+                        className={`ml-3 md:ml-0 1/12 duration-500 hover:text-red-500
+                        ${status === "Delivered" ? "hidden" : ""}`}
+                        onClick={props.cancelOrder}>
+                        <MdCancel/>
                     </button>
                 </div>
             </div>
@@ -51,7 +69,8 @@ Order.propTypes = {
     status: PropTypes.string,
     orderNumber: PropTypes.number,
     purchaseDate: PropTypes.string,
-    deliverer: PropTypes.string
+    deliverer: PropTypes.string,
+    cancelOrder: PropTypes.func,
 }
 
 export default Order;
