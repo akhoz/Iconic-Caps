@@ -12,6 +12,8 @@ import pedidoRoutes from './routes/Pedidoroutes.js'
 import listaProductosRoutes from './routes/Listaproductosroutes.js'
 import envioxpedidoRoutes from './routes/Envioxpedidoroutes.js'
 import consultaRoutes from './routes/Consultaroutes.js'
+import personaRoutes from './routes/Personaroutes.js'
+
 const app = express()
 
 app.use(cors())
@@ -26,7 +28,7 @@ app.use('/pedidos', pedidoRoutes)
 app.use('/listaProductos', listaProductosRoutes)
 app.use('/envioxpedido', envioxpedidoRoutes)
 app.use('/consultas', consultaRoutes)
-
+app.use('/personas', personaRoutes)
 
 try {
     await db.authenticate()

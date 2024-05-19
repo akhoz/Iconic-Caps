@@ -6,5 +6,4 @@ import { getAllListaProductos} from '../controllers/ListaProductosPedidoControll
 const router = express.Router()
 
 router.get('/', getAllListaProductos)
-
 export default router;

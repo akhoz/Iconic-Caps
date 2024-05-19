@@ -89,7 +89,7 @@ export const deleteComentario = async (req, res) => {
                 IdComentario: req.params.IdComentario
             }
         });
-        res.json(comentario);
+        res.json("Eliminado con {exito");
     } catch (error) {
         res.json({ message: error.message });
     }
