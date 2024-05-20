@@ -5,6 +5,7 @@ import { useProducts } from "../contexts/ProductsContext.jsx";
 import { useUser} from "../contexts/UserContext.jsx";
 import OutStockModal from "./OutStockModal.jsx";
 import WarningModal from "./WarningModal.jsx";
+import CommentModal from "./CommentModal.jsx";
 import axios from "axios";
 
 function ProductViewComponent(props) {
@@ -16,12 +17,17 @@ function ProductViewComponent(props) {
     const [showCommentModal, setShowCommentModal] = useState(false);
     const [showWarningModal, setShowWarningModal] = useState(false);
     const [buyingAmount, setBuyingAmount] = useState(0);
+    const [showLogInModal, setShowLogInModal] = useState(false);
 
     const URI = `http://localhost:8000/consultas/productos/${user?.CedulaCliente}`;
 
     const handleBagButtonClick = () => {
-        addItemToBag(props.model);
-        console.log(`Added ${props.model} to bag`);
+        if (!user) {
+            setShowLogInModal(true);
+        } else {
+            addItemToBag(props.model);
+            console.log(`Added ${props.model} to bag`);
+        }
     }
 
     const [availableStock, setAvailableStock] = useState(true);
@@ -67,7 +73,8 @@ function ProductViewComponent(props) {
 
     const handleCloseModal = () => {
         setShowModal(false);
-        setShowWarningModal(false);
+        setShowCommentModal(false);
+        setShowLogInModal(false);
     }
 
     useEffect(() => {
@@ -123,7 +130,7 @@ function ProductViewComponent(props) {
                         {`$${props.price}`}
                     </p>
                     <div className="w-full" onClick={availableStock ? handleBagButtonClick : outOfStock}>
-                        <BagButton outStock={availableStock}/>
+                        <BagButton outStock={availableStock} notLoggedIn={showLogInModal}/>
                     </div>
                     <button
                         className={`flex w-full items-center justify-center bg-black rounded-xl mt-2 duration-500 text-white 
@@ -155,6 +162,27 @@ function ProductViewComponent(props) {
             {showWarningModal && (
                 <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
+            {showLogInModal && (
+                <div className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <WarningModal
+                        warningTitle="Oops! Looks like you haven't logged in yet"
+                        warningDescription="You must log in before purchasing this product"
+                        handleCloseModal={handleCloseModal}/>
+                </div>
+            )}
+            {showLogInModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
+            )}
+            {showCommentModal && (
+                <div className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <CommentModal
+                        handleCloseModal={handleCloseModal}/>
+                </div>
+            )}
+            {showCommentModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
+            )}
+
         </>
     );
 }

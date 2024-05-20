@@ -13,7 +13,8 @@ function BagButton(props) {
 }
 
 BagButton.propTypes = {
-    outStock: PropTypes.bool
+    outStock: PropTypes.bool,
+    notLoggedIn: PropTypes.bool
 }
 
 export default BagButton;
