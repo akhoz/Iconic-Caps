@@ -2,12 +2,22 @@ import PropTypes from 'prop-types';
 import {useState, useEffect} from "react";
 import BagButton from "./BagButton.jsx";
 import { useProducts } from "../contexts/ProductsContext.jsx";
+import { useUser} from "../contexts/UserContext.jsx";
 import OutStockModal from "./OutStockModal.jsx";
+import WarningModal from "./WarningModal.jsx";
+import axios from "axios";
 
 function ProductViewComponent(props) {
     const { bagItems, addItemToBag } = useProducts();
+    const { user } = useUser();
+    const [purchasedItems, setPurchasedItems] = useState([]);
+    const [canComment, setCanComment] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [showCommentModal, setShowCommentModal] = useState(false);
+    const [showWarningModal, setShowWarningModal] = useState(false);
     const [buyingAmount, setBuyingAmount] = useState(0);
+
+    const URI = `http://localhost:8000/consultas/productos/${user?.CedulaCliente}`;
 
     const handleBagButtonClick = () => {
         addItemToBag(props.model);
@@ -57,6 +67,35 @@ function ProductViewComponent(props) {
 
     const handleCloseModal = () => {
         setShowModal(false);
+        setShowWarningModal(false);
+    }
+
+    useEffect(() => {
+        getProductosComprados();
+    });
+
+    const getProductosComprados = async () => {
+        if (user) {
+            const res = await axios.get(URI);
+            setPurchasedItems(res.data);
+        }
+    }
+
+    useEffect(() => {
+        if (purchasedItems.length > 0) {
+            const found = purchasedItems.find(item => item.ModeloProducto === props.model);
+            if (found) {
+                setCanComment(true);
+            }
+        }
+    }, [purchasedItems]);
+
+    const handleComment = () => {
+        if (canComment) {
+            setShowCommentModal(true);
+        } else {
+            setShowWarningModal(true);
+        }
     }
 
     return (
@@ -86,6 +125,14 @@ function ProductViewComponent(props) {
                     <div className="w-full" onClick={availableStock ? handleBagButtonClick : outOfStock}>
                         <BagButton outStock={availableStock}/>
                     </div>
+                    <button
+                        className={`flex w-full items-center justify-center bg-black rounded-xl mt-2 duration-500 text-white 
+                        ${canComment ? 'hover:bg-white hover:text-black hover:border hover:border-black' : 'hover:bg-red-500'}`}
+                        onClick={handleComment}>
+                        <p className="text-md px-2 py-1">
+                            Comment
+                        </p>
+                    </button>
                 </div>
             </div>
             {showModal && (
@@ -95,6 +142,17 @@ function ProductViewComponent(props) {
 
             )}
             {showModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
+            )}
+            {showWarningModal && (
+                <div className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <WarningModal
+                        warningTitle="Oops! Looks like you haven't purchased this product yet"
+                        warningDescription="You must purchase this product before commenting"
+                        handleCloseModal={handleCloseModal}/>
+                </div>
+            )}
+            {showWarningModal && (
                 <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
         </>
