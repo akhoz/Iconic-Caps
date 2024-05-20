@@ -41,31 +41,14 @@ export const createCliente = async (req, res) => {
 export const updateUsuarioCliente = async (req, res) => {
     try {
         const cliente = await ClienteModel.update({
-            Usuario: req.body.Usuario
-        }, {
-            where: {
-                Usuario: req.params.Usuario
-            }
-        });
-        console.log(req.params.Usuario)
-        console.log("Cliente actualizado")
-        res.json("Cliente actualizado");
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const updateContrasenaCliente = async (req, res) => {
-    try {
-        const cliente = await ClienteModel.update({
+            Usuario: req.body.Usuario,
             Contrasena: req.body.Contrasena
         }, {
             where: {
                 Usuario: req.params.Usuario
             }
         });
-        console.log(req.params.Usuario);
-        console.log("Cliente actualizado");
+        console.log("Cliente actualizado")
         res.json("Cliente actualizado");
     } catch (error) {
         res.json({ message: error.message });

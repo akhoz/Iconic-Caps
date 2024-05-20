@@ -28,3 +28,25 @@ export const getInformacionPedidosByCliente = async (CedulaClienteConsultado) =>
         throw error;
     }
 };
+
+export const getProductosCompradosByCliente = async (CedulaClienteConsultado) => {
+    const query = `
+        SELECT listaproductospedidos.ModeloProducto 
+        FROM cliente
+        JOIN pedido ON cliente.CedulaCliente = pedido.CedulaCliente
+        JOIN listaproductospedidos ON pedido.NumeroFactura = listaproductospedidos.NumeroFacturaPedido
+        WHERE cliente.CedulaCliente = :CedulaClienteConsultado;
+    `;
+
+    try {
+        const results = await db.query(query, {
+            replacements: { CedulaClienteConsultado },
+            type: db.QueryTypes.SELECT,
+        });
+        return results;
+    } catch (error) {
+        console.error('Error executing query:', error);
+        throw error;
+    }
+};
+
