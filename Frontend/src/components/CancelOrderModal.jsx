@@ -11,7 +11,6 @@ function CancelOrderModal(props) {
         props.handleCloseModal();
     }
 
-
     return (
         <div className="flex flex-col items-center justify-center bg-white rounded-md px-12 py-12 relative" data-aos="zoom-in">
             <h1 className="text-2xl text-center font-bold lg:w-2/3">

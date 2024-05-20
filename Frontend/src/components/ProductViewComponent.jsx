@@ -176,7 +176,10 @@ function ProductViewComponent(props) {
             {showCommentModal && (
                 <div className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
                     <CommentModal
-                        handleCloseModal={handleCloseModal}/>
+                        handleCloseModal={handleCloseModal}
+                        clientId={user?.CedulaCliente}
+                        model={props.model}
+                    />
                 </div>
             )}
             {showCommentModal && (

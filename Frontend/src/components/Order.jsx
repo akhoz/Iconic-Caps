@@ -17,9 +17,6 @@ function Order(props) {
         traduceStatus(props.status);
     });
 
-
-
-
     return (
         <div className="flex w-10/12 flex-col">
             <div className="flex w-full flex-row justify-between items-center py-5">
