@@ -6,8 +6,10 @@ import { SiPuma } from "react-icons/si";
 import { SiReebok } from "react-icons/si";
 import { SiNewbalance } from "react-icons/si";
 import { SiJordan } from "react-icons/si";
+import { useUser } from "../contexts/UserContext.jsx";
 
 function Home() {
+    const user = useUser();
 
     return (
         <div className="flex flex-col" data-aos="fade-up">
@@ -69,7 +71,7 @@ function Home() {
                         bgColor={'bg-black'}
                         textColor={'text-white'}
                         text={'Explore more'}
-                        href={'./Shop'}
+                        href={'./About'}
                     />
                 </div>
                 <img
@@ -95,8 +97,8 @@ function Home() {
                     <LinkButton
                         bgColor={'bg-white'}
                         textColor={'text-black'}
-                        text={'Log in'}
-                        href={'./LogIn'}
+                        text={user ? 'Shop now' : 'Log in'}
+                        href={user ? './Shop' : './LogIn'}
                     />
                 </div>
             </div>
