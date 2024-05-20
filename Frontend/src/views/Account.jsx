@@ -9,6 +9,7 @@ import Order from "../components/Order.jsx";
 import axios from "axios";
 import ModifyUsernameModal from "../components/ModifyUsernameModal.jsx";
 import ModifyPasswordModal from "../components/ModifyPasswordModal.jsx";
+import CancelOrderModal from "../components/CancelOrderModal.jsx";
 
 function Account() {
     const { user, logOut } = useUser();
@@ -23,12 +24,14 @@ function Account() {
 
     const [pedidosEntregados, setPedidosEntregados] = useState([]);
     const [pedidosEnProceso, setPedidosEnProceso] = useState([]);
+    const [showCancelOrderModal, setShowCancelOrderModal] = useState(false);
+    const [orderSelected, setOrderSelected] = useState(0);
 
     useEffect( ()=>{
         if (user) {
             getPedidos()
         }
-    }, [user]);
+    });
 
     const getPedidos = async () => {
         const res = await axios.get(URI);
@@ -75,6 +78,7 @@ function Account() {
         setShowCommentModal(false);
         setShowModifyUsernameModal(false);
         setShowModifyPasswordModal(false);
+        setShowCancelOrderModal(false);
     }
 
     const handleDeleteAccount = () => {
@@ -99,6 +103,11 @@ function Account() {
     const [showModifyPasswordModal, setShowModifyPasswordModal] = useState(false)
     const handleModifyPassword = () => {
         setShowModifyPasswordModal(true);
+    }
+
+    const handleCancelOrder = (orderNumber) => {
+        setOrderSelected(orderNumber);
+        setShowCancelOrderModal(true);
     }
 
 
@@ -173,6 +182,7 @@ function Account() {
                         orderNumber={pedido.NumeroFactura}
                         purchaseDate={pedido.FechaDeCompra}
                         deliverer={pedido.Repartidor}
+                        handleCancelOrder={() => handleCancelOrder(pedido.NumeroFactura)}
                     />
                 ))}
                 {pedidosEntregados.length > 0 &&
@@ -263,6 +273,18 @@ function Account() {
 
             )}
             {showModifyPasswordModal && (
+                <div className="fixed inset-0 w-screen h-screen bg-black z-30 opacity-80">
+                </div>
+            )}
+            {showCancelOrderModal && (
+                <div className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <CancelOrderModal
+                        handleCloseModal={handleCloseModal}
+                        orderNumber={orderSelected}/>
+                </div>
+
+            )}
+            {showCancelOrderModal && (
                 <div className="fixed inset-0 w-screen h-screen bg-black z-30 opacity-80">
                 </div>
             )}

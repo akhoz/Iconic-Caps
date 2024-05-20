@@ -91,7 +91,7 @@ function Bag() {
                                 <td className="text-center px-4 py-2">{`${"$" + item.price}`}</td>
                                 <td className="text-center px-4 py-2">{item.amount}</td>
                                 <td className="text-center px-4 py-2">
-                                    <button onClick={() => handleRemoveClick(item.id)} className="text-red-500">Remove
+                                    <button onClick={() => handleRemoveClick(item.id)} className="text-red-500 transition-transform transform hover:scale-105">Remove
                                     </button>
                                 </td>
                             </tr>
@@ -102,14 +102,15 @@ function Bag() {
                         <Link
                             to={"/Checkout"}
                             onClick={handleCheckoutClick}
-                            className="bg-black w-11/12 rounded-lg py-2 text-center text-white mt-4 xl:w-full">
+                            className="bg-black w-11/12 rounded-lg py-2 text-center text-white mt-4 xl:w-full duration-500
+                            hover:bg-white hover:text-black hover:border hover:border-black">
                             Go to checkout
                         </Link>
                     )}
                     {addedItems.length > 0 && (
                         <button
                             onClick={handleEmptyBagClick}
-                            className="mt-2 underline-offset-1">
+                            className="mt-2 underline-offset-1 transition-transform transform hover:scale-105">
                             Empty Bag
                         </button>
                     )}
