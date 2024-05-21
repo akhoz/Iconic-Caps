@@ -50,3 +50,71 @@ export const getProductosCompradosByCliente = async (CedulaClienteConsultado) =>
     }
 };
 
+export const crearPedido = async (CedulaClienteSolicitante, porcentajeGarantia, direccionIngresada) => {
+    const transaction = await db.transaction();
+    try {
+        // 1. Seleccionar un repartidor al azar
+        const [repartidor] = await db.query(
+            `SELECT CedulaRepartidor 
+             FROM repartidor 
+             ORDER BY RAND() 
+             LIMIT 1`,
+            { type: db.QueryTypes.SELECT, transaction }
+        );
+        const cedulaRepartidor = repartidor.CedulaRepartidor;
+
+        // 2. Crear un nuevo pedido
+        const [pedidoResult] = await db.query(
+            `INSERT INTO pedido (CedulaCliente, FechaDeCompra) 
+             VALUES (:CedulaClienteSolicitante, NOW())`,
+            {
+                replacements: { CedulaClienteSolicitante },
+                type: db.QueryTypes.INSERT,
+                transaction,
+            }
+        );
+
+        // 3. Obtener el número de factura del nuevo pedido
+        const [nuevoPedido] = await db.query(
+            `SELECT NumeroFactura 
+             FROM pedido 
+             ORDER BY NumeroFactura DESC 
+             LIMIT 1`,
+            { type: db.QueryTypes.SELECT, transaction }
+        );
+        const nuevaFactura = nuevoPedido.NumeroFactura;
+
+        // 4. Insertar una garantía para el pedido
+        await db.query(
+            `INSERT INTO garantiaxpedido (NumeroFacturaPedido, FechaInicio, FechaFinal, TipoGarantia) 
+             VALUES (:nuevaFactura, NOW(), DATE_ADD(NOW(), INTERVAL 1 YEAR), :porcentajeGarantia)`,
+            {
+                replacements: { nuevaFactura, porcentajeGarantia },
+                type: db.QueryTypes.INSERT,
+                transaction,
+            }
+        );
+
+        // 5. Insertar un envío para el pedido
+        await db.query(
+            `INSERT INTO envioxpedido (NumeroFacturaPedido, CedulaRepartidor, Direccion, FechaEntrega, Estado) 
+             VALUES (:nuevaFactura, :cedulaRepartidor, :direccionIngresada, DATE_ADD(NOW(), INTERVAL 1 MONTH), 'En proceso')`,
+            {
+                replacements: { nuevaFactura, cedulaRepartidor, direccionIngresada },
+                type: db.QueryTypes.INSERT,
+                transaction,
+            }
+        );
+
+        // Confirmar la transacción
+        await transaction.commit();
+        return nuevaFactura;
+    } catch (error) {
+        // Revertir la transacción en caso de error
+        await transaction.rollback();
+        console.error('Error creating pedido:', error);
+        throw error;
+    }
+};
+
+

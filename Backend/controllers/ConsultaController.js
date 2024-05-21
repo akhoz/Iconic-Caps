@@ -1,4 +1,4 @@
-import { getInformacionPedidosByCliente, getProductosCompradosByCliente } from '../queries.js';
+import { getInformacionPedidosByCliente, getProductosCompradosByCliente , crearPedido} from '../queries.js';
 
 export const obtenerInformacionPedidos = async (req, res) => {
     const { CedulaClienteConsultado } = req.params;
@@ -20,5 +20,16 @@ export const obtenerProductosComprados = async (req, res) => {
         res.status(200).json(productos);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener los productos comprados' });
+    }
+};
+
+export const crearNuevoPedido = async (req, res) => {
+    const { CedulaClienteSolicitante, porcentajeGarantia, direccionIngresada } = req.body;
+
+    try {
+        const nuevaFactura = await crearPedido(CedulaClienteSolicitante, porcentajeGarantia, direccionIngresada);
+        res.status(201).json({ NumeroFactura: nuevaFactura });
+    } catch (error) {
+        res.status(500).json({ error: 'Error al crear el pedido' });
     }
 };
