@@ -75,6 +75,7 @@ function ProductViewComponent(props) {
         setShowModal(false);
         setShowCommentModal(false);
         setShowLogInModal(false);
+        setShowWarningModal(false);
     }
 
     useEffect(() => {
