@@ -10,6 +10,9 @@ import PaymentForm from "../components/PaymentForm.jsx";
 function Checkout() {
     const URI = 'http://localhost:8000/productos/'
     const { bagItems, addItemToBag, removeItemFromBag, emptyBag } = useProducts();
+    const [addedItems, setAddedItems] = useState([]);
+    const [total, setTotal] = useState(0);
+    const [garantia, setGarantia] = useState(0)
 
     const [productos, setProducto] = useState([])
     useEffect( ()=>{
@@ -21,8 +24,13 @@ function Checkout() {
         setProducto(res.data)
     }
 
-    const [addedItems, setAddedItems] = useState([]);
-    const [total, setTotal] = useState(0);
+    useEffect(() => {
+        if ( 0 < total <= 100) {
+            setGarantia(total);
+        } else {
+            setGarantia(100);
+        }
+    },[total]);
 
 
     useEffect(() => {
@@ -30,7 +38,7 @@ function Checkout() {
             setAddedItems([]);
             return;
         }
-    console.log(total)
+
     const updatedAddedItems = Array.from(bagItems, ([id, amount]) => {
         const product = productos.find(producto => producto.Modelo === id)
 
