@@ -13,3 +13,11 @@ export const getAllListaProductos = async (req, res) => {
         res.json({message: error.message})
     }
 };
+
+export const createListaPoductos= async(req, res) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+};
