@@ -29,7 +29,7 @@ function OurTeam() {
                 <DeveloperCard
                     name="Hector Caravaca"
                     image="/img/hector.png"
-                    description="Héctor Adrian is a multi-skilled developer with a unique vision on problem solving."
+                    description="Héctor is a multi-skilled developer with a unique vision on problem solving."
                     ig="https://www.instagram.com/hector_caravaca/"
                     x="https://twitter.com/hector_cv13"
                     github="https://github.com/hectorcaravacavargas"
