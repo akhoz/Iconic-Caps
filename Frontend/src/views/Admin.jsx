@@ -5,12 +5,15 @@ import { Link } from "react-router-dom";
 import { RiLogoutBoxFill } from "react-icons/ri";
 
 import DeleteProductModal from "../components/admin/DeleteProductModal.jsx";
+import DeleteStoreModal from "../components/admin/DeleteStoreModal.jsx";
 
 function Admin() {
     const { user, logOut } = useUser();
     const navigate = useNavigate();
     const [showFeatures, setShowFeatures] = useState(false);
+
     const [showDeleteProductModal, setShowDeleteProductModal] = useState(false);
+    const [showDeleteStoreModal, setShowDeleteStoreModal] = useState(false);
 
     const handleFeatures = () => {
         setShowFeatures(!showFeatures);
@@ -24,10 +27,16 @@ function Admin() {
 
     const handleCloseModal = () => {
         setShowDeleteProductModal(false);
+        setShowDeleteStoreModal(false);
     }
 
     const handleDeleteProduct = () => {
         setShowDeleteProductModal(true);
+    }
+
+    const handleDeleteStore = () => {
+        setShowDeleteStoreModal(true);
+        console.log('Delete Store')
     }
 
     return (
@@ -110,6 +119,7 @@ function Admin() {
                             </button>
                             <button
                                 className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
+                                onClick={handleDeleteStore}
                             >
                                 Delete Stores
                             </button>
@@ -135,6 +145,20 @@ function Admin() {
 
             )}
             {showDeleteProductModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
+            )}
+            <button
+                onClick={handleLogOut}>
+                <RiLogoutBoxFill className={"absolute left-5 top-5 text-3xl text-white duration-500 transition-transform transform hover:scale-125"}/>
+            </button>
+            {showDeleteStoreModal && (
+                <div
+                    className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <DeleteStoreModal handleCloseModal={handleCloseModal}/>
+                </div>
+
+            )}
+            {showDeleteStoreModal && (
                 <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
             <button
