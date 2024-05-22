@@ -14,3 +14,17 @@ export const getAllRepartidores = async (req, res) => {
         res.json({message: error.message})
     }
 };
+
+// Eliminar un registro
+export const deleteRepartidor = async (req, res) => {
+    try {
+        await RepartidorModel.destroy({
+            where: {
+                CedulaRepartidor: req.params.Cedula
+            }
+        });
+        res.json("Repartidor eliminado");
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};

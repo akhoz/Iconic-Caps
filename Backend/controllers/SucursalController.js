@@ -40,14 +40,14 @@ export const updateSucursal = async (req, res) => {
         const sucursal = await SucursalModel.update({
             Nombre: req.body.Nombre,
             Direccion: req.body.Direccion,
-            Telefono: req.body.Telefono
+            NumeroTelefono: req.body.NumeroTelefono,
+            Img: req.body.Img,
+            LinkGoogleMaps: req.body.LinkGoogleMaps
         }, {
             where: {
                 NumeroSucursal: req.params.idSucursal
             }
         });
-        console.log(req.params.idSucursal)
-        console.log("Sucursal actualizada")
         res.json("Sucursal actualizada");
     } catch (error) {
         res.json({ message: error.message });
