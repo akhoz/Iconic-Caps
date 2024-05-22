@@ -47,8 +47,18 @@ function DeleteProductModal(props) {
         }
     };
 
+    const handleDeleteProduct = async () => {
+        if (!invalidProduct) {
+            await fetch(URI, {
+                method: 'DELETE',
+            });
+            console.log('Product deleted');
+            props.handleCloseModal();
+        }
+    }
+
     return (
-        <div className="flex flex-row relative w-1/2 rounded-md" data-aos="zoom-in">
+        <div className="flex flex-row relative w-1/2 rounded-lg overflow-hidden" data-aos="zoom-in">
             <div className="flex flex-col items-center justify-center bg-white w-1/2 py-20 overflow-hidden">
                 <h1 className="text-2xl font-bold">
                     Delete Product
@@ -63,35 +73,35 @@ function DeleteProductModal(props) {
                     placeholder="Product Model"
                     onChange={handleModelChange}
                 />
-                <div
-                    className="flex items-center justify-center mt-10 bg-black text-white p-2 rounded-md mb-5 duration-500 w-1/3">
-                    <button className="w-full h-full">
-                        Delete Product
-                    </button>
-                </div>
+                <button className={`mt-8 rounded-lg w-1/2 py-3 duration-500 bg-black text-white
+                    ${invalidProduct ? 'hover:bg-red-500' : 'hover:bg-white hover:text-black hover:border hover:border-black'}`}
+                    onClick={handleDeleteProduct}>
+                    Delete Product
+                </button>
             </div>
             {invalidProduct && (
                 <div className="flex flex-row items-center justify-center bg-white w-1/2 py-20 overflow-hidden">
-                    <div className="flex flex-col">
-                        <h1 className="font-bold text-2xl">
+                    <div className="flex flex-col" data-aos="zoom-in">
+                    <h1 className="font-bold text-2xl" data-aos="zoom-in">
                             Oops, we couldn't find that product
                         </h1>
                         <p>
                             Please type a valid product model
                         </p>
                     </div>
-                    <div className="w-1/2">
+                    <div className="w-1/2" data-aos="zoom-in">
                         <GiBilledCap className="w-full h-24 text-2xl"/>
                     </div>
                 </div>
             )}
             {!invalidProduct && producto &&
-                <div className="flex flex-row items-center justify-center bg-white w-1/2 py-20 overflow-hidden">
+                <div className="flex flex-row items-center justify-center bg-white w-1/2 py-20 overflow-hidden pr-20">
                     <img
                         src={`img/caps/${producto.Img}`}
                         alt={`img/caps/${producto.Img}`}
-                        className="w-40 h-40 object-cover p-1 md:w-60 md:h-60 lg:w-80 lg:h-80 xl:w-96 xl:h-96"/>
-                    <div className="flex flex-col">
+                        className="w-40 h-40 object-cover p-1 md:w-60 md:h-60"
+                        data-aos="zoom-in"/>
+                    <div className="flex flex-col" data-aos="zoom-in">
                         <h1 className="font-bold text-xl md:text-2xl lg:text-3xl">
                             {producto.Modelo}
                         </h1>
