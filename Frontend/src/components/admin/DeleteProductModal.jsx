@@ -30,7 +30,7 @@ function DeleteProductModal(props) {
     }, [URI]);
 
     useEffect(() => {
-        if (producto === null || producto.length === 0) {
+        if (!producto) {
             setInvalidProduct(true);
         } else {
             setInvalidProduct(false);

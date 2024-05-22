@@ -6,6 +6,7 @@ import { RiLogoutBoxFill } from "react-icons/ri";
 
 import DeleteProductModal from "../components/admin/DeleteProductModal.jsx";
 import DeleteStoreModal from "../components/admin/DeleteStoreModal.jsx";
+import DeleteEmployeeModal from "../components/admin/DeleteEmployeeModal.jsx";
 
 function Admin() {
     const { user, logOut } = useUser();
@@ -14,6 +15,8 @@ function Admin() {
 
     const [showDeleteProductModal, setShowDeleteProductModal] = useState(false);
     const [showDeleteStoreModal, setShowDeleteStoreModal] = useState(false);
+    const [showDeleteEmployeeModal, setShowDeleteEmployeeModal] = useState(false);
+
 
     const handleFeatures = () => {
         setShowFeatures(!showFeatures);
@@ -28,6 +31,7 @@ function Admin() {
     const handleCloseModal = () => {
         setShowDeleteProductModal(false);
         setShowDeleteStoreModal(false);
+        setShowDeleteEmployeeModal(false);
     }
 
     const handleDeleteProduct = () => {
@@ -36,14 +40,18 @@ function Admin() {
 
     const handleDeleteStore = () => {
         setShowDeleteStoreModal(true);
-        console.log('Delete Store')
+    }
+
+    const handleDeleteEmployee = () => {
+        setShowDeleteEmployeeModal(true);
     }
 
     return (
         <>
             {user && (
                 <div className="flex flex-col w-full items-center justify-center" data-aos="fade-up">
-                    <div className="flex items-center justify-center bg-account bg-cover bg-no-repeat w-full h-72 relative">
+                    <div
+                        className="flex items-center justify-center bg-account bg-cover bg-no-repeat w-full h-72 relative">
                         <h1 className="text-5xl text-center text-white z-10">
                             {user.Usuario}
                         </h1>
@@ -85,8 +93,9 @@ function Admin() {
                         </div>
                     )}
                     {showFeatures && (
-                        <div className="flex flex-col justify-between items-center w-full py-6 bg-black text-white text-md space-y-5 md:px-14 md:space-y-0 md:flex-row lg:px-20 xl:px-40"
-                             data-aos="fade-down">
+                        <div
+                            className="flex flex-col justify-between items-center w-full py-6 bg-black text-white text-md space-y-5 md:px-14 md:space-y-0 md:flex-row lg:px-20 xl:px-40"
+                            data-aos="fade-down">
                             <button
                                 className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
                             >
@@ -110,8 +119,9 @@ function Admin() {
                         </div>
                     )}
                     {showFeatures && (
-                        <div className="flex flex-col justify-between items-center w-full py-6 bg-black text-white text-md space-y-5 md:px-14 md:space-y-0 md:flex-row lg:px-20 xl:px-40"
-                             data-aos="fade-down">
+                        <div
+                            className="flex flex-col justify-between items-center w-full py-6 bg-black text-white text-md space-y-5 md:px-14 md:space-y-0 md:flex-row lg:px-20 xl:px-40"
+                            data-aos="fade-down">
                             <button
                                 className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
                                 onClick={handleDeleteProduct}>
@@ -125,6 +135,7 @@ function Admin() {
                             </button>
                             <button
                                 className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
+                                onClick={handleDeleteEmployee}
                             >
                                 Delete Employees
                             </button>
@@ -135,6 +146,12 @@ function Admin() {
                             </button>
                         </div>
                     )}
+                    <div className="flex items-center justify-center bg-white h-screen w-full">
+                        Dashboard Here
+                    </div>
+                    <div className="flex items-center justify-center bg-black h-screen w-full text-white">
+                        Orders Management Here
+                    </div>
                 </div>
             )}
             {showDeleteProductModal && (
@@ -161,6 +178,16 @@ function Admin() {
             {showDeleteStoreModal && (
                 <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
+            {showDeleteEmployeeModal && (
+                <div
+                    className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <DeleteEmployeeModal handleCloseModal={handleCloseModal}/>
+                </div>
+            )}
+            {showDeleteEmployeeModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
+            )
+            }
             <button
                 onClick={handleLogOut}>
                 <RiLogoutBoxFill className={"absolute left-5 top-5 text-3xl text-white duration-500 transition-transform transform hover:scale-125"}/>

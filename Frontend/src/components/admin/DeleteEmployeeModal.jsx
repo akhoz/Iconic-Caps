@@ -2,7 +2,7 @@ import { IoClose } from "react-icons/io5";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaStore } from "react-icons/fa";
+import { IoPerson } from "react-icons/io5";
 
 function DeleteEmployeeModal(props) {
     const [cedulaEmpleado, setCedulaEmpleado] = useState(0);
@@ -16,7 +16,7 @@ function DeleteEmployeeModal(props) {
 
     useEffect(() => {
         if (cedulaEmpleado) {
-            setURI(`http://localhost:8000/sucursales/${cedulaEmpleado}`);
+            setURI(`http://localhost:8000/empleados/${cedulaEmpleado}`);
         } else {
             setEmpleado(null);
             setInvalidEmpleado(false);
@@ -40,7 +40,7 @@ function DeleteEmployeeModal(props) {
     const getEmpleado = async () => {
         try {
             const res = await axios.get(URI);
-            setEmpleado(res.data[0]);
+            setEmpleado(res.data);
         } catch (error) {
             setEmpleado(null);
             setInvalidEmpleado(true);
@@ -93,26 +93,21 @@ function DeleteEmployeeModal(props) {
                         </p>
                     </div>
                     <div className="w-1/2" data-aos="zoom-in">
-                        <FaStore className="w-full h-24 text-2xl"/>
+                        <IoPerson className="w-full h-24 text-2xl"/>
                     </div>
                 </div>
             )}
             {!invalidEmpleado && empleado &&
                 <div className="flex flex-row items-center justify-center bg-white w-2/3 py-20 overflow-hidden pr-20 space-x-5">
-                    <img
-                        src={`img/stores/${sucursal.Img}`}
-                        alt={`img/stores/${sucursal.Img}`}
-                        className="w-40 h-40 object-cover p-1 md:w-60 md:h-60 rounded-lg"
-                        data-aos="zoom-in"/>
                     <div className="flex flex-col" data-aos="zoom-in">
                         <h1 className="font-bold text-xl md:text-2xl lg:text-3xl">
-                            {`${sucursal.Nombre}`}
+                            {`${empleado.Persona.Nombre + ' ' + empleado.Persona.PrimerApellido + ' ' + empleado.Persona.SegundoApellido}`}
                         </h1>
                         <p className="text-gray-600 text-md md:text-lg lg:text-xl">
-                            {`Store number: ${sucursal.NumeroSucursal}`}
+                            {`Store assigned: ${empleado.SucursalAsignada ? empleado.SucursalAsignada.Nombre : 'No store assigned'}`}
                         </p>
                         <p className="text-gray-600 text-md md:text-lg lg:text-lg">
-                            {`Store phone: ${sucursal.NumeroTelefono}`}
+                            {`${empleado.Persona.Nombre}'s email: ${empleado.Persona.Email}`}
                         </p>
                     </div>
                 </div>
