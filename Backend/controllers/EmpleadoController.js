@@ -19,7 +19,7 @@ export const getEmpleado = async (req, res) => {
     try {
         const empleado = await EmpleadoModel.findOne({
             where: {
-                Cedula: req.params.Cedula
+                CedulaEmpleado: req.params.Cedula
             }, include: [{model: SucursalModel, as: 'SucursalAsignada'}, {model: PersonaModel}]
         });
         res.json(empleado);

@@ -7,7 +7,7 @@ import { createProducto, deleteProducto, getAllProductos, getProducto, updatePro
  router.get('/', getAllProductos)
  router.get('/:modelo', getProducto)
  router.post('/',createProducto)
- router.put('/', updateProducto)
+ router.put('/:modelo', updateProducto)
  router.delete('/:modelo',deleteProducto)
 
  export default router;
