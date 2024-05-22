@@ -14,6 +14,27 @@ function Header() {
     const handleLinkClick = () => {
         setIsOpen(false);
     };
+
+    const determineRoute = (user) => {
+        if (!user) {
+            return '/LogIn';
+        } else if (user.Admin) {
+            return '/Admin';
+        } else {
+            return '/Account';
+        }
+    };
+
+    const determineName = (user) => {
+        if (!user) {
+            return 'Log In';
+        } else if (user.Admin) {
+            return 'Admin';
+        } else {
+            return 'Account';
+        }
+    };
+
     return (
         <header className="bg-white py-5 md:sticky md:top-0 md:z-10 md:opacity-95 lg:px-16">
             <div className="container mx-auto pr-4">
@@ -27,10 +48,10 @@ function Header() {
                                 <Link to="/" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">Home</Link>
                                 <Link to="/Shop" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">Shop</Link>
                                 <Link
-                                    to={`${user ? '/Account' : '/LogIn'}`}
+                                    to={determineRoute(user)}
                                     onClick={handleButtonClick}
                                     className="text-black transition-transform transform hover:scale-105">
-                                    {user ? 'Account' : 'Log In'}
+                                    {determineName(user)}
                                 </Link>
                                 <Link to="/LocalStores" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">Stores</Link>
                                 <Link to="/About" onClick={handleButtonClick} className="text-black transition-transform transform hover:scale-105">About</Link>

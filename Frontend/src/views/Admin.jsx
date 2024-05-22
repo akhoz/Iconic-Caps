@@ -2,6 +2,7 @@ import { useUser } from "../contexts/UserContext.jsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { RiLogoutBoxFill } from "react-icons/ri";
 
 import DeleteProductModal from "../components/admin/DeleteProductModal.jsx";
 
@@ -18,6 +19,7 @@ function Admin() {
     const handleLogOut = () => {
         logOut();
         navigate('/');
+        window.location.reload();
     }
 
     const handleCloseModal = () => {
@@ -135,6 +137,10 @@ function Admin() {
             {showDeleteProductModal && (
                 <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
+            <button
+                onClick={handleLogOut}>
+                <RiLogoutBoxFill className={"absolute left-5 top-5 text-3xl text-white duration-500 transition-transform transform hover:scale-125"}/>
+            </button>
         </>
     );
 }
