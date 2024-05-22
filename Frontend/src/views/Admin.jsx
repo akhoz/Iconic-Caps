@@ -3,23 +3,35 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { RiLogoutBoxFill } from "react-icons/ri";
+import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io";
+
+import AddProductModal from "../components/admin/AddProductModal.jsx";
 
 import DeleteProductModal from "../components/admin/DeleteProductModal.jsx";
 import DeleteStoreModal from "../components/admin/DeleteStoreModal.jsx";
 import DeleteEmployeeModal from "../components/admin/DeleteEmployeeModal.jsx";
+import DeleteDelivererModal from "../components/admin/DeleteDelivererModal.jsx";
 
 function Admin() {
     const { user, logOut } = useUser();
     const navigate = useNavigate();
     const [showFeatures, setShowFeatures] = useState(false);
 
+    const [showAddProductModal, setShowAddProductModal] = useState(false);
+
     const [showDeleteProductModal, setShowDeleteProductModal] = useState(false);
     const [showDeleteStoreModal, setShowDeleteStoreModal] = useState(false);
     const [showDeleteEmployeeModal, setShowDeleteEmployeeModal] = useState(false);
-
+    const [showDeleteDelivererModal, setShowDeleteDelivererModal] = useState(false);
 
     const handleFeatures = () => {
         setShowFeatures(!showFeatures);
+        if (!showFeatures) {
+            window.scrollBy({ top: 110, behavior: 'smooth' });
+        } else {
+            window.scrollBy({ top: -110, behavior: 'smooth' });
+        }
     }
 
     const handleLogOut = () => {
@@ -29,9 +41,16 @@ function Admin() {
     }
 
     const handleCloseModal = () => {
+        setShowAddProductModal(false);
+
         setShowDeleteProductModal(false);
         setShowDeleteStoreModal(false);
         setShowDeleteEmployeeModal(false);
+        setShowDeleteDelivererModal(false);
+    }
+
+    const handleAddProduct = () => {
+        setShowAddProductModal(true);
     }
 
     const handleDeleteProduct = () => {
@@ -44,6 +63,10 @@ function Admin() {
 
     const handleDeleteEmployee = () => {
         setShowDeleteEmployeeModal(true);
+    }
+
+    const handleDeleteDeliverer = () => {
+        setShowDeleteDelivererModal(true);
     }
 
     return (
@@ -60,10 +83,11 @@ function Admin() {
                     <div
                         className="flex flex-col justify-center items-center w-full py-6 bg-black text-white text-md space-y-5 md:px-14 md:space-y-0 md:flex-row lg:px-20 xl:px-40">
                         <button
-                            className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
+                            className="flex flex-row justify-center items-center duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125 space-x-2"
                             onClick={handleFeatures}
                         >
-                            Display Features
+                            <p>Display Features</p>
+                            {showFeatures ? <IoIosArrowUp/> : <IoIosArrowDown/>}
                         </button>
                     </div>
                     {showFeatures && (
@@ -72,6 +96,7 @@ function Admin() {
                             data-aos="fade-down">
                             <button
                                 className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125 text-center"
+                                onClick={handleAddProduct}
                             >
                                 Add Products
                             </button>
@@ -141,6 +166,7 @@ function Admin() {
                             </button>
                             <button
                                 className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
+                                onClick={handleDeleteDeliverer}
                             >
                                 Delete Deliverers
                             </button>
@@ -153,6 +179,15 @@ function Admin() {
                         Orders Management Here
                     </div>
                 </div>
+            )}
+            {showAddProductModal && (
+                <div
+                    className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <AddProductModal handleCloseModal={handleCloseModal}/>
+                </div>
+            )}
+            {showAddProductModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
             {showDeleteProductModal && (
                 <div
@@ -186,8 +221,16 @@ function Admin() {
             )}
             {showDeleteEmployeeModal && (
                 <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
-            )
-            }
+            )}
+            {showDeleteDelivererModal && (
+                <div
+                    className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <DeleteDelivererModal handleCloseModal={handleCloseModal}/>
+                </div>
+            )}
+            {showDeleteDelivererModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
+            )}
             <button
                 onClick={handleLogOut}>
                 <RiLogoutBoxFill className={"absolute left-5 top-5 text-3xl text-white duration-500 transition-transform transform hover:scale-125"}/>
