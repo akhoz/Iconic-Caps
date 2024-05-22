@@ -16,6 +16,7 @@ import ProductView from "./views/ProductView.jsx";
 import Checkout from "./views/Checkout.jsx";
 import {useUser} from "./contexts/UserContext.jsx";
 import {CommentsProvider} from "./contexts/CommentsContext.jsx";
+import Admin from "./views/Admin.jsx";
 
 function App() {
     const URI = 'http://localhost:8000/productos/'
@@ -56,6 +57,7 @@ function App() {
                     <Route path="/SignUp" element={<SignUp/>}/>
                     <Route path="/Account" element={<AccountWithCommentsProvider/>}/>
                     <Route path="/Checkout" element={<Checkout/>}/>
+                    <Route path="/Admin" element={<Admin/>}/>
                 </Routes>
             </Router>
         </div>

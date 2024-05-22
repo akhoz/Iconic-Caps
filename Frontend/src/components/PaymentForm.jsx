@@ -2,8 +2,11 @@ import {FaCcVisa} from "react-icons/fa";
 import {RiMastercardFill} from "react-icons/ri";
 import PropTypes from "prop-types";
 import {useState} from "react";
+import {useUser} from "../contexts/UserContext.jsx";
+import axios from "axios";
 
 function PaymentForm(props) {
+    const { user } = useUser();
     const [cardholder, setCardholder] = useState("");
     const [cardNumber, setCardNumber] = useState("");
     const [expire, setExpire] = useState("");
@@ -12,11 +15,30 @@ function PaymentForm(props) {
     const [postalCode, setPostalCode] = useState("");
     const [formStatus, setFormStatus] = useState(false);
 
-    const verifyPaymentForm = () => {
+    const verifyPaymentForm = async () => {
         if (!cardholder || !cardNumber || !expire || !cvv || !direction || !postalCode) {
             alert('Please fill all the fields');
             setFormStatus(false);
         } else {
+
+            console.log(user.CedulaCliente, props.warranty, direction);
+            const res = await axios.post('http://localhost:8000/consultas/crearpedido', {
+                CedulaClienteSolicitante: user.CedulaCliente,
+                porcentajeGarantia: props.warranty,
+                direccionIngresada: direction
+            });
+            console.log(res.data);
+            const factura = res.data.NumeroFactura;
+            console.log(factura);
+
+            for (const product of props.products) {
+                await axios.post('http://localhost:8000/listaProductos/create', {
+                    NumeroFacturaPedido: factura,
+                    ModeloProducto: product.id,
+                    CantidadProducto: product.amount
+                })}
+            console.log('Pedido creado');
+
             setFormStatus(true);
             props.confirmPurchase();
         }
@@ -27,6 +49,9 @@ function PaymentForm(props) {
     };
 
 
+    for (const product of props.products) {
+        console.log(product.id, product.amount);
+    }
     return (
         <div className="flex flex-col w-full mt-8 ml-5 md:ml-0 md:mt-8 md:w-10/12  md:flex-row md:justify-between">
             <div className="flex flex-col justify-start items-start w-full md:w-1/2">
@@ -88,7 +113,7 @@ function PaymentForm(props) {
                     {`Total: $${props.total}`}
                 </h1>
                 <p className="text-gray-600 text-md">
-                    Garanty: 100%
+                    {`Warranty: ${props.warranty}%`}
                 </p>
                 <button
                     className="bg-black text-white rounded-lg text-center py-3 px-5 mt-3
@@ -103,6 +128,8 @@ function PaymentForm(props) {
 
 PaymentForm.propTypes = {
     total: PropTypes.number,
+    warranty: PropTypes.number,
+    products: PropTypes.array,
     confirmPurchase: PropTypes.func
 }
 

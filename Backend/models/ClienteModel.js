@@ -19,8 +19,12 @@ const ClienteModel = db.define('Cliente', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    Admin: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+    },
 }, {
-    tableName: 'Cliente', // Nombre de la tabla
+    tableName: 'Cliente',
     timestamps: false,
 });
 

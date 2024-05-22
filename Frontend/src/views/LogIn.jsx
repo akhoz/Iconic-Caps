@@ -52,7 +52,11 @@ function LogIn() {
                         setCookie('username', username, { path: '/' });
                         console.log(`Cookie set: ${cookie.username}`);
                     }
-                    navigate('/Account');
+                    if (clienteData.Admin) {
+                        navigate('/Admin');
+                    } else {
+                        navigate('/Account');
+                    }
                 } else {
                     console.log('Contraseña incorrecta');
                     setErrorTitle('Your password is incorrect');

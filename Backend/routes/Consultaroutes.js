@@ -5,5 +5,5 @@ const router = express.Router();
 
 router.get('/pedidos/:CedulaClienteConsultado', obtenerInformacionPedidos);
 router.get('/productos/:CedulaClienteConsultado', obtenerProductosComprados);
-router.get('/crearpedido', crearNuevoPedido)
+router.post('/crearpedido', crearNuevoPedido)
 export default router;

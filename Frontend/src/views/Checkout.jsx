@@ -25,13 +25,12 @@ function Checkout() {
     }
 
     useEffect(() => {
-        if ( 0 < total <= 100) {
-            setGarantia(total);
-        } else {
+        if (total > 100) {
             setGarantia(100);
+        } else {
+            setGarantia(total);
         }
     },[total]);
-
 
     useEffect(() => {
         if (bagItems.length === 0) {
@@ -100,6 +99,8 @@ function Checkout() {
                 ))}
                 <PaymentForm
                 total={total}
+                warranty={garantia}
+                products={addedItems}
                 confirmPurchase={handlePurchaseClick}/>
             </div>
             <Link to="/Shop"
