@@ -42,9 +42,18 @@ export const createProducto = async (req, res) => {
 // Actualizar un registro
 export const updateProducto = async (req, res) => {
     try {
-        await ProductoModel.update(req.body, {
+        const producto3 = await ProductoModel.update( 
+            {
+            Categoria: req.body.Categoria,
+            Precio: req.body.Precio,
+            ExistenciasDisponibles: req.body.ExistenciasDisponibles,
+            Img: req.body.Img,
+            IdentificadorFiscalProvedor: req.body.IdentificadorFiscalProvedor
+            },
+
+        {
             where: {modelo: req.params.modelo}
-        })
+        });
         res.json({"message":"Registro actualizado con éxito"})
     } catch (error) {
         res.json({message: error.message})
