@@ -41,15 +41,13 @@ export const createEmpleado = async (req, res) => {
 export const updateEmpleado = async (req, res) => {
     try {
         const empleado = await EmpleadoModel.update({
-            Cedula: req.body.Cedula,
-            SucursalAsignada: req.body.SucursalAsignada,
-            Cargo: req.body.Cargo
+            CedulaEmpleado: req.body.Cedula,
+            NumeroSucursalAsignada: req.body.NumeroSucursalAsignada
         }, {
             where: {
-                Cedula: req.params.Cedula
+                CedulaEmpleado: req.params.Cedula
             }
         });
-        console.log(req.params.Cedula)
         console.log("Empleado actualizado")
         res.json("Empleado actualizado");
     } catch (error) {
@@ -64,8 +62,6 @@ export const deleteEmpleado = async (req, res) => {
                 CedulaEmpleado: req.params.Cedula
             }
         });
-        console.log(req.params.Cedula)
-        console.log("Empleado eliminado")
         res.json("Empleado eliminado");
     } catch (error) {
         res.json({ message: error.message });
