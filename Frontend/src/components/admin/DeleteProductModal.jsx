@@ -58,7 +58,7 @@ function DeleteProductModal(props) {
     }
 
     return (
-        <div className="flex flex-row relative rounded-lg overflow-hidden w-2/3 " data-aos="zoom-in">
+        <div className="flex flex-row relative rounded-lg overflow-hidden w-4/5" data-aos="zoom-in">
             <div className="flex flex-col items-center justify-center bg-white w-1/2 py-20 overflow-hidden">
                 <h1 className="text-2xl font-bold">
                     Delete Product

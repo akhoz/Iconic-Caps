@@ -1,0 +1,157 @@
+import {IoClose} from "react-icons/io5";
+import PropTypes from "prop-types";
+import { useCallback, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import DragFileArea from "../DragFileArea.jsx";
+import { GiBilledCap } from "react-icons/gi";
+
+function AddProductModal(props) {
+    const [lastUploadedFile, setLastUploadedFile] = useState(null);
+    const [fileName, setFileName] = useState('');
+
+    const onDrop = useCallback((acceptedFiles) => {
+        const lastFile = acceptedFiles[acceptedFiles.length - 1];
+        setFileName(lastFile.name)
+        setLastUploadedFile(URL.createObjectURL(lastFile));
+    }, []);
+
+    const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+    const [model, setModel] = useState('');
+    const [brand, setBrand] = useState('');
+    const [category, setCategory] = useState('');
+    const [stock, setStock] = useState(0);
+    const [price, setPrice] = useState(0);
+
+    const handleModelChange = (event) => {
+        setModel(event.target.value);
+    }
+
+    const handleBrandChange = (event) => {
+        setBrand(event.target.value);
+    }
+
+    const handleCategoryChange = (event) => {
+        setCategory(event.target.value);
+    }
+
+    const handleStockChange = (event) => {
+        setStock(event.target.value);
+    }
+
+    const handlePriceChange = (event) => {
+        setPrice(event.target.value);
+    }
+
+    return (
+        <div className="flex flex-row relative rounded-lg overflow-hidden w-4/5" data-aos="zoom-in">
+            <div className="flex flex-col items-center justify-center bg-white w-1/2 py-5 overflow-hidden">
+                <h1 className="text-2xl font-bold">
+                    Add Product
+                </h1>
+                <p className="text-md mt-3 w-1/2 text-center">
+                    Fill the following fields to add a new product to the store
+                </p>
+                <input
+                    type="text"
+                    id="model"
+                    className="border-0 border-b-2 p-1 mt-8 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 w-1/2 remove-arrow"
+                    placeholder="Product Model"
+                    onChange={handleModelChange}
+                />
+                <input
+                    type="text"
+                    id="brand"
+                    className="border-0 border-b-2 p-1 mt-8 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 w-1/2 remove-arrow"
+                    placeholder="Product Brand"
+                    onChange={handleBrandChange}
+                />
+                <input
+                    type="text"
+                    id="category"
+                    className="border-0 border-b-2 p-1 mt-8 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 w-1/2 remove-arrow"
+                    placeholder="Product Category"
+                    onChange={handleCategoryChange}
+                />
+                <div className="w-1/2 flex flex-row space-x-3">
+                    <input
+                        type="number"
+                        id="stock"
+                        className="border-0 border-b-2 p-1 my-8 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 w-1/2 remove-arrow"
+                        placeholder="Initial Stock"
+                        onChange={handleStockChange}
+                    />
+                    <input
+                        type="number"
+                        id="stock"
+                        className="border-0 border-b-2 p-1 my-8 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 w-1/2 remove-arrow"
+                        placeholder="Price"
+                        onChange={handlePriceChange}
+                    />
+                </div>
+                <div
+                    {...getRootProps()}
+                    className={`flex items-center justify-center rounded-lg overflow-hidden w-1/2 border border-gray-300 `}
+                >
+                    <input {...getInputProps()} className="w-fit"/>
+                    {!lastUploadedFile && (
+                        <p className="text-center w-full py-2 px-3">
+                            Drag the product image here
+                        </p>
+                    )}
+                    {lastUploadedFile && (
+                        <p className="text-center w-full py-2 px-3">
+                            {`Image uploaded: ${fileName}`}
+                        </p>
+                    )}
+                </div>
+                <button className={`mt-8 rounded-lg w-1/2 py-3 duration-500 bg-black text-white`}>
+                Add Product
+                </button>
+            </div>
+            <div className="flex flex-row items-center justify-start bg-white w-1/2 py-20 overflow-hidden">
+                <div className="flex flex-row justify-center items-center">
+                    {lastUploadedFile && (
+                    <img
+                        src={lastUploadedFile ? lastUploadedFile : ''}
+                        className="w-40 h-40 object-cover p-1 md:w-60 md:h-60 lg:w-80 lg:h-80"/>
+                    )}
+                    {!lastUploadedFile && (
+                        <GiBilledCap className="text-9xl mr-5"/>
+                    )}
+                    <div className="flex flex-col">
+                        <h1 className="font-bold text-xl">
+                            {model ? model : 'XY1' }
+                        </h1>
+                        <p className="text-black text-md">
+                            {brand ? brand : 'Brand'}
+                        </p>
+                        <p className="text-gray-600 text-md">
+                            {`Category: ${category}`}
+                        </p>
+                        <p className="text-gray-600 text-md">
+                            {`Initial stock: ${stock}`}
+                        </p>
+                        <hr className="border-1 border-gray-300 my-1 w-full"/>
+                        <p className="font-bold text-md">
+                            {`$${price}`}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <button
+                onClick={props.handleCloseModal}
+                className="absolute right-5 top-5 text-xl text-black transition-transform transform hover:scale-150">
+            <IoClose/>
+            </button>
+        </div>
+    );
+}
+
+
+AddProductModal.propTypes = {
+    handleCloseModal: PropTypes.func.isRequired,
+};
+
+
+export default AddProductModal;

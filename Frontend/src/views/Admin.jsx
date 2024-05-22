@@ -6,6 +6,8 @@ import { RiLogoutBoxFill } from "react-icons/ri";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 
+import AddProductModal from "../components/admin/AddProductModal.jsx";
+
 import DeleteProductModal from "../components/admin/DeleteProductModal.jsx";
 import DeleteStoreModal from "../components/admin/DeleteStoreModal.jsx";
 import DeleteEmployeeModal from "../components/admin/DeleteEmployeeModal.jsx";
@@ -15,6 +17,8 @@ function Admin() {
     const { user, logOut } = useUser();
     const navigate = useNavigate();
     const [showFeatures, setShowFeatures] = useState(false);
+
+    const [showAddProductModal, setShowAddProductModal] = useState(false);
 
     const [showDeleteProductModal, setShowDeleteProductModal] = useState(false);
     const [showDeleteStoreModal, setShowDeleteStoreModal] = useState(false);
@@ -37,10 +41,16 @@ function Admin() {
     }
 
     const handleCloseModal = () => {
+        setShowAddProductModal(false);
+
         setShowDeleteProductModal(false);
         setShowDeleteStoreModal(false);
         setShowDeleteEmployeeModal(false);
         setShowDeleteDelivererModal(false);
+    }
+
+    const handleAddProduct = () => {
+        setShowAddProductModal(true);
     }
 
     const handleDeleteProduct = () => {
@@ -86,6 +96,7 @@ function Admin() {
                             data-aos="fade-down">
                             <button
                                 className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125 text-center"
+                                onClick={handleAddProduct}
                             >
                                 Add Products
                             </button>
@@ -168,6 +179,15 @@ function Admin() {
                         Orders Management Here
                     </div>
                 </div>
+            )}
+            {showAddProductModal && (
+                <div
+                    className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <AddProductModal handleCloseModal={handleCloseModal}/>
+                </div>
+            )}
+            {showAddProductModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
             {showDeleteProductModal && (
                 <div
