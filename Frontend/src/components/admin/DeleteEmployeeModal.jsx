@@ -4,51 +4,51 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaStore } from "react-icons/fa";
 
-function DeleteStoreModal(props) {
-    const [numeroSucursal, setNumeroSucursal] = useState(0);
-    const [sucursal, setSucursal] = useState(null);
-    const [invalidSucursal, setInvalidSucursal] = useState(false);
+function DeleteEmployeeModal(props) {
+    const [cedulaEmpleado, setCedulaEmpleado] = useState(0);
+    const [empleado, setEmpleado] = useState(null);
+    const [invalidEmpleado, setInvalidEmpleado] = useState(false);
     const [URI, setURI] = useState('');
 
     const handleModelChange = (event) => {
-        setNumeroSucursal(event.target.value);
+        setCedulaEmpleado(event.target.value);
     };
 
     useEffect(() => {
-        if (numeroSucursal) {
-            setURI(`http://localhost:8000/sucursales/${numeroSucursal}`);
+        if (cedulaEmpleado) {
+            setURI(`http://localhost:8000/sucursales/${cedulaEmpleado}`);
         } else {
-            setSucursal(null);
-            setInvalidSucursal(false);
+            setEmpleado(null);
+            setInvalidEmpleado(false);
         }
-    }, [numeroSucursal]);
+    }, [cedulaEmpleado]);
 
     useEffect(() => {
         if (URI) {
-            getSucursal();
+            getEmpleado();
         }
     }, [URI]);
 
     useEffect(() => {
-        if (!sucursal) {
-            setInvalidSucursal(true);
+        if (!empleado) {
+            setInvalidEmpleado(true);
         } else {
-            setInvalidSucursal(false);
+            setInvalidEmpleado(false);
         }
-    }, [sucursal]);
+    }, [empleado]);
 
-    const getSucursal = async () => {
+    const getEmpleado = async () => {
         try {
             const res = await axios.get(URI);
-            setSucursal(res.data[0]);
+            setEmpleado(res.data[0]);
         } catch (error) {
-            setSucursal(null);
-            setInvalidSucursal(true);
+            setEmpleado(null);
+            setInvalidEmpleado(true);
         }
     };
 
-    const handleDeleteSucursal = async () => {
-        if (!invalidSucursal) {
+    const handleDeleteEmpleado = async () => {
+        if (!invalidEmpleado) {
             await fetch(URI, {
                 method: 'DELETE',
             });
@@ -58,16 +58,16 @@ function DeleteStoreModal(props) {
         }
     }
 
-    console.log(sucursal)
-    console.log(URI)
+    console.log(empleado)
+    console.log(URI);
     return (
         <div className="flex flex-row relative rounded-lg overflow-hidden w-4/5 " data-aos="zoom-in">
             <div className="flex flex-col items-center justify-center bg-white w-1/2 py-20 overflow-hidden">
                 <h1 className="text-2xl font-bold">
-                    Delete Store
+                    Delete Employee
                 </h1>
                 <p className="text-lg mt-3">
-                    Write the store number below
+                    Write the Employee's ID below
                 </p>
                 <input
                     type="number"
@@ -77,19 +77,19 @@ function DeleteStoreModal(props) {
                     onChange={handleModelChange}
                 />
                 <button className={`mt-8 rounded-lg w-1/2 py-3 duration-500 bg-black text-white
-                    ${invalidSucursal ? 'hover:bg-red-500' : 'hover:bg-white hover:text-black hover:border hover:border-black'}`}
-                        onClick={handleDeleteSucursal}>
-                    Delete Store
+                    ${invalidEmpleado ? 'hover:bg-red-500' : 'hover:bg-white hover:text-black hover:border hover:border-black'}`}
+                        onClick={handleDeleteEmpleado}>
+                    Delete Employee
                 </button>
             </div>
-            {invalidSucursal && (
+            {invalidEmpleado && (
                 <div className="flex flex-row items-center justify-center bg-white w-1/2 py-20 overflow-hidden">
                     <div className="flex flex-col" data-aos="zoom-in">
                         <h1 className="font-bold text-2xl" data-aos="zoom-in">
-                            Oops, we couldn't find that product
+                            Oops, we couldn't find that employee
                         </h1>
                         <p>
-                            Please type a valid product model
+                            Please type a valid employee ID
                         </p>
                     </div>
                     <div className="w-1/2" data-aos="zoom-in">
@@ -97,7 +97,7 @@ function DeleteStoreModal(props) {
                     </div>
                 </div>
             )}
-            {!invalidSucursal && sucursal &&
+            {!invalidEmpleado && empleado &&
                 <div className="flex flex-row items-center justify-center bg-white w-2/3 py-20 overflow-hidden pr-20 space-x-5">
                     <img
                         src={`img/stores/${sucursal.Img}`}
@@ -126,8 +126,8 @@ function DeleteStoreModal(props) {
     );
 }
 
-DeleteStoreModal.propTypes = {
+DeleteEmployeeModal.propTypes = {
     handleCloseModal: PropTypes.func.isRequired,
 };
 
-export default DeleteStoreModal;
+export default DeleteEmployeeModal;
