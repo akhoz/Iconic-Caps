@@ -55,7 +55,7 @@ export const updateProducto = async (req, res) => {
 export const deleteProducto = async (req, res) => {
     try {
         await ProductoModel.destroy({
-            where: {id : req.params.id}
+            where: {Modelo : req.params.modelo}
         })
         res.json({"message":"Registro actualizado con éxito"})
     } catch (error) {

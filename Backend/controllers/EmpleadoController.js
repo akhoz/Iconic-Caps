@@ -61,7 +61,7 @@ export const deleteEmpleado = async (req, res) => {
     try {
         const empleado = await EmpleadoModel.destroy({
             where: {
-                Cedula: req.params.Cedula
+                CedulaEmpleado: req.params.Cedula
             }
         });
         console.log(req.params.Cedula)
