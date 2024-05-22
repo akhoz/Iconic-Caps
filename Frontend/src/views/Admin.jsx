@@ -1,10 +1,10 @@
 import { useUser } from "../contexts/UserContext.jsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
+import { IoExitOutline } from "react-icons/io5";
 
 import AddProductModal from "../components/admin/AddProductModal.jsx";
 
@@ -199,10 +199,6 @@ function Admin() {
             {showDeleteProductModal && (
                 <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
-            <button
-                onClick={handleLogOut}>
-                <RiLogoutBoxFill className={"absolute left-5 top-5 text-3xl text-white duration-500 transition-transform transform hover:scale-125"}/>
-            </button>
             {showDeleteStoreModal && (
                 <div
                     className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
@@ -233,7 +229,7 @@ function Admin() {
             )}
             <button
                 onClick={handleLogOut}>
-                <RiLogoutBoxFill className={"absolute left-5 top-5 text-3xl text-white duration-500 transition-transform transform hover:scale-125"}/>
+                <IoExitOutline className={"absolute left-5 top-5 text-3xl text-white duration-500 transition-transform transform hover:scale-125 rotate-180"}/>
             </button>
         </>
     );

@@ -1,11 +1,14 @@
 import {IoClose} from "react-icons/io5";
 import PropTypes from "prop-types";
-import { useCallback, useState } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import { useDropzone } from 'react-dropzone';
 import DragFileArea from "../DragFileArea.jsx";
 import { GiBilledCap } from "react-icons/gi";
+import axios from "axios";
 
 function AddProductModal(props) {
+    const URI = 'http://localhost:8000/productos';
+
     const [lastUploadedFile, setLastUploadedFile] = useState(null);
     const [fileName, setFileName] = useState('');
 
@@ -23,24 +26,85 @@ function AddProductModal(props) {
     const [stock, setStock] = useState(0);
     const [price, setPrice] = useState(0);
 
+    const [invalidProduct, setInvalidProduct] = useState(false);
+    const [invalidBrand, setInvalidBrand] = useState(false);
+    const [invalidCategory, setInvalidCategory] = useState(false);
+    const [invalidStock, setInvalidStock] = useState(false);
+    const [invalidPrice, setInvalidPrice] = useState(false);
+    const [invalidImage, setInvalidImage] = useState(false);
+
+
     const handleModelChange = (event) => {
         setModel(event.target.value);
+        setInvalidProduct(false);
     }
 
     const handleBrandChange = (event) => {
         setBrand(event.target.value);
+        setInvalidBrand(false);
     }
 
     const handleCategoryChange = (event) => {
         setCategory(event.target.value);
+        setInvalidCategory(false);
     }
 
     const handleStockChange = (event) => {
         setStock(event.target.value);
+        setInvalidStock(false);
     }
 
     const handlePriceChange = (event) => {
         setPrice(event.target.value);
+        setInvalidPrice(false);
+    }
+
+    useEffect(() => {
+        if (lastUploadedFile) {
+            setInvalidImage(false);
+        }
+    }, [lastUploadedFile]);
+
+
+    const handleAddProduct = async () => {
+        if (model === '') {
+            setInvalidProduct(true);
+            return;
+        }
+        setInvalidProduct(false);
+        if (brand === '') {
+            setInvalidBrand(true);
+            return;
+        }
+        setInvalidBrand(false);
+        if (category === '') {
+            setInvalidCategory(true);
+            return;
+        }
+        setInvalidCategory(false);
+        if (stock === 0) {
+            setInvalidStock(true);
+            return;
+        }
+        setInvalidStock(false);
+        if (price === 0) {
+            setInvalidPrice(true);
+            return;
+        }
+        setInvalidPrice(false);
+        if (lastUploadedFile === null) {
+            setInvalidImage(true);
+            return;
+        }
+        setInvalidImage(false);
+        const res = await axios.post(URI, {
+            Modelo: model,
+            Categoria: brand,
+            Precio: price,
+            ExistenciasDisponibles: stock,
+            Img: fileName,
+        });
+        console.log('Product added');
     }
 
     return (
@@ -55,43 +119,78 @@ function AddProductModal(props) {
                 <input
                     type="text"
                     id="model"
-                    className="border-0 border-b-2 p-1 mt-8 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 w-1/2 remove-arrow"
+                    className={`border-0 border-b-2 p-1 mt-8 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 w-1/2 remove-arrow duration-500
+                        ${invalidProduct ? 'border-b-red-500' : ''}`}
                     placeholder="Product Model"
                     onChange={handleModelChange}
                 />
+                {invalidProduct && (
+                    <p className="text-red-500 text-sm text-start" data-aos="fade-down">
+                        Invalid product model
+                    </p>
+                )}
                 <input
                     type="text"
                     id="brand"
-                    className="border-0 border-b-2 p-1 mt-8 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 w-1/2 remove-arrow"
+                    className={`border-0 border-b-2 p-1 mt-8 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 w-1/2 remove-arrow
+                        ${invalidBrand ? 'border-b-red-500' : ''}`}
                     placeholder="Product Brand"
                     onChange={handleBrandChange}
                 />
+                {invalidBrand && (
+                    <p className="text-red-500 text-sm text-start" data-aos="fade-down">
+                        Invalid product brand
+                    </p>
+                )}
                 <input
                     type="text"
                     id="category"
-                    className="border-0 border-b-2 p-1 mt-8 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 w-1/2 remove-arrow"
+                    className={`border-0 border-b-2 p-1 mt-8 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 w-1/2 remove-arrow
+                        ${invalidCategory ? 'border-b-red-500' : ''}`}
                     placeholder="Product Category"
                     onChange={handleCategoryChange}
                 />
+                {invalidCategory && (
+                    <p className="text-red-500 text-sm text-start" data-aos="fade-down">
+                        Invalid product category
+                    </p>
+                )}
                 <div className="w-1/2 flex flex-row space-x-3">
-                    <input
-                        type="number"
-                        id="stock"
-                        className="border-0 border-b-2 p-1 my-8 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 w-1/2 remove-arrow"
-                        placeholder="Initial Stock"
-                        onChange={handleStockChange}
-                    />
-                    <input
-                        type="number"
-                        id="stock"
-                        className="border-0 border-b-2 p-1 my-8 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 w-1/2 remove-arrow"
-                        placeholder="Price"
-                        onChange={handlePriceChange}
-                    />
+                    <div className="flex flex-col w-1/2">
+                        <input
+                            type="number"
+                            id="stock"
+                            className={`w-full border-0 border-b-2 p-1 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 remove-arrow
+                        ${invalidStock ? 'border-b-red-500 mt-8' : 'my-8'}`}
+                            placeholder="Initial Stock"
+                            onChange={handleStockChange}
+                        />
+                        {invalidStock && (
+                            <p className="text-red-500 text-sm text-start mb-2" data-aos="fade-down">
+                                Invalid product stock
+                            </p>
+                        )}
+                    </div>
+                    <div className="flex flex-col w-1/2">
+                        <input
+                            type="number"
+                            id="price"
+                            className={`w-full border-0 border-b-2 p-1 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 remove-arrow
+                        ${invalidPrice? 'border-b-red-500 mt-8' : 'my-8'}`}
+                            placeholder="Price"
+                            onChange={handlePriceChange}
+                        />
+                        {invalidPrice && (
+                            <p className="text-red-500 text-sm text-start mb-2" data-aos="fade-down">
+                                Invalid product price
+                            </p>
+                        )}
+                    </div>
                 </div>
                 <div
                     {...getRootProps()}
-                    className={`flex items-center justify-center rounded-lg overflow-hidden w-1/2 border border-gray-300 `}
+                    className={`flex items-center justify-center rounded-lg overflow-hidden w-1/2 border
+                        ${invalidImage ? 'border-red-500' : 'border-gray-300'}`}
                 >
                     <input {...getInputProps()} className="w-fit"/>
                     {!lastUploadedFile && (
@@ -105,16 +204,18 @@ function AddProductModal(props) {
                         </p>
                     )}
                 </div>
-                <button className={`mt-8 rounded-lg w-1/2 py-3 duration-500 bg-black text-white`}>
-                Add Product
+                <button className={`mt-8 rounded-lg w-1/2 py-3 duration-500 bg-black text-white
+                    ${invalidProduct || invalidBrand || invalidCategory || invalidStock || invalidPrice || invalidImage ? 'hover:bg-red-500' : 'hover:bg-white hover:text-black hover:border hover:border-black'}`}
+                    onClick={handleAddProduct}>
+                    Add Product
                 </button>
             </div>
             <div className="flex flex-row items-center justify-start bg-white w-1/2 py-20 overflow-hidden">
-                <div className="flex flex-row justify-center items-center">
+                <div className="flex flex-row justify-start items-center">
                     {lastUploadedFile && (
                     <img
                         src={lastUploadedFile ? lastUploadedFile : ''}
-                        className="w-40 h-40 object-cover p-1 md:w-60 md:h-60 lg:w-80 lg:h-80"/>
+                        className="object-cover w-1/2"/>
                     )}
                     {!lastUploadedFile && (
                         <GiBilledCap className="text-9xl mr-5"/>
