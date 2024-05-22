@@ -14,6 +14,7 @@ import envioxpedidoRoutes from './routes/Envioxpedidoroutes.js'
 import consultaRoutes from './routes/Consultaroutes.js'
 import personaRoutes from './routes/Personaroutes.js'
 import garantiasRoutes from './routes/Garantiaroutes.js'
+import provedorRoutes from './routes/Provedorroutes.js'
 const app = express()
 
 app.use(cors())
@@ -30,6 +31,7 @@ app.use('/envioxpedido', envioxpedidoRoutes)
 app.use('/consultas', consultaRoutes)
 app.use('/personas', personaRoutes)
 app.use ('/garantias',garantiasRoutes )
+app.use('/provedores', provedorRoutes)
 try {
     await db.authenticate()
     console.log('Conexión exitosa a la DB')
