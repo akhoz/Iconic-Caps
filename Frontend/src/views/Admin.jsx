@@ -3,10 +3,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+import DeleteProductModal from "../components/admin/DeleteProductModal.jsx";
+
 function Admin() {
     const { user, logOut } = useUser();
     const navigate = useNavigate();
     const [showFeatures, setShowFeatures] = useState(false);
+    const [showDeleteProductModal, setShowDeleteProductModal] = useState(false);
 
     const handleFeatures = () => {
         setShowFeatures(!showFeatures);
@@ -15,6 +18,14 @@ function Admin() {
     const handleLogOut = () => {
         logOut();
         navigate('/');
+    }
+
+    const handleCloseModal = () => {
+        setShowDeleteProductModal(false);
+    }
+
+    const handleDeleteProduct = () => {
+        setShowDeleteProductModal(true);
     }
 
     return (
@@ -92,7 +103,7 @@ function Admin() {
                              data-aos="fade-down">
                             <button
                                 className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
-                            >
+                                onClick={handleDeleteProduct}>
                                 Delete Products
                             </button>
                             <button
@@ -114,9 +125,16 @@ function Admin() {
                     )}
                 </div>
             )}
-            <h1>
-                a
-            </h1>
+            {showDeleteProductModal && (
+                <div
+                    className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <DeleteProductModal handleCloseModal={handleCloseModal}/>
+                </div>
+
+            )}
+            {showDeleteProductModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
+            )}
         </>
     );
 }
