@@ -7,6 +7,7 @@ import { IoIosArrowUp } from "react-icons/io";
 import { IoExitOutline } from "react-icons/io5";
 
 import AddProductModal from "../components/admin/AddProductModal.jsx";
+import AddStoreModal from "../components/admin/AddStoreModal.jsx";
 
 import DeleteProductModal from "../components/admin/DeleteProductModal.jsx";
 import DeleteStoreModal from "../components/admin/DeleteStoreModal.jsx";
@@ -19,6 +20,7 @@ function Admin() {
     const [showFeatures, setShowFeatures] = useState(false);
 
     const [showAddProductModal, setShowAddProductModal] = useState(false);
+    const [showAddStoreModal, setShowAddStoreModal] = useState(false);
 
     const [showDeleteProductModal, setShowDeleteProductModal] = useState(false);
     const [showDeleteStoreModal, setShowDeleteStoreModal] = useState(false);
@@ -42,6 +44,7 @@ function Admin() {
 
     const handleCloseModal = () => {
         setShowAddProductModal(false);
+        setShowAddStoreModal(false);
 
         setShowDeleteProductModal(false);
         setShowDeleteStoreModal(false);
@@ -51,6 +54,10 @@ function Admin() {
 
     const handleAddProduct = () => {
         setShowAddProductModal(true);
+    }
+
+    const handleAddStore = () => {
+        setShowAddStoreModal(true);
     }
 
     const handleDeleteProduct = () => {
@@ -102,7 +109,7 @@ function Admin() {
                             </button>
                             <button
                                 className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
-                            >
+                                onClick={handleAddStore}>
                                 Add Stores
                             </button>
                             <button
@@ -187,6 +194,15 @@ function Admin() {
                 </div>
             )}
             {showAddProductModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
+            )}
+            {showAddStoreModal && (
+                <div
+                    className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <AddStoreModal handleCloseModal={handleCloseModal}/>
+                </div>
+            )}
+            {showAddStoreModal && (
                 <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
             {showDeleteProductModal && (
