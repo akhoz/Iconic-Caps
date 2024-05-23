@@ -14,7 +14,8 @@ function AddProductModal(props) {
 
     const onDrop = useCallback((acceptedFiles) => {
         const lastFile = acceptedFiles[acceptedFiles.length - 1];
-        setFileName(lastFile.name)
+        const formattedFileName = lastFile.name.replace(/\s+/g, '');
+        setFileName(formattedFileName.toLowerCase());
         setLastUploadedFile(URL.createObjectURL(lastFile));
     }, []);
 
@@ -33,6 +34,20 @@ function AddProductModal(props) {
     const [invalidPrice, setInvalidPrice] = useState(false);
     const [invalidImage, setInvalidImage] = useState(false);
 
+    const [provedor, setProvedor] = useState(0);
+
+    const getProvedores = async () => {
+        if (brand) {
+            const formattedBrand = brand.charAt(0).toUpperCase() + brand.slice(1).toLowerCase();
+            try {
+                const res = await axios.get(`http://localhost:8000/provedores/${formattedBrand.trim().replace(/\s+/g, '')}`);
+                setProvedor(res.data.IdentificadorFiscal);
+            } catch (error) {
+                console.log('Error fetching provedores');
+                setProvedor(0);
+            }
+        }
+    }
 
     const handleModelChange = (event) => {
         setModel(event.target.value);
@@ -65,6 +80,11 @@ function AddProductModal(props) {
         }
     }, [lastUploadedFile]);
 
+    useEffect(() => {
+        console.log('Brand changed:', brand);
+        getProvedores();
+    }, [brand]);
+
 
     const handleAddProduct = async () => {
         if (model === '') {
@@ -72,7 +92,18 @@ function AddProductModal(props) {
             return;
         }
         setInvalidProduct(false);
+        const products = await axios.get(URI);
+        if (products.data.find(product => product.Modelo === model)) {
+            setInvalidProduct(true);
+            return;
+        }
+        setInvalidProduct(false);
         if (brand === '') {
+            setInvalidBrand(true);
+            return;
+        }
+        setInvalidBrand(false);
+        if (provedor === 0) {
             setInvalidBrand(true);
             return;
         }
@@ -97,14 +128,22 @@ function AddProductModal(props) {
             return;
         }
         setInvalidImage(false);
+
+        const formattedLocalFileName = brand.replace(/\s+/g, '-').toLowerCase();
+        const localFileName = `${formattedLocalFileName}/${fileName}`;
+        console.log(`${formattedLocalFileName}/${fileName}`);
+
         const res = await axios.post(URI, {
             Modelo: model,
-            Categoria: brand,
+            Categoria: category,
             Precio: price,
             ExistenciasDisponibles: stock,
-            Img: fileName,
+            Img: localFileName,
+            IdentificadorFiscalProvedor: provedor
         });
+        console.log(res.data)
         console.log('Product added');
+        props.handleCloseModal();
     }
 
     return (
