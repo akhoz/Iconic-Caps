@@ -3,8 +3,8 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {IoClose, IoSearchOutline} from "react-icons/io5";
 
-function ModifyEmployeesModal(props) {
-    const URI = 'http://localhost:8000/empleados';
+function ModifyDelivererModal(props) {
+    const URI = 'http://localhost:8000/repartidores';
 
     const [name, setName] = useState('');
     const [cedula, setCedula] = useState('');
@@ -62,10 +62,10 @@ function ModifyEmployeesModal(props) {
         <div className="flex flex-row relative rounded-lg overflow-hidden w-4/5" data-aos="zoom-in">
             <div className="flex flex-col items-center justify-center bg-white w-1/2 py-5 overflow-hidden">
                 <h1 className="text-2xl font-bold">
-                    Modify Employee
+                    Modify Deliverer
                 </h1>
                 <p className="text-md mt-3 w-1/2 text-center">
-                    Fill the following fields to modify an employee
+                    Fill the following fields to modify a deliverer
                 </p>
                 <div className="relative w-1/2 mt-8">
                     <IoSearchOutline className="absolute left-2 top-2.5 text-gray-400"/>
@@ -73,7 +73,7 @@ function ModifyEmployeesModal(props) {
                         type="number"
                         id="cedula"
                         className={`border border-1 border-gray-300 focus:ring-0 focus:outline-0 w-full pl-8 remove-arrow duration-500 rounded-xl py-1 remove-arrow`}
-                        placeholder="Employee ID"
+                        placeholder="Deliverer ID"
                         onChange={handleCedulaChange}
                     />
                 </div>
@@ -94,12 +94,12 @@ function ModifyEmployeesModal(props) {
                 <button className={`mt-8 rounded-lg w-1/2 py-3 duration-500 bg-black text-white
                     ${invalidSucursal || !cedula ? 'hover:bg-red-500' : 'hover:bg-white hover:text-black hover:border hover:border-black'}`}
                         onClick={handleModifyEmployee}>
-                    Modify Employee
+                    Modify Deliverer
                 </button>
             </div>
             <div className="flex flex-col items-center justify-center bg-white w-1/2 py-20 overflow-hidden">
                 <h1 className="font-bold text-xl">
-                    {name ? name : 'Employee Name'}
+                    {name ? name : 'Deliverer Name'}
                 </h1>
                 <p className="text-black text-md">
                     {cedula ? cedula : '123456789'}
@@ -120,8 +120,8 @@ function ModifyEmployeesModal(props) {
     );
 }
 
-ModifyEmployeesModal.propTypes = {
+ModifyDelivererModal.propTypes = {
     handleCloseModal: PropTypes.func.isRequired
 }
 
-export default ModifyEmployeesModal;
+export default ModifyDelivererModal;
