@@ -3,9 +3,9 @@ import {useCallback, useEffect, useState} from "react";
 import {useDropzone} from "react-dropzone";
 import axios from "axios";
 import { FaStore } from "react-icons/fa";
-import {IoClose} from "react-icons/io5";
+import {IoClose, IoSearchOutline} from "react-icons/io5";
 
-function AddStoreModal(props) {
+function ModifyStoreModal(props) {
     const URI = 'http://localhost:8000/sucursales';
     const [sucursales, setSucursales] = useState([]);
 
@@ -27,10 +27,8 @@ function AddStoreModal(props) {
     const [phone, setPhone] = useState('');
     const [gmURL, setGMURL] = useState('');
     const [location, setLocation] = useState('');
+    const [image, setImage] = useState('');
 
-
-
-    const [invalidName, setInvalidName] = useState(false);
     const [invalidPhone, setInvalidPhone] = useState(false);
     const [invalidURL, setInvalidURL] = useState(false);
     const [invalidLocation, setInvalidLocation] = useState(false);
@@ -38,8 +36,8 @@ function AddStoreModal(props) {
 
     const handleNameChange = (e) => {
         setStoreName(e.target.value);
-        setInvalidName(false);
     }
+
 
     const handlePhoneChange = (e) => {
         setPhone(e.target.value);
@@ -64,29 +62,30 @@ function AddStoreModal(props) {
 
     useEffect(() => {
         getSucursales();
-    }, []);
+    }, [storeName]);
 
     const getSucursales = async () => {
         try {
             const res = await axios.get(URI);
-            console.log(res.data);
             setSucursales(res.data);
+            if (sucursales.find(sucursal => sucursal.Nombre === storeName)) {
+                setPhone(sucursales.find(sucursal => sucursal.Nombre === storeName).NumeroTelefono);
+                setGMURL(sucursales.find(sucursal => sucursal.Nombre === storeName).LinkGoogleMaps);
+                setLocation(sucursales.find(sucursal => sucursal.Nombre === storeName).Direccion);
+                setLastUploadedFile(sucursales.find(sucursal => sucursal.Nombre === storeName).Img);
+                setImage(sucursales.find(sucursal => sucursal.Nombre === storeName).Img);
+            } else {
+                setPhone('');
+                setGMURL('');
+                setLocation('');
+                setLastUploadedFile(null);
+            }
         } catch (error) {
             console.log('Error fetching stores');
         }
     }
 
     const handleAddStore = async () => {
-        if (!storeName) {
-            setInvalidName(true);
-            return;
-        }
-        setInvalidName(false);
-        if (sucursales.find(sucursal => sucursal.Nombre === storeName)) {
-            setInvalidName(true);
-            return;
-        }
-        setInvalidName(false);
         if (!phone) {
             setInvalidPhone(true);
             return;
@@ -107,15 +106,16 @@ function AddStoreModal(props) {
             return;
         }
         setInvalidImage(false);
-        console.log('Add store');
-        const res = await axios.post(URI, {
-            Nombre: storeName,
+        console.log('Modify store');
+        const storeID = sucursales.find(sucursal => sucursal.Nombre === storeName).NumeroSucursal;
+        const res = await axios.put(URI + `/${storeID}`, {
             NumeroTelefono: phone,
             LinkGoogleMaps: gmURL,
             Direccion: location,
             Img: lastUploadedFile
         });
         console.log(res);
+        props.handleCloseModal();
     }
 
     return (
@@ -127,26 +127,25 @@ function AddStoreModal(props) {
                 <p className="text-md mt-3 w-1/2 text-center">
                     Fill the following fields to add a new store
                 </p>
+                <div className="relative w-1/2 mt-8">
+                    <IoSearchOutline className="absolute left-2 top-2.5 text-gray-400"/>
+                    <input
+                        type="text"
+                        id="model"
+                        className={`border border-1 border-gray-300 focus:ring-0 focus:outline-0 w-full pl-8 remove-arrow duration-500 rounded-xl py-1`}
+                        placeholder="Store Name"
+                        onChange={handleNameChange}
+
+                    />
+                </div>
                 <input
                     type="text"
-                    id="name"
-                    className={`border-0 border-b-2 p-1 mt-8 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 w-1/2 remove-arrow duration-500
-                        ${invalidName ? 'border-b-red-500' : ''}`}
-                    placeholder="Store Name"
-                    onChange={handleNameChange}
-                />
-                {invalidName && (
-                    <p className="text-red-500 text-sm text-start" data-aos="fade-down">
-                        Invalid store name
-                    </p>
-                )}
-                <input
-                    type="number"
                     id="phone"
                     className={`border-0 border-b-2 p-1 mt-8 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 w-1/2 remove-arrow
                         ${invalidPhone ? 'border-b-red-500' : ''}`}
                     placeholder="Phone Number"
                     onChange={handlePhoneChange}
+                    value={phone}
                 />
                 {invalidPhone && (
                     <p className="text-red-500 text-sm text-start" data-aos="fade-down">
@@ -160,6 +159,7 @@ function AddStoreModal(props) {
                         ${invalidURL ? 'border-b-red-500' : ''}`}
                     placeholder="Google Maps URL"
                     onChange={handleURLChange}
+                    value={gmURL}
                 />
                 {invalidURL && (
                     <p className="text-red-500 text-sm text-start" data-aos="fade-down">
@@ -170,9 +170,10 @@ function AddStoreModal(props) {
                           className={`p-2 w-1/2 text-sm text-gray-900 border rounded-lg focus:ring-0 focus:outline-none my-8
                             ${invalidLocation ? 'border-b-red-500' : 'border-b-gray-300'}`}
                           placeholder="Store Location" required
-                          onChange={handleLocationChange}>
+                          onChange={handleLocationChange}
+                          value={location}>
                 </textarea>
-                {invalidLocation&& (
+                {invalidLocation && (
                     <p className="text-red-500 text-sm text-start" data-aos="fade-down">
                         Invalid store location
                     </p>
@@ -183,31 +184,33 @@ function AddStoreModal(props) {
                         ${invalidImage ? 'border-red-500' : 'border-gray-300'}`}
                 >
                     <input {...getInputProps()} className="w-fit"/>
-                    {!lastUploadedFile && (
+                    {!lastUploadedFile && !image && (
                         <p className="text-center w-full py-2 px-3">
                             Drag the product image here
                         </p>
                     )}
-                    {lastUploadedFile && (
+                    {lastUploadedFile || image && (
                         <p className="text-center w-full py-2 px-3">
-                            {`Image uploaded: ${fileName}`}
+                            {`Image uploaded: ${fileName ? fileName : image}`}
                         </p>
                     )}
                 </div>
                 <button className={`mt-8 rounded-lg w-1/2 py-3 duration-500 bg-black text-white
-                    ${invalidName || invalidPhone || invalidLocation || invalidLocation || invalidURL ? 'hover:bg-red-500' : 'hover:bg-white hover:text-black hover:border hover:border-black'}`}
+                    ${invalidPhone || invalidLocation || invalidURL ? 'hover:bg-red-500' : 'hover:bg-white hover:text-black hover:border hover:border-black'}`}
                         onClick={handleAddStore}>
-                    Add Product
+                    Modify Store
                 </button>
             </div>
             <div className="flex flex-row items-center justify-start bg-white w-1/2 py-20 overflow-hidden">
                 <div className="flex flex-row justify-start items-center">
-                    {lastUploadedFile && (
+
+                    {lastUploadedFile && image && (
                         <img
-                            src={lastUploadedFile ? lastUploadedFile : ''}
+                            src={`img/stores/${lastUploadedFile ? lastUploadedFile : image}`}
+                            alt={`${storeName ? storeName : 'Iconic Store' }`}
                             className="object-cover w-1/3 mr-5 rounded-xl"/>
                     )}
-                    {!lastUploadedFile && (
+                    {!lastUploadedFile && !image && (
                         <FaStore className="text-9xl mr-5"/>
                     )}
                     <div className="flex flex-col">
@@ -232,8 +235,8 @@ function AddStoreModal(props) {
     );
 }
 
-AddStoreModal.propTypes = {
+ModifyStoreModal.propTypes = {
     handleCloseModal: PropTypes.func.isRequired,
 }
 
-export default AddStoreModal;
+export default ModifyStoreModal;

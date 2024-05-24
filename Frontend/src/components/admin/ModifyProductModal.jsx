@@ -2,9 +2,10 @@ import {IoClose} from "react-icons/io5";
 import PropTypes from "prop-types";
 import {useCallback, useEffect, useState} from 'react';
 import { useDropzone } from 'react-dropzone';
-import DragFileArea from "../DragFileArea.jsx";
+import { IoSearchOutline } from "react-icons/io5";
 import { GiBilledCap } from "react-icons/gi";
 import axios from "axios";
+import product from "../Product.jsx";
 
 function AddProductModal(props) {
     const URI = 'http://localhost:8000/productos';
@@ -33,7 +34,6 @@ function AddProductModal(props) {
     const [invalidCategory, setInvalidCategory] = useState(false);
     const [invalidStock, setInvalidStock] = useState(false);
     const [invalidPrice, setInvalidPrice] = useState(false);
-    const [invalidImage, setInvalidImage] = useState(false);
 
     const [provedor, setProvedor] = useState(0);
 
@@ -75,11 +75,6 @@ function AddProductModal(props) {
         setInvalidPrice(false);
     }
 
-    useEffect(() => {
-        if (lastUploadedFile) {
-            setInvalidImage(false);
-        }
-    }, [lastUploadedFile]);
 
     useEffect(() => {
         console.log('Brand changed:', brand);
@@ -102,18 +97,19 @@ function AddProductModal(props) {
                 setPrice(product.Precio);
                 setStock(product.ExistenciasDisponibles);
                 setImage(product.Img)
+                setFileName(product.Img)
             } else {
                 setBrand('');
                 setCategory('');
                 setPrice(0);
                 setStock(0);
                 setImage(null);
+                setFileName('');
             }
         } catch (error) {
             console.log(error);
         }
     }
-
 
     const handleAddProduct = async () => {
         if (model === '') {
@@ -146,21 +142,13 @@ function AddProductModal(props) {
             return;
         }
         setInvalidPrice(false);
-        if (lastUploadedFile === null) {
-            setInvalidImage(true);
-            return;
-        }
-        setInvalidImage(false);
 
-        const formattedLocalFileName = brand.replace(/\s+/g, '-').toLowerCase();
-        const localFileName = `${formattedLocalFileName}/${fileName}`;
-        console.log(`${formattedLocalFileName}/${fileName}`);
 
         const res = await axios.put(URI + `/${model}`, {
             Categoria: category,
             Precio: price,
             ExistenciasDisponibles: stock,
-            Img: localFileName,
+            Img: fileName,
             IdentificadorFiscalProvedor: provedor
         });
         console.log(res.data)
@@ -177,15 +165,18 @@ function AddProductModal(props) {
                 <p className="text-md mt-3 w-1/2 text-center">
                     Fill the following fields to modify a product
                 </p>
-                <input
-                    type="text"
-                    id="model"
-                    className={`border-0 border-b-2 p-1 mt-8 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 w-1/2 remove-arrow duration-500
-                        ${invalidProduct ? 'border-b-red-500' : ''}`}
-                    placeholder="Product Model"
-                    onChange={handleModelChange}
-                    value={model}
-                />
+                <div className="relative w-1/2 mt-8">
+                    <IoSearchOutline className="absolute left-2 top-2.5 text-gray-400"/>
+                    <input
+                        type="text"
+                        id="model"
+                        className={`border border-1 border-gray-300 focus:ring-0 focus:outline-0 w-full pl-8 remove-arrow duration-500 rounded-xl py-1 
+                    ${invalidProduct ? 'border-b-red-500' : ''}`}
+                        placeholder="Product Model"
+                        onChange={handleModelChange}
+                        value={model}
+                    />
+                </div>
                 {invalidProduct && (
                     <p className="text-red-500 text-sm text-start" data-aos="fade-down">
                         Invalid product model
@@ -228,7 +219,7 @@ function AddProductModal(props) {
                         ${invalidStock ? 'border-b-red-500 mt-8' : 'my-8'}`}
                             placeholder="Initial Stock"
                             onChange={handleStockChange}
-                            value={stock ? stock : '' }
+                            value={stock ? stock : ''}
                         />
                         {invalidStock && (
                             <p className="text-red-500 text-sm text-start mb-2" data-aos="fade-down">
@@ -241,7 +232,7 @@ function AddProductModal(props) {
                             type="number"
                             id="price"
                             className={`w-full border-0 border-b-2 p-1 focus:border-b-2 focus:border-black focus:ring-0 focus:outline-0 remove-arrow
-                        ${invalidPrice? 'border-b-red-500 mt-8' : 'my-8'}`}
+                        ${invalidPrice ? 'border-b-red-500 mt-8' : 'my-8'}`}
                             placeholder="Price"
                             onChange={handlePriceChange}
                             value={price ? price : ''}
@@ -255,8 +246,7 @@ function AddProductModal(props) {
                 </div>
                 <div
                     {...getRootProps()}
-                    className={`flex items-center justify-center rounded-lg overflow-hidden w-1/2 border
-                        ${invalidImage ? 'border-red-500' : 'border-gray-300'}`}
+                    className={`flex items-center justify-center rounded-lg overflow-hidden w-1/2 border border-gray-300`}
                 >
                     <input {...getInputProps()} className="w-fit"/>
                     {!lastUploadedFile && !image && (
@@ -271,7 +261,7 @@ function AddProductModal(props) {
                     )}
                 </div>
                 <button className={`mt-8 rounded-lg w-1/2 py-3 duration-500 bg-black text-white
-                    ${invalidProduct || invalidBrand || invalidCategory || invalidStock || invalidPrice || invalidImage ? 'hover:bg-red-500' : 'hover:bg-white hover:text-black hover:border hover:border-black'}`}
+                    ${invalidProduct || invalidBrand || invalidCategory || invalidStock || invalidPrice ? 'hover:bg-red-500' : 'hover:bg-white hover:text-black hover:border hover:border-black'}`}
                         onClick={handleAddProduct}>
                     Modify Product
                 </button>
