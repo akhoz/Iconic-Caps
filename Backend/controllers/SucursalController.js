@@ -38,7 +38,6 @@ export const createSucursal = async (req, res) => {
 export const updateSucursal = async (req, res) => {
     try {
         const sucursal = await SucursalModel.update({
-            Nombre: req.body.Nombre,
             Direccion: req.body.Direccion,
             NumeroTelefono: req.body.NumeroTelefono,
             Img: req.body.Img,
