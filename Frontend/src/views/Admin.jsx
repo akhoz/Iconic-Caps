@@ -12,6 +12,7 @@ import AddDelivererModal from "../components/admin/AddDelivererModal.jsx";
 
 import ModifyProductModal from "../components/admin/ModifyProductModal.jsx";
 import ModifyStoreModal from "../components/admin/ModifyStoreModal.jsx";
+import ModifyEmployeeModal from "../components/admin/ModifyEmployeeModal.jsx";
 
 import DeleteProductModal from "../components/admin/DeleteProductModal.jsx";
 import DeleteStoreModal from "../components/admin/DeleteStoreModal.jsx";
@@ -30,6 +31,7 @@ function Admin() {
 
     const [showModifyProductModal, setShowModifyProductModal] = useState(false);
     const [showModifyStoreModal, setShowModifyStoreModal] = useState(false);
+    const [showModifyEmployeeModal, setShowModifyEmployeeModal] = useState(false);
 
     const [showDeleteProductModal, setShowDeleteProductModal] = useState(false);
     const [showDeleteStoreModal, setShowDeleteStoreModal] = useState(false);
@@ -59,6 +61,7 @@ function Admin() {
 
         setShowModifyProductModal(false);
         setShowModifyStoreModal(false);
+        setShowModifyEmployeeModal(false);
 
         setShowDeleteProductModal(false);
         setShowDeleteStoreModal(false);
@@ -88,6 +91,10 @@ function Admin() {
 
     const handleModifyStore = () => {
         setShowModifyStoreModal(true);
+    }
+
+    const handleModifyEmployee = () => {
+        setShowModifyEmployeeModal(true);
     }
 
     const handleDeleteProduct = () => {
@@ -170,7 +177,7 @@ function Admin() {
                             </button>
                             <button
                                 className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
-                            >
+                                onClick={handleModifyEmployee}>
                                 Modify Employees
                             </button>
                             <button
@@ -269,6 +276,15 @@ function Admin() {
                 </div>
             )}
             {showModifyStoreModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
+            )}
+            {showModifyEmployeeModal && (
+                <div
+                    className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <ModifyEmployeeModal handleCloseModal={handleCloseModal}/>
+                </div>
+            )}
+            {showModifyEmployeeModal && (
                 <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
             {showDeleteProductModal && (
