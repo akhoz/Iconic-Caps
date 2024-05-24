@@ -3,8 +3,8 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {IoClose} from "react-icons/io5";
 
-function AddEmployeesModal(props) {
-    const URI = 'http://localhost:8000/empleados';
+function AddDelivererModal(props) {
+    const URI = 'http://localhost:8000/repartidores';
     const [empleados, setEmpleados] = useState([]);
 
     const [name, setName] = useState('');
@@ -184,18 +184,18 @@ function AddEmployeesModal(props) {
                 </button>
             </div>
             <div className="flex flex-col items-center justify-center bg-white w-1/2 py-20 overflow-hidden">
-                    <h1 className="font-bold text-xl">
-                        {name ? name : 'Employee Name' }
-                    </h1>
-                    <p className="text-black text-md">
-                        {cedula? cedula : '123456789'}
-                    </p>
-                    <p className="text-gray-600 text-md">
-                        {email ? email : 'email@example.com'}
-                    </p>
-                    <p className="text-gray-600 text-md">
-                        {`Store Number: ${sucursalAsignada ? sucursalAsignada : 'X'}`}
-                    </p>
+                <h1 className="font-bold text-xl">
+                    {name ? name : 'Employee Name' }
+                </h1>
+                <p className="text-black text-md">
+                    {cedula? cedula : '123456789'}
+                </p>
+                <p className="text-gray-600 text-md">
+                    {email ? email : 'email@example.com'}
+                </p>
+                <p className="text-gray-600 text-md">
+                    {`Store Number: ${sucursalAsignada ? sucursalAsignada : 'X'}`}
+                </p>
             </div>
             <button
                 onClick={props.handleCloseModal}
@@ -206,8 +206,8 @@ function AddEmployeesModal(props) {
     );
 }
 
-AddEmployeesModal.propTypes = {
+AddDelivererModal.propTypes = {
     handleCloseModal: PropTypes.func.isRequired
 }
 
-export default AddEmployeesModal;
+export default AddDelivererModal;
