@@ -9,6 +9,7 @@ import { IoExitOutline } from "react-icons/io5";
 import AddProductModal from "../components/admin/AddProductModal.jsx";
 import AddStoreModal from "../components/admin/AddStoreModal.jsx";
 import AddEmployeesModal from "../components/admin/AddEmployees.Modal.jsx";
+import AddDelivererModal from "../components/admin/AddDelivererModal.jsx";
 
 import DeleteProductModal from "../components/admin/DeleteProductModal.jsx";
 import DeleteStoreModal from "../components/admin/DeleteStoreModal.jsx";
@@ -23,6 +24,7 @@ function Admin() {
     const [showAddProductModal, setShowAddProductModal] = useState(false);
     const [showAddStoreModal, setShowAddStoreModal] = useState(false);
     const [showAddEmployeeModal, setShowAddEmployeeModal] = useState(false);
+    const [showAddDelivererModal, setShowAddDelivererModal] = useState(false);
 
     const [showDeleteProductModal, setShowDeleteProductModal] = useState(false);
     const [showDeleteStoreModal, setShowDeleteStoreModal] = useState(false);
@@ -48,6 +50,7 @@ function Admin() {
         setShowAddProductModal(false);
         setShowAddStoreModal(false);
         setShowAddEmployeeModal(false);
+        setShowAddDelivererModal(false);
 
         setShowDeleteProductModal(false);
         setShowDeleteStoreModal(false);
@@ -65,6 +68,10 @@ function Admin() {
 
     const handleAddEmployee = () => {
         setShowAddEmployeeModal(true);
+    }
+
+    const handleAddDeliverer = () => {
+        setShowAddDelivererModal(true);
     }
 
     const handleDeleteProduct = () => {
@@ -126,7 +133,7 @@ function Admin() {
                             </button>
                             <button
                                 className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
-                            >
+                                onClick={handleAddDeliverer}>
                                 Add Deliverers
                             </button>
                         </div>
@@ -219,6 +226,15 @@ function Admin() {
                 </div>
             )}
             {showAddEmployeeModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
+            )}
+            {showAddDelivererModal && (
+                <div
+                    className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <AddDelivererModal handleCloseModal={handleCloseModal}/>
+                </div>
+            )}
+            {showAddDelivererModal && (
                 <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
             {showDeleteProductModal && (

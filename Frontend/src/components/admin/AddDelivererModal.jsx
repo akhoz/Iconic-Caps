@@ -5,7 +5,7 @@ import {IoClose} from "react-icons/io5";
 
 function AddDelivererModal(props) {
     const URI = 'http://localhost:8000/repartidores';
-    const [empleados, setEmpleados] = useState([]);
+    const [repartidores, setRepartidores] = useState([]);
 
     const [name, setName] = useState('');
     const [cedula, setCedula] = useState('');
@@ -40,17 +40,17 @@ function AddDelivererModal(props) {
     }
 
     useEffect(() => {
-        getEmpleados();
+        getRepartidores();
     }, []);
 
-    const getEmpleados = async () => {
+    const getRepartidores= async () => {
         try {
             const res = await axios.get(URI);
             console.log(res.data);
-            setEmpleados(res.data);
-            const nombres = res.data.map(empleado => empleado.Persona.Nombre);
-            const apellidos = res.data.map(empleado => empleado.Persona.PrimerApellido);
-            const apellidos2 = res.data.map(empleado => empleado.Persona.SegundoApellido);
+            setRepartidores(res.data);
+            const nombres = res.data.map(repartidor => repartidor.Persona.Nombre);
+            const apellidos = res.data.map(repartidor => repartidor.Persona.PrimerApellido);
+            const apellidos2 = res.data.map(repartidor => repartidor.Persona.SegundoApellido);
 
             const currentNames = nombres.map((nombre, index) => {
                 return `${nombre}${apellidos[index]}${apellidos2[index]}`;
@@ -61,7 +61,7 @@ function AddDelivererModal(props) {
         }
     }
 
-    const handleAddEmployee = async () => {
+    const handleAddDeliverer = async () => {
         if (name === '' || !name.replace(/\s/g, '').length > 2 || name.split(' ').length - 1 !== 2 ) {
             setInvalidName(true);
             return;
@@ -75,7 +75,7 @@ function AddDelivererModal(props) {
             setInvalidCedula(true);
             return;
         }
-        if (empleados.find(empleado => empleado.Persona.Cedula === cedula)) {
+        if (repartidores.find(repartidor => repartidor.Cedula === cedula)) {
             setInvalidCedula(true);
             return;
         }
@@ -89,7 +89,7 @@ function AddDelivererModal(props) {
             setInvalidSucursal(true);
             return;
         }
-        if (empleados.find(empleado => empleado.NumeroSucursalAsignada === sucursalAsignada)) {
+        if (repartidores.find(repartidor => repartidor.NumeroSucursalAsignada === sucursalAsignada)) {
             setInvalidSucursal(true);
             return;
         }
@@ -109,7 +109,7 @@ function AddDelivererModal(props) {
         console.log(res.data);
 
         const res2 = await axios.post(URI, {
-            CedulaEmpleado: cedula,
+            CedulaRepartidor: cedula,
             NumeroSucursalAsignada: sucursalAsignada
         });
         console.log(res2.data);
@@ -120,10 +120,10 @@ function AddDelivererModal(props) {
         <div className="flex flex-row relative rounded-lg overflow-hidden w-4/5" data-aos="zoom-in">
             <div className="flex flex-col items-center justify-center bg-white w-1/2 py-5 overflow-hidden">
                 <h1 className="text-2xl font-bold">
-                    Add Employee
+                    Add Deliverer
                 </h1>
                 <p className="text-md mt-3 w-1/2 text-center">
-                    Fill the following fields to add a new employee
+                    Fill the following fields to add a new deliverer
                 </p>
                 <input
                     type="text"
@@ -135,7 +135,7 @@ function AddDelivererModal(props) {
                 />
                 {invalidName&& (
                     <p className="text-red-500 text-sm text-start" data-aos="fade-down">
-                        Invalid employee name
+                        Invalid deliverer name
                     </p>
                 )}
                 <input
@@ -148,7 +148,7 @@ function AddDelivererModal(props) {
                 />
                 {invalidCedula && (
                     <p className="text-red-500 text-sm text-start" data-aos="fade-down">
-                        Invalid employee ID
+                        Invalid deliverer ID
                     </p>
                 )}
                 <input
@@ -161,7 +161,7 @@ function AddDelivererModal(props) {
                 />
                 {invalidEmail && (
                     <p className="text-red-500 text-sm text-start" data-aos="fade-down">
-                        Invalid employee email
+                        Invalid deliverer email
                     </p>
                 )}
                 <input
@@ -179,13 +179,13 @@ function AddDelivererModal(props) {
                 )}
                 <button className={`mt-8 rounded-lg w-1/2 py-3 duration-500 bg-black text-white
                     ${invalidName || invalidCedula || invalidEmail || invalidSucursal ? 'hover:bg-red-500' : 'hover:bg-white hover:text-black hover:border hover:border-black'}`}
-                        onClick={handleAddEmployee}>
-                    Add Employee
+                        onClick={handleAddDeliverer}>
+                    Add Deliverer
                 </button>
             </div>
             <div className="flex flex-col items-center justify-center bg-white w-1/2 py-20 overflow-hidden">
                 <h1 className="font-bold text-xl">
-                    {name ? name : 'Employee Name' }
+                    {name ? name : 'Deliverer Name' }
                 </h1>
                 <p className="text-black text-md">
                     {cedula? cedula : '123456789'}
