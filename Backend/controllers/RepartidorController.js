@@ -7,7 +7,7 @@ import PersonaModel from "../models/PersonaModel.js"
     //Mostrar todos los registros
 export const getAllRepartidores = async (req, res) => {
     try {
-         const repartidores = await RepartidorModel.findAll()
+         const repartidores = await RepartidorModel.findAll({include: [{model: PersonaModel}]});
          res.json(repartidores)
 
     } catch (error) {
