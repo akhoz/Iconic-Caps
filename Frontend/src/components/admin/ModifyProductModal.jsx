@@ -26,11 +26,7 @@ function AddProductModal(props) {
     const [category, setCategory] = useState('');
     const [stock, setStock] = useState(0);
     const [price, setPrice] = useState(0);
-
-    const [currentBrand, setCurrentBrand] = useState('');
-    const [currentCategory, setCurrentCategory] = useState('');
-    const [currentStock, setCurrentStock] = useState(0);
-    const [currentPrice, setCurrentPrice] = useState(0);
+    const [image, setImage] = useState(null);
 
     const [invalidProduct, setInvalidProduct] = useState(false);
     const [invalidBrand, setInvalidBrand] = useState(false);
@@ -90,15 +86,37 @@ function AddProductModal(props) {
         getProvedores();
     }, [brand]);
 
+    useEffect(() => {
+        getProducts();
+    }, [model]);
+
+    const getProducts = async () => {
+        try {
+            const res = await axios.get(URI);
+            console.log(URI);
+            const product = res.data.find(product => product.Modelo === model);
+            console.log(product);
+            if (product) {
+                setBrand(product.Provedor.NombreEmpresa);
+                setCategory(product.Categoria);
+                setPrice(product.Precio);
+                setStock(product.ExistenciasDisponibles);
+                setImage(product.Img)
+            } else {
+                setBrand('');
+                setCategory('');
+                setPrice(0);
+                setStock(0);
+                setImage(null);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
     const handleAddProduct = async () => {
         if (model === '') {
-            setInvalidProduct(true);
-            return;
-        }
-        setInvalidProduct(false);
-        const products = await axios.get(URI);
-        if (products.data.find(product => product.Modelo === model)) {
             setInvalidProduct(true);
             return;
         }
@@ -138,8 +156,7 @@ function AddProductModal(props) {
         const localFileName = `${formattedLocalFileName}/${fileName}`;
         console.log(`${formattedLocalFileName}/${fileName}`);
 
-        const res = await axios.post(URI, {
-            Modelo: model,
+        const res = await axios.put(URI + `/${model}`, {
             Categoria: category,
             Precio: price,
             ExistenciasDisponibles: stock,
@@ -147,7 +164,7 @@ function AddProductModal(props) {
             IdentificadorFiscalProvedor: provedor
         });
         console.log(res.data)
-        console.log('Product added');
+        console.log('Product modified');
         props.handleCloseModal();
     }
 
@@ -155,10 +172,10 @@ function AddProductModal(props) {
         <div className="flex flex-row relative rounded-lg overflow-hidden w-4/5" data-aos="zoom-in">
             <div className="flex flex-col items-center justify-center bg-white w-1/2 py-5 overflow-hidden">
                 <h1 className="text-2xl font-bold">
-                    Add Product
+                    Modify Product
                 </h1>
                 <p className="text-md mt-3 w-1/2 text-center">
-                    Fill the following fields to add a new product to the store
+                    Fill the following fields to modify a product
                 </p>
                 <input
                     type="text"
@@ -167,6 +184,7 @@ function AddProductModal(props) {
                         ${invalidProduct ? 'border-b-red-500' : ''}`}
                     placeholder="Product Model"
                     onChange={handleModelChange}
+                    value={model}
                 />
                 {invalidProduct && (
                     <p className="text-red-500 text-sm text-start" data-aos="fade-down">
@@ -180,6 +198,7 @@ function AddProductModal(props) {
                         ${invalidBrand ? 'border-b-red-500' : ''}`}
                     placeholder="Product Brand"
                     onChange={handleBrandChange}
+                    value={brand}
                 />
                 {invalidBrand && (
                     <p className="text-red-500 text-sm text-start" data-aos="fade-down">
@@ -193,6 +212,7 @@ function AddProductModal(props) {
                         ${invalidCategory ? 'border-b-red-500' : ''}`}
                     placeholder="Product Category"
                     onChange={handleCategoryChange}
+                    value={category}
                 />
                 {invalidCategory && (
                     <p className="text-red-500 text-sm text-start" data-aos="fade-down">
@@ -208,6 +228,7 @@ function AddProductModal(props) {
                         ${invalidStock ? 'border-b-red-500 mt-8' : 'my-8'}`}
                             placeholder="Initial Stock"
                             onChange={handleStockChange}
+                            value={stock ? stock : '' }
                         />
                         {invalidStock && (
                             <p className="text-red-500 text-sm text-start mb-2" data-aos="fade-down">
@@ -223,6 +244,7 @@ function AddProductModal(props) {
                         ${invalidPrice? 'border-b-red-500 mt-8' : 'my-8'}`}
                             placeholder="Price"
                             onChange={handlePriceChange}
+                            value={price ? price : ''}
                         />
                         {invalidPrice && (
                             <p className="text-red-500 text-sm text-start mb-2" data-aos="fade-down">
@@ -237,31 +259,31 @@ function AddProductModal(props) {
                         ${invalidImage ? 'border-red-500' : 'border-gray-300'}`}
                 >
                     <input {...getInputProps()} className="w-fit"/>
-                    {!lastUploadedFile && (
+                    {!lastUploadedFile && !image && (
                         <p className="text-center w-full py-2 px-3">
                             Drag the product image here
                         </p>
                     )}
-                    {lastUploadedFile && (
+                    {lastUploadedFile || image && (
                         <p className="text-center w-full py-2 px-3">
-                            {`Image uploaded: ${fileName}`}
+                            {`Image uploaded: ${fileName ? fileName : image}`}
                         </p>
                     )}
                 </div>
                 <button className={`mt-8 rounded-lg w-1/2 py-3 duration-500 bg-black text-white
                     ${invalidProduct || invalidBrand || invalidCategory || invalidStock || invalidPrice || invalidImage ? 'hover:bg-red-500' : 'hover:bg-white hover:text-black hover:border hover:border-black'}`}
                         onClick={handleAddProduct}>
-                    Add Product
+                    Modify Product
                 </button>
             </div>
             <div className="flex flex-row items-center justify-start bg-white w-1/2 py-20 overflow-hidden">
                 <div className="flex flex-row justify-start items-center">
-                    {lastUploadedFile && (
+                    {lastUploadedFile || image && (
                         <img
-                            src={lastUploadedFile ? lastUploadedFile : ''}
+                            src={lastUploadedFile ? lastUploadedFile : `img/caps/${image}`}
                             className="object-cover w-1/2"/>
                     )}
-                    {!lastUploadedFile && (
+                    {!lastUploadedFile && !image && (
                         <GiBilledCap className="text-9xl mr-5"/>
                     )}
                     <div className="flex flex-col">
