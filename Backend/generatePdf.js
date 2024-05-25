@@ -7,23 +7,18 @@ import fs from 'fs';
  * @param {Object} data - Un objeto con los datos de cada vista.
  * @returns {Promise<void>}
  */
-export const generatePdf = (vistas, data) => {
+export const generatePdf = (data) => {
     return new Promise((resolve, reject) => {
         const doc = new PDFDocument();
-        const writeStream = fs.createWriteStream('VistasDatos.pdf');
+        const writeStream = fs.createWriteStream('VistaDatos.pdf');
         
         doc.pipe(writeStream);
 
-        vistas.forEach(vista => {
-            doc.addPage()
-               .fontSize(20)
-               .text(`Vista: ${vista}`, { underline: true });
+        doc.fontSize(20).text('Datos de la Vista', { underline: true });
 
-            const rows = data[vista];
-
-            rows.forEach(row => {
-                doc.fontSize(12).text(JSON.stringify(row));
-            });
+        data.forEach(row => {
+            doc.fontSize(12).text(JSON.stringify(row));
+            doc.moveDown();
         });
 
         doc.end();

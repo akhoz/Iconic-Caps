@@ -1,4 +1,5 @@
-import { getInformacionPedidosByCliente, getProductosCompradosByCliente , crearPedido, obtenerVista, getAllViews, getCantidadComprasPorProducto} from '../queries.js';
+import { getInformacionPedidosByCliente, getProductosCompradosByCliente , crearPedido, obtenerVista, getAllViews,
+     getCantidadComprasPorProducto, getPedidosPendientes} from '../queries.js';
 import { generatePdf} from '../generatePdf.js';
 
 export const obtenerInformacionPedidos = async (req, res) => {
@@ -11,7 +12,6 @@ export const obtenerInformacionPedidos = async (req, res) => {
         res.status(500).json({ error: 'Error al obtener la información de los pedidos' });
     }
 };
-
 
 export const obtenerProductosComprados = async (req, res) => {
     const { CedulaClienteConsultado } = req.params;
@@ -46,6 +46,7 @@ export const obtenerDatosDesdeVista = async (req, res) => {
     }
 };
 
+
 export const generarPdfConVistas = async (req, res) => {
     try {
         const vistas = await getAllViews();
@@ -73,5 +74,14 @@ export const obtenerCantidadComprasPorProducto = async (req, res) => {
         res.status(200).json(resultados);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener los datos' });
+    }
+};
+
+export const obtenerPedidosPendientes = async (req, res) => {
+    try {
+        const pedidos = await getPedidosPendientes();
+        res.status(200).json(pedidos);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener los pedidos pendientes' });
     }
 };
