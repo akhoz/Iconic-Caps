@@ -40,7 +40,7 @@ export const updateProvedor = async (req, res) => {
     try {
         const provedor = await ProvedorModel.findOne({
             where: {
-                NombreEmpresa: req.params.NombreEmpresa
+                IdentificadorFiscal: req.params.IdentificadorFiscal
             }
         });
 

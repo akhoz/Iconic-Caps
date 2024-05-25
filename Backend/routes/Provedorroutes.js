@@ -5,7 +5,7 @@ const router = express.Router();
 router.get('/', getProvedores);
 router.get('/:NombreEmpresa', getProvedor);
 router.post('/', createProvedor);
-router.put('/:NombreEmpresa', updateProvedor);
+router.put('/:IdentificadorFiscal', updateProvedor);
 router.delete('/:NombreEmpresa', deleteProvedor);
 
 export default router;
