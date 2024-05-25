@@ -1,5 +1,5 @@
 import { useUser } from "../contexts/UserContext.jsx";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
@@ -21,7 +21,8 @@ import DeleteEmployeeModal from "../components/admin/DeleteEmployeeModal.jsx";
 import DeleteDelivererModal from "../components/admin/DeleteDelivererModal.jsx";
 
 import Dashboard from "../components/admin/Dashboard.jsx";
-import ManageOrdersSection from "../components/admin/ordersManagement/ManageOrdersSection.jsx";
+import PendingOrderModal from "../components/admin/ordersManagement/PendingOrderModal.jsx";
+import axios from "axios";
 
 function Admin() {
     const { user, logOut } = useUser();
@@ -42,6 +43,8 @@ function Admin() {
     const [showDeleteStoreModal, setShowDeleteStoreModal] = useState(false);
     const [showDeleteEmployeeModal, setShowDeleteEmployeeModal] = useState(false);
     const [showDeleteDelivererModal, setShowDeleteDelivererModal] = useState(false);
+
+    const [showPendingOrderModal, setShowPendingOrderModal] = useState(false);
 
     const handleFeatures = () => {
         setShowFeatures(!showFeatures);
@@ -73,6 +76,8 @@ function Admin() {
         setShowDeleteStoreModal(false);
         setShowDeleteEmployeeModal(false);
         setShowDeleteDelivererModal(false);
+
+        setShowPendingOrderModal(false);
     }
 
     const handleAddProduct = () => {
@@ -121,6 +126,24 @@ function Admin() {
 
     const handleDeleteDeliverer = () => {
         setShowDeleteDelivererModal(true);
+    }
+
+    const handleClickOrder = (order) => {
+        setShowPendingOrderModal(true)
+        setSelectedOrder(order)
+    }
+
+    const URI = `http://localhost:8000/consultas/pedidos-pendientes`
+    const [pendingOrders, setPendingOrders] = useState([])
+    const [selectedOrder, setSelectedOrder] = useState(null)
+
+    useEffect( ()=>{
+        getPendingOrders()
+    },[])
+
+    const getPendingOrders = async () => {
+        const res = await axios.get(URI)
+        setPendingOrders(res.data)
     }
 
     return (
@@ -227,7 +250,44 @@ function Admin() {
                         </div>
                     )}
                     <Dashboard/>
-                    <ManageOrdersSection/>
+                    <div className="flex-grow bg-black w-full text-white mt-20 py-20 relative">
+                        <h1 className="font-bold text-2xl absolute top-8 left-8">
+                            Pending Orders
+                        </h1>
+                        {pendingOrders.length === 0 && (
+                            <p className={`${pendingOrders.length > 0 ? 'hidden' : ''} text-lg ml-8`}>
+                                There are no pending orders
+                            </p>)}
+                        {pendingOrders.length > 0 && (
+                        <div className="flex w-full justify-center">
+                            <div
+                                className="grid grid-cols-1 gap-x-10 gap-y-20 mx-8 w-full md:grid-cols-2 lg:grid-cols-3">
+                                {pendingOrders.map((order) => (
+                                    <button
+                                        key={order.NumeroFactura}
+                                        className="transition-transform transform hover:scale-105"
+                                        onClick={() => handleClickOrder(order)}
+                                    >
+                                        <div className="flex flex-col justify-between items-start">
+                                            <h2 className="font-bold text-lg">
+                                                {`Order: ${order.NumeroFactura}`}
+                                            </h2>
+                                            <p className="text-sm mt-1 text-justify">
+                                                {order.FechaDeCompra}
+                                            </p>
+                                            <p>
+                                                {`User: ${order.NombreCliente}`}
+                                            </p>
+                                            <p>
+                                                {`Deliverer: ${order.NombreRepartidor}`}
+                                            </p>
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                        )}
+                    </div>
                 </div>
             )}
             {showAddProductModal && (
@@ -338,6 +398,15 @@ function Admin() {
                 </div>
             )}
             {showDeleteDelivererModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
+            )}
+            {showPendingOrderModal && (
+                <div
+                    className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <PendingOrderModal handleCloseModal={handleCloseModal} orderSelected={selectedOrder.NumeroFactura}/>
+                </div>
+            )}
+            {showPendingOrderModal && (
                 <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
             <button
