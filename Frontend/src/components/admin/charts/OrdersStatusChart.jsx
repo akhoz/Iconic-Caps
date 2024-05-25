@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import {Pie, PieChart, ResponsiveContainer, Cell, Tooltip, Legend} from "recharts";
 
-const COLORS = ['#FFA07A', '#6A5ACD', '#20B2AA'];
+const COLORS = ['#39f3bb', '#1d81a2', '#09bb9f'];
 
 function OrdersStatusChart() {
     const ordersURI = 'http://localhost:8000/envioxpedido';

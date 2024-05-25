@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import {Pie, PieChart, ResponsiveContainer, Cell, Tooltip, Legend} from "recharts";
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
+const COLORS = ['#39f3bb', '#18a1cd', '#15607a', '#1d81a2', '#09bb9f'];
 
 function ProductsRatingChart() {
     const commentsURI = 'http://localhost:8000/comentarios';

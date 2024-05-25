@@ -8,11 +8,11 @@ function Dashboard() {
             <h1 className="font-bold text-2xl mb-20">
                 Dashboard
             </h1>
-            <div className="flex flex-row w-full h-full">
+            <div className="flex flex-row w-full h-full" data-aos="fade-up">
                 <ProductsRatingChart />
                 <OrdersStatusChart />
             </div>
-            <div className="w-full h-full">
+            <div className="w-full h-full" data-aos="fade-up">
                 <ProductsPurchasedChart />
             </div>
         </div>
