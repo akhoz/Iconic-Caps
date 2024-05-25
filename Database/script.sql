@@ -58,15 +58,6 @@ create table IconicCaps.Repartidor (
     FOREIGN KEY (NumeroSucursalAsignada) references Sucursal (NumeroSucursal) ON DELETE SET NULL
 );
 
-create table IconicCaps.Compra (
-    IdCompra INT AUTO_INCREMENT,
-    ModeloProducto VARCHAR(25),
-    CedulaCliente INT,
-    FOREIGN KEY (ModeloProducto) references Producto (Modelo) ON DELETE CASCADE,
-    FOREIGN KEY (CedulaCliente) references Cliente (CedulaCliente) ON DELETE CASCADE,
-    PRIMARY KEY (IdCompra, ModeloProducto, CedulaCliente)
-);
-
 create table IconicCaps.Comentario (
     IdComentario INT PRIMARY KEY AUTO_INCREMENT,
     CedulaCliente INT,
@@ -121,3 +112,15 @@ ADD Img VARCHAR(100);
 
 ALTER TABLE Sucursal
 ADD LinkGoogleMaps VARCHAR(100);
+
+ALTER TABLE Cliente
+ADD Admin BOOL;
+
+UPDATE Cliente
+SET Admin = false;
+
+INSERT INTO Persona (Cedula, Nombre, PrimerApellido, SegundoApellido, Email) VALUE
+(1, 'ADMIN', 'ADMIN', 'ADMIN', 'ADMIN');
+
+INSERT INTO Cliente (CedulaCliente, Usuario, Contrasena, Admin) VALUE
+(1, 'ADMIN', 'Admin123', true);

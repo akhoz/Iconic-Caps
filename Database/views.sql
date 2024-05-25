@@ -2,7 +2,7 @@ use iconiccaps;
 
 -- Vista para obtener todos los nombres de los repartidores y su historial de envios
 CREATE OR REPLACE VIEW vista_repartidores AS
-SELECT CONCAT(Persona.Nombre, ' ', Persona.PrimerApellido, ' ', Persona.SegundoApellido) AS NombreCompleto, Persona.NumeroTelefono,
+SELECT CONCAT(Persona.Nombre, ' ', Persona.PrimerApellido, ' ', Persona.SegundoApellido) AS NombreCompleto, Persona.Email,
        Repartidor.NumeroSucursalAsignada, EnvioXPedido.NumeroFacturaPedido, EnvioXPedido.Direccion, EnvioXPedido.FechaEntrega,
        EnvioXPedido.Estado
 FROM Repartidor
@@ -13,7 +13,7 @@ SELECT * FROM vista_repartidores;
 
 -- Vista para obtener los clientes y su historial de compras
 CREATE OR REPLACE VIEW vista_clientes AS
-SELECT CONCAT(Persona.Nombre, ' ', Persona.PrimerApellido, ' ', Persona.SegundoApellido) AS NombreCompleto, Persona.NumeroTelefono,
+SELECT CONCAT(Persona.Nombre, ' ', Persona.PrimerApellido, ' ', Persona.SegundoApellido) AS NombreCompleto, Persona.Email,
        Pedido.NumeroFactura, Pedido.FechaDeCompra, ListaProductosPedidos.ModeloProducto, ListaProductosPedidos.CantidadProducto
 FROM Cliente
 JOIN Persona ON Cliente.CedulaCliente = Persona.Cedula
@@ -34,7 +34,7 @@ SELECT * FROM vista_comentarios;
 
 -- Vista para obtener el nombre y numero de telefono de todas las personas asociadas a una sucursal
 CREATE OR REPLACE VIEW vista_sucursales AS
-SELECT CONCAT(Persona.Nombre, ' ', Persona.PrimerApellido, ' ', Persona.SegundoApellido) AS NombreCompleto, Persona.NumeroTelefono, Persona.Cedula, Sucursal.Nombre AS SucursalAsignada
+SELECT CONCAT(Persona.Nombre, ' ', Persona.PrimerApellido, ' ', Persona.SegundoApellido) AS NombreCompleto, Persona.Email, Persona.Cedula, Sucursal.Nombre AS SucursalAsignada
 FROM Sucursal
 JOIN Empleado ON Sucursal.NumeroSucursal = Empleado.NumeroSucursalAsignada
 JOIN Repartidor ON Sucursal.NumeroSucursal = Repartidor.NumeroSucursalAsignada

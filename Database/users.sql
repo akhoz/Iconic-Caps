@@ -15,3 +15,4 @@ GRANT SELECT ON iconiccaps.* TO usuario_respaldo@localhost; -- Falta darle mas p
 SHOW GRANTS FOR super_usuario@localhost;
 SHOW GRANTS FOR usuario_normal@localhost;
 SHOW GRANTS FOR usuario_respaldo@localhost;
+

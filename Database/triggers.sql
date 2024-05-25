@@ -86,59 +86,92 @@ END //
 DELIMITER ;
 
 -- FALTA ELIMINAR
-
--- Triggers de Compra ----------------------------------------
-
--- Insertar (verifica si el producto existe)
 DELIMITER //
-CREATE TRIGGER verificar_producto_existente
-BEFORE INSERT ON Compra
+CREATE TRIGGER notificar_eliminacion
+AFTER DELETE ON comentario
 FOR EACH ROW
 BEGIN
-    DECLARE cantidad_productos INT;
-    SELECT COUNT(*) INTO cantidad_productos
-    FROM Producto
-    WHERE Modelo = NEW.ModeloProducto;
-    IF cantidad_productos = 0 THEN
     SIGNAL SQLSTATE '55000'
-    SET MESSAGE_TEXT = 'El producto no existe';
-    end if;
+    SET MESSAGE_TEXT = 'Comentario eliminado';
 END //
 DELIMITER ;
 
--- Actualizar (verifica si el producto existe)
+-- Triggers de Persona (ADMIN) ----------------------------------------
+
+-- Trigger para antes de insertar, verificar que no inserte un usuario igual que ADMIN
 DELIMITER //
-CREATE TRIGGER verificar_producto_existente_actualizar
-BEFORE UPDATE ON Compra
+CREATE TRIGGER verificar_admin
+BEFORE INSERT ON Persona
 FOR EACH ROW
 BEGIN
-    DECLARE cantidad_productos INT;
-    SELECT COUNT(*) INTO cantidad_productos
-    FROM Producto
-    WHERE Modelo = NEW.ModeloProducto;
-    IF cantidad_productos = 0 THEN
+    IF NEW.Nombre = 'ADMIN' THEN
     SIGNAL SQLSTATE '55000'
-    SET MESSAGE_TEXT = 'El producto no existe';
+    SET MESSAGE_TEXT = 'No se puede insertar un usuario con el nombre ADMIN';
     end if;
 END //
 DELIMITER ;
 
--- Eliminar (si se eliminan todas las compras de un producto de un usuario, se elimina tambien sus comentarios de ese producto)
+-- Trigger para antes de actualizar, verificar que no actualice un usuario igual que ADMIN
 DELIMITER //
-CREATE TRIGGER eliminar_comentarios
-AFTER DELETE ON Compra
+CREATE TRIGGER verificar_admin_actualizar
+BEFORE UPDATE ON Persona
 FOR EACH ROW
 BEGIN
-    DECLARE cantidad_compras INT;
-    SELECT COUNT(*) INTO cantidad_compras
-    FROM Compra
-    WHERE ModeloProducto = OLD.ModeloProducto AND CedulaCliente = OLD.CedulaCliente;
-    IF cantidad_compras = 0 THEN
-    DELETE FROM Comentario
-    WHERE ModeloProducto = OLD.ModeloProducto AND CedulaCliente = OLD.CedulaCliente;
+    IF NEW.Nombre = 'ADMIN' THEN
+    SIGNAL SQLSTATE '55000'
+    SET MESSAGE_TEXT = 'No se puede actualizar un usuario con el nombre ADMIN';
     end if;
 END //
-DELIMITER ;
+
+-- Trigger para que no se pueda eliminar el usuario ADMIN
+DELIMITER //
+CREATE TRIGGER verificar_admin_eliminar
+BEFORE DELETE ON Persona
+FOR EACH ROW
+BEGIN
+    IF OLD.Nombre = 'ADMIN' THEN
+    SIGNAL SQLSTATE '55000'
+    SET MESSAGE_TEXT = 'No se puede eliminar el usuario ADMIN';
+    end if;
+END //
+
+-- Triggers Cliente
+
+-- Trigger para evitar que se elimine el usuario ADMIN
+DELIMITER //
+CREATE TRIGGER verificar_admin_eliminar_cliente
+BEFORE DELETE ON Cliente
+FOR EACH ROW
+BEGIN
+    IF OLD.CedulaCliente = 1 THEN
+    SIGNAL SQLSTATE '55000'
+    SET MESSAGE_TEXT = 'No se puede eliminar el usuario ADMIN';
+    end if;
+END //
+
+-- Trigger para evitar que se actualice el usuario ADMIN
+DELIMITER //
+CREATE TRIGGER verificar_admin_actualizar_cliente
+BEFORE UPDATE ON Cliente
+FOR EACH ROW
+BEGIN
+    IF OLD.Usuario = "ADMIN" THEN
+    SIGNAL SQLSTATE '55000'
+    SET MESSAGE_TEXT = 'No se puede actualizar el usuario ADMIN';
+    end if;
+END //
+
+-- Trigger para evitar que se inserte el usuario ADMIN
+DELIMITER //
+CREATE TRIGGER verificar_admin_insertar_cliente
+BEFORE INSERT ON Cliente
+FOR EACH ROW
+BEGIN
+    IF NEW.Usuario = "ADMIN" THEN
+    SIGNAL SQLSTATE '55000'
+    SET MESSAGE_TEXT = 'No se puede insertar el usuario ADMIN';
+    end if;
+END //
 
 -- Trigger adicional
 DELIMITER //

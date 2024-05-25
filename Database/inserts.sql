@@ -69,16 +69,6 @@ insert into IconicCaps.Repartidor (CedulaRepartidor, NumeroSucursalAsignada) val
     (208700203, 5),
     (208700204, 6);
 
-insert into IconicCaps.Compra (ModeloProducto, CedulaCliente) values
-    ('AD5', 208700187),
-    ('EL2', 208700188),
-    ('GP6', 208700189),
-    ('NR2', 208700190),
-    ('PM12', 208700191),
-    ('UA34', 208700192);
-
-select CedulaRepartidor from repartidor;
-
 INSERT INTO IconicCaps.Comentario (CedulaCliente, ModeloProducto, Estrellas, Comentario, Fecha, Hora) VALUES
     (208700187, 'AD5', 4, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod libero nec sapien faucibus, nec consequat libero mollis.', '2024-02-04', '10:00'),
     (208700188, 'EL2', 4, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod libero nec sapien faucibus, nec consequat libero mollis.', '2024-02-05', '11:00'),
@@ -450,14 +440,6 @@ INSERT INTO IconicCaps.EnvioXPedido (NumeroFacturaPedido, CedulaRepartidor, Dire
     (11, 208700233, 'Rome', '2024-02-07', 'En proceso'),
     (12, 208700234, 'Madrid', '2024-02-08', 'Entregado');
 
-INSERT INTO IconicCaps.Compra (ModeloProducto, CedulaCliente) VALUES
-    ('AD5', 208700217),
-    ('EL2', 208700218),
-    ('GP6', 208700209),
-    ('NR2', 208700216),
-    ('PM12', 208700205),
-    ('UA34', 208700214);
-
 INSERT INTO IconicCaps.Pedido (CedulaCliente, FechaDeCompra) VALUES
     (208700211, '2024-01-03'),
     (208700212, '2024-01-04'),
@@ -489,14 +471,6 @@ INSERT INTO IconicCaps.EnvioXPedido (NumeroFacturaPedido, CedulaRepartidor, Dire
     (16, 208700244, 'Copenhagen', '2024-02-06', 'En proceso'),
     (17, 208700245, 'Dublin', '2024-02-07', 'En proceso'),
     (18, 208700246, 'Edinburgh', '2024-02-08', 'Entregado');
-
-INSERT INTO IconicCaps.Compra (ModeloProducto, CedulaCliente) VALUES
-    ('AD77', 208700211),
-    ('PM33', 208700212),
-    ('EL69', 208700213),
-    ('NR99', 208700215),
-    ('GP0', 208700210),
-    ('UA35', 208700218);
 
 INSERT INTO IconicCaps.Persona (Cedula, Nombre, PrimerApellido, SegundoApellido, Email) VALUE
     (108403221, 'Olivier', 'Giroud', 'Leao', 'email@example.com');
@@ -665,3 +639,30 @@ WHERE sucursal.Nombre = 'Iconic Vienna';
 UPDATE sucursal
 SET LinkGoogleMaps = 'https://maps.app.goo.gl/a3G99sWNAvjem2kv9'
 WHERE sucursal.Nombre = 'Iconic Zurich';
+
+insert into listaproductospedidos (NumeroFacturaPedido, ModeloProducto, CantidadProducto) VALUE
+    (4, 'AD5', 2);
+
+insert into pedido (CedulaCliente, FechaDeCompra) VALUE
+    (208700190, NOW());
+
+insert into listaproductospedidos (NumeroFacturaPedido, ModeloProducto, CantidadProducto) VALUE
+    (19, 'AD5', 1);
+
+insert into envioxpedido (NumeroFacturaPedido, CedulaRepartidor, Direccion, FechaEntrega, Estado) VALUE
+    (19, 208700243, 'Lorem ipsum...', NOW(), 'En proceso');
+
+INSERT INTO IconicCaps.Pedido (CedulaCliente, FechaDeCompra) VALUES
+    (208700187, NOW()),
+    (208700188, NOW()),
+    (208700190, NOW());
+
+INSERT INTO listaproductospedidos (NumeroFacturaPedido, ModeloProducto, CantidadProducto) VALUES
+    (27, 'UA36', 1),
+    (28, 'EL69', 3),
+    (29, 'PM65', 2);
+
+INSERT INTO envioxpedido (NumeroFacturaPedido, CedulaRepartidor, Direccion, FechaEntrega, Estado) VALUES
+    (27, 208700242, 'Lorem ipsum', '2024-02-10', 'Entregado'),
+    (28, 208700235, 'Lorem ipsum', '2024-02-11', 'Entregado'),
+    (29, 208700238, 'Lorem ipsum', '2024-02-12', 'En proceso');
