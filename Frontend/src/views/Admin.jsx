@@ -226,9 +226,6 @@ function Admin() {
                         </div>
                     )}
                     <Dashboard/>
-                    <div className="flex items-center justify-center bg-black h-screen w-full text-white">
-                        Orders Management Here
-                    </div>
                 </div>
             )}
             {showAddProductModal && (
