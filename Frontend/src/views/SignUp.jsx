@@ -167,7 +167,8 @@ function SignUp () {
         const res2 = await axios.post('http://localhost:8000/clientes', {
             CedulaCliente: newCedula,
             Usuario: newUsername,
-            Contrasena: newPassword
+            Contrasena: newPassword,
+            Admin: false
         });
         console.log(res2.data);
         navigate('/LogIn')

@@ -26,7 +26,7 @@ function PendingOrderModal(props) {
                 Is this order delivered?
             </h1>
             <p className="text-lg mt-3 text-center lg:w-2/3">
-                Order: {props.orderSelected.NumeroFactura}
+                Order: {props.orderSelected}
             </p>
             <p className="text-lg text-center w-4/5">
                 {'Click the button below to confirm the delivery of this order'}
