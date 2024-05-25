@@ -117,4 +117,16 @@ export const crearPedido = async (CedulaClienteSolicitante, porcentajeGarantia, 
     }
 };
 
+export const obtenerVista = async (vista) => {
+    try {
+        const resultados = await db.query(`SELECT * FROM ${vista}`, {
+            type: db.QueryTypes.SELECT
+        });
+        return resultados;
+    } catch (error) {
+        console.error('Error fetching data from view:', error);
+        throw error;
+    }
+};
+
 
