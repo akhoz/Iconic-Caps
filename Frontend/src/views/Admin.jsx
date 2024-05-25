@@ -21,6 +21,7 @@ import DeleteProductModal from "../components/admin/DeleteProductModal.jsx";
 import DeleteStoreModal from "../components/admin/DeleteStoreModal.jsx";
 import DeleteEmployeeModal from "../components/admin/DeleteEmployeeModal.jsx";
 import DeleteDelivererModal from "../components/admin/DeleteDelivererModal.jsx";
+import DeleteProviderModal from "../components/admin/DeleteProviderModal.jsx";
 
 import Dashboard from "../components/admin/Dashboard.jsx";
 import PendingOrderModal from "../components/admin/ordersManagement/PendingOrderModal.jsx";
@@ -47,6 +48,7 @@ function Admin() {
     const [showDeleteStoreModal, setShowDeleteStoreModal] = useState(false);
     const [showDeleteEmployeeModal, setShowDeleteEmployeeModal] = useState(false);
     const [showDeleteDelivererModal, setShowDeleteDelivererModal] = useState(false);
+    const [showDeleteProvidersModal, setShowDeleteProvidersModal] = useState(false);
 
     const [showPendingOrderModal, setShowPendingOrderModal] = useState(false);
 
@@ -82,6 +84,7 @@ function Admin() {
         setShowDeleteStoreModal(false);
         setShowDeleteEmployeeModal(false);
         setShowDeleteDelivererModal(false);
+        setShowDeleteProvidersModal(false);
 
         setShowPendingOrderModal(false);
     }
@@ -140,6 +143,10 @@ function Admin() {
 
     const handleDeleteDeliverer = () => {
         setShowDeleteDelivererModal(true);
+    }
+
+    const handleDeleteProviders = () => {
+        setShowDeleteProvidersModal(true);
     }
 
     const handleClickOrder = (order) => {
@@ -272,7 +279,8 @@ function Admin() {
                                 Delete Deliverers
                             </button>
                             <button
-                                className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125">
+                                className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
+                                onClick={handleDeleteProviders}>
                                 Delete Providers
                             </button>
                         </div>
@@ -444,6 +452,15 @@ function Admin() {
                 </div>
             )}
             {showDeleteDelivererModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
+            )}
+            {showDeleteProvidersModal && (
+                <div
+                    className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <DeleteProviderModal handleCloseModal={handleCloseModal}/>
+                </div>
+            )}
+            {showDeleteProvidersModal && (
                 <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
             {showPendingOrderModal && (
