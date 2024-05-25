@@ -15,6 +15,7 @@ import ModifyProductModal from "../components/admin/ModifyProductModal.jsx";
 import ModifyStoreModal from "../components/admin/ModifyStoreModal.jsx";
 import ModifyEmployeeModal from "../components/admin/ModifyEmployeeModal.jsx";
 import ModifyDelivererModal from "../components/admin/ModifyDelivererModal.jsx";
+import ModifyProvidersModal from "../components/admin/ModifyProvidersModal.jsx";
 
 import DeleteProductModal from "../components/admin/DeleteProductModal.jsx";
 import DeleteStoreModal from "../components/admin/DeleteStoreModal.jsx";
@@ -40,6 +41,7 @@ function Admin() {
     const [showModifyStoreModal, setShowModifyStoreModal] = useState(false);
     const [showModifyEmployeeModal, setShowModifyEmployeeModal] = useState(false);
     const [showModifyDelivererModal, setShowModifyDelivererModal] = useState(false);
+    const [showModifyProvidersModal, setShowModifyProvidersModal] = useState(false);
 
     const [showDeleteProductModal, setShowDeleteProductModal] = useState(false);
     const [showDeleteStoreModal, setShowDeleteStoreModal] = useState(false);
@@ -74,6 +76,7 @@ function Admin() {
         setShowModifyStoreModal(false);
         setShowModifyEmployeeModal(false);
         setShowModifyDelivererModal(false);
+        setShowModifyProvidersModal(false);
 
         setShowDeleteProductModal(false);
         setShowDeleteStoreModal(false);
@@ -117,6 +120,10 @@ function Admin() {
 
     const handleModifyDeliverer = () => {
         setShowModifyDelivererModal(true);
+    }
+
+    const handleModifyProviders = () => {
+        setShowModifyProvidersModal(true);
     }
 
     const handleDeleteProduct = () => {
@@ -231,7 +238,8 @@ function Admin() {
                                 Modify Deliverers
                             </button>
                             <button
-                                className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125">
+                                className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
+                                onClick={handleModifyProviders}>
                                 Modify Providers
                             </button>
                         </div>
@@ -389,6 +397,15 @@ function Admin() {
                 </div>
             )}
             {showModifyDelivererModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
+            )}
+            {showModifyProvidersModal && (
+                <div
+                    className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <ModifyProvidersModal handleCloseModal={handleCloseModal}/>
+                </div>
+            )}
+            {showModifyProvidersModal && (
                 <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
             {showDeleteProductModal && (
