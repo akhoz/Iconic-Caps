@@ -117,8 +117,6 @@ export const crearPedido = async (CedulaClienteSolicitante, porcentajeGarantia, 
     }
 };
 
-
-
 export const obtenerVista = async (vista) => {
     try {
         const resultados = await db.query(`SELECT * FROM ${vista}`, {
@@ -134,20 +132,27 @@ export const obtenerVista = async (vista) => {
 //Generar pdf
 export const getAllViews = async () => {
     try {
-        const vistas = await db.query(
+        const resultados = await db.query(
             `SELECT table_name 
              FROM information_schema.tables 
              WHERE table_type = 'VIEW' 
              AND table_schema = 'IconicCaps'`,  // Cambia 'IconicCaps' por el nombre de tu esquema
             { type: db.QueryTypes.SELECT }
         );
-        return vistas.map(vista => vista.table_name);
+        console.log('Resultados de la consulta:', resultados); // Añadir depuración
+
+        // Mostrar las claves del primer resultado para verificar el nombre correcto
+        if (resultados.length > 0) {
+            console.log('Claves del primer resultado:', Object.keys(resultados[0]));
+        }
+
+        // Intentar acceder al valor correcto
+        return resultados.map(vista => vista.table_name || vista.TABLE_NAME);
     } catch (error) {
         console.error('Error fetching views:', error);
         throw error;
     }
 };
-
 
 export const getCantidadComprasPorProducto = async () => {
     try {
@@ -155,6 +160,30 @@ export const getCantidadComprasPorProducto = async () => {
             `SELECT ModeloProducto, SUM(CantidadProducto) AS cantidad_compras
              FROM listaproductospedidos
              GROUP BY ModeloProducto`,
+            { type: db.QueryTypes.SELECT }
+        );
+        return resultados;
+    } catch (error) {
+        console.error('Error al ejecutar la consulta:', error);
+        throw error;
+    }
+};
+
+export const getPedidosPendientes = async () => {
+    try {
+        const resultados = await db.query(
+            `SELECT
+            pedido.NumeroFactura,
+            pedido.FechaDeCompra,
+            CONCAT(c.Nombre, ' ', c.PrimerApellido, ' ', c.SegundoApellido) AS NombreCliente,
+            CONCAT(r.Nombre, ' ', r.PrimerApellido, ' ', r.SegundoApellido) AS NombreRepartidor
+        FROM pedido
+        JOIN envioxpedido ON pedido.NumeroFactura = envioxpedido.NumeroFacturaPedido
+        JOIN repartidor ON envioxpedido.CedulaRepartidor = repartidor.CedulaRepartidor
+        JOIN cliente ON pedido.CedulaCliente = cliente.CedulaCliente
+        JOIN persona AS c ON cliente.CedulaCliente = c.Cedula
+        JOIN persona AS r ON repartidor.CedulaRepartidor = r.Cedula
+        WHERE envioxpedido.Estado = 'En proceso';`,
             { type: db.QueryTypes.SELECT }
         );
         return resultados;
