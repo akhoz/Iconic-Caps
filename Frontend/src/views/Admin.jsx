@@ -21,6 +21,7 @@ import DeleteEmployeeModal from "../components/admin/DeleteEmployeeModal.jsx";
 import DeleteDelivererModal from "../components/admin/DeleteDelivererModal.jsx";
 
 import Dashboard from "../components/admin/Dashboard.jsx";
+import ManageOrdersSection from "../components/admin/ordersManagement/ManageOrdersSection.jsx";
 
 function Admin() {
     const { user, logOut } = useUser();
@@ -47,7 +48,7 @@ function Admin() {
         if (!showFeatures) {
             window.scrollBy({ top: 110, behavior: 'smooth' });
         } else {
-            window.scrollBy({ top: -110, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }
 
@@ -226,6 +227,7 @@ function Admin() {
                         </div>
                     )}
                     <Dashboard/>
+                    <ManageOrdersSection/>
                 </div>
             )}
             {showAddProductModal && (
