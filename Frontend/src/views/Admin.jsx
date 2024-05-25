@@ -20,6 +20,8 @@ import DeleteStoreModal from "../components/admin/DeleteStoreModal.jsx";
 import DeleteEmployeeModal from "../components/admin/DeleteEmployeeModal.jsx";
 import DeleteDelivererModal from "../components/admin/DeleteDelivererModal.jsx";
 
+import Dashboard from "../components/admin/Dashboard.jsx";
+
 function Admin() {
     const { user, logOut } = useUser();
     const navigate = useNavigate();
@@ -224,7 +226,7 @@ function Admin() {
                         </div>
                     )}
                     <div className="flex items-center justify-center bg-white h-screen w-full">
-                        Dashboard Here
+                        <Dashboard/>
                     </div>
                     <div className="flex items-center justify-center bg-black h-screen w-full text-white">
                         Orders Management Here
