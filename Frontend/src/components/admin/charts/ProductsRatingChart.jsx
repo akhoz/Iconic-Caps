@@ -49,7 +49,7 @@ function ProductsRatingChart() {
     };
 
     return (
-        <div className="flex flex-col w-1/2 h-1/2 justify-center items-center">
+        <div className="flex flex-col w-1/2 h-full justify-center items-center">
             <h1 className="font-bold text-xl">
                 Products Rating Chart
             </h1>

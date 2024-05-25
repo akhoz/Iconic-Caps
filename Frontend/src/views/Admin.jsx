@@ -225,9 +225,7 @@ function Admin() {
                             </button>
                         </div>
                     )}
-                    <div className="flex items-center justify-center bg-white h-screen w-full">
-                        <Dashboard/>
-                    </div>
+                    <Dashboard/>
                     <div className="flex items-center justify-center bg-black h-screen w-full text-white">
                         Orders Management Here
                     </div>
