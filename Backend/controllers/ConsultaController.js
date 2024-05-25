@@ -1,4 +1,5 @@
-import { getInformacionPedidosByCliente, getProductosCompradosByCliente , crearPedido, obtenerVista} from '../queries.js';
+import { getInformacionPedidosByCliente, getProductosCompradosByCliente , crearPedido, obtenerVista, getAllViews, getCantidadComprasPorProducto} from '../queries.js';
+import { generatePdf} from '../generatePdf.js';
 
 export const obtenerInformacionPedidos = async (req, res) => {
     const { CedulaClienteConsultado } = req.params;
@@ -42,5 +43,35 @@ export const obtenerDatosDesdeVista = async (req, res) => {
         res.status(200).json(datos);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener los datos desde la vista' });
+    }
+};
+
+export const generarPdfConVistas = async (req, res) => {
+    try {
+        const vistas = await getAllViews();
+        const data = {};
+
+        for (const vista of vistas) {
+            data[vista] = await obtenerVista(vista);
+        }
+
+        await generatePdf(vistas, data);
+
+        res.download('VistasDatos.pdf', 'VistasDatos.pdf', (err) => {
+            if (err) {
+                res.status(500).json({ error: 'Error al descargar el PDF' });
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Error al generar el PDF' });
+    }
+};
+
+export const obtenerCantidadComprasPorProducto = async (req, res) => {
+    try {
+        const resultados = await getCantidadComprasPorProducto();
+        res.status(200).json(resultados);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener los datos' });
     }
 };

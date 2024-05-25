@@ -117,6 +117,8 @@ export const crearPedido = async (CedulaClienteSolicitante, porcentajeGarantia, 
     }
 };
 
+
+
 export const obtenerVista = async (vista) => {
     try {
         const resultados = await db.query(`SELECT * FROM ${vista}`, {
@@ -129,4 +131,35 @@ export const obtenerVista = async (vista) => {
     }
 };
 
+//Generar pdf
+export const getAllViews = async () => {
+    try {
+        const vistas = await db.query(
+            `SELECT table_name 
+             FROM information_schema.tables 
+             WHERE table_type = 'VIEW' 
+             AND table_schema = 'IconicCaps'`,  // Cambia 'IconicCaps' por el nombre de tu esquema
+            { type: db.QueryTypes.SELECT }
+        );
+        return vistas.map(vista => vista.table_name);
+    } catch (error) {
+        console.error('Error fetching views:', error);
+        throw error;
+    }
+};
 
+
+export const getCantidadComprasPorProducto = async () => {
+    try {
+        const resultados = await db.query(
+            `SELECT ModeloProducto, SUM(CantidadProducto) AS cantidad_compras
+             FROM listaproductospedidos
+             GROUP BY ModeloProducto`,
+            { type: db.QueryTypes.SELECT }
+        );
+        return resultados;
+    } catch (error) {
+        console.error('Error al ejecutar la consulta:', error);
+        throw error;
+    }
+};
