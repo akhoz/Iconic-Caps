@@ -9,6 +9,7 @@ import AddProductModal from "../components/admin/AddProductModal.jsx";
 import AddStoreModal from "../components/admin/AddStoreModal.jsx";
 import AddEmployeesModal from "../components/admin/AddEmployees.Modal.jsx";
 import AddDelivererModal from "../components/admin/AddDelivererModal.jsx";
+import AddProvidersModal from "../components/admin/AddProvidersModal.jsx";
 
 import ModifyProductModal from "../components/admin/ModifyProductModal.jsx";
 import ModifyStoreModal from "../components/admin/ModifyStoreModal.jsx";
@@ -33,6 +34,7 @@ function Admin() {
     const [showAddStoreModal, setShowAddStoreModal] = useState(false);
     const [showAddEmployeeModal, setShowAddEmployeeModal] = useState(false);
     const [showAddDelivererModal, setShowAddDelivererModal] = useState(false);
+    const [showAddProvidersModal, setShowAddProvidersModal] = useState(false);
 
     const [showModifyProductModal, setShowModifyProductModal] = useState(false);
     const [showModifyStoreModal, setShowModifyStoreModal] = useState(false);
@@ -66,6 +68,7 @@ function Admin() {
         setShowAddStoreModal(false);
         setShowAddEmployeeModal(false);
         setShowAddDelivererModal(false);
+        setShowAddProvidersModal(false);
 
         setShowModifyProductModal(false);
         setShowModifyStoreModal(false);
@@ -94,6 +97,10 @@ function Admin() {
 
     const handleAddDeliverer = () => {
         setShowAddDelivererModal(true);
+    }
+
+    const handleAddProviders = () => {
+        setShowAddProvidersModal(true);
     }
 
     const handleModifyProduct = () => {
@@ -192,6 +199,11 @@ function Admin() {
                                 onClick={handleAddDeliverer}>
                                 Add Deliverers
                             </button>
+                            <button
+                                className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
+                                onClick={handleAddProviders}>
+                                Add Providers
+                            </button>
                         </div>
                     )}
                     {showFeatures && (
@@ -217,6 +229,10 @@ function Admin() {
                                 className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125"
                                 onClick={handleModifyDeliverer}>
                                 Modify Deliverers
+                            </button>
+                            <button
+                                className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125">
+                                Modify Providers
                             </button>
                         </div>
                     )}
@@ -246,6 +262,10 @@ function Admin() {
                                 onClick={handleDeleteDeliverer}
                             >
                                 Delete Deliverers
+                            </button>
+                            <button
+                                className="duration-500 transition-transform transform hover:scale-110 lg:hover:scale-125">
+                                Delete Providers
                             </button>
                         </div>
                     )}
@@ -324,6 +344,15 @@ function Admin() {
                 </div>
             )}
             {showAddDelivererModal && (
+                <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
+            )}
+            {showAddProvidersModal && (
+                <div
+                    className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+                    <AddProvidersModal handleCloseModal={handleCloseModal}/>
+                </div>
+            )}
+            {showAddProvidersModal && (
                 <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
             )}
             {showModifyProductModal && (
