@@ -10,7 +10,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON iconiccaps.* TO usuario_normal@
 
 -- Usuaio de respaldo
 CREATE USER usuario_respaldo@localhost IDENTIFIED BY 'respaldo';
-GRANT SELECT ON iconiccaps.* TO usuario_respaldo@localhost; -- Falta darle mas permisos
+GRANT SELECT, SHOW VIEW, LOCK TABLES ON iconiccaps.* TO usuario_respaldo@localhost;
 
 SHOW GRANTS FOR super_usuario@localhost;
 SHOW GRANTS FOR usuario_normal@localhost;
