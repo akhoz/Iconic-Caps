@@ -4,23 +4,27 @@ import ClienteModel from './ClienteModel.js';
 import ProductoModel from './ProductoModel.js';
 
 const ComentarioModel = db.define('Comentario', {
-    IdComentario: { type: DataTypes.INTEGER, primaryKey: true },
-    Estrellas: { type: DataTypes.INTEGER },
-    Comentario: { type: DataTypes.STRING },
-    Fecha: { type: DataTypes.DATE },
-    Hora: { type: DataTypes.TIME }
-});
+  IdComentario: { type: DataTypes.INTEGER, primaryKey: true },
+  Estrellas: { type: DataTypes.INTEGER },
+  Comentario: { type: DataTypes.STRING },
+  Fecha: { type: DataTypes.DATE },
+  Hora: { type: DataTypes.TIME }
+},
+  {
+    tableName: 'Comentario',
+    timestamps: false,
+  });
 
 // Definir la relación con ClienteModel
 ComentarioModel.belongsTo(ClienteModel, {
-    foreignKey: 'CedulaCliente',
-    targetKey: 'CedulaCliente'
+  foreignKey: 'CedulaCliente',
+  targetKey: 'CedulaCliente'
 });
 
 // Definir la relación con ProductoModel
 ComentarioModel.belongsTo(ProductoModel, {
-    foreignKey: 'ModeloProducto',
-    targetKey: 'Modelo'
+  foreignKey: 'ModeloProducto',
+  targetKey: 'Modelo'
 });
 
 export default ComentarioModel;
