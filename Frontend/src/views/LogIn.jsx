@@ -9,7 +9,6 @@ import { useCookies } from "react-cookie";
 function LogIn() {
   const { logIn } = useUser();
   const [cookie, setCookie, removeCookie] = useCookies(['username']);
-
   const [username, setUsername] = useState('x');
   const [cliente, setCliente] = useState(null);
   const [password, setPassword] = useState('');
@@ -17,6 +16,7 @@ function LogIn() {
   const [rememberMe, setRememberMe] = useState(false);
   const [errorTitle, setErrorTitle] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
@@ -43,7 +43,7 @@ function LogIn() {
     try {
       // 1) Enviar credenciales al servidor
       console.log(username, password)
-      const { data } = await axios.post('http://localhost:8000/auth/login', {
+      const { data } = await axios.post(`${API_URL}/auth/login`, {
         Usuario: username,
         Contrasena: password,
       });

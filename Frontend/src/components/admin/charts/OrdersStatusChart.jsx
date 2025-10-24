@@ -5,7 +5,8 @@ import {Pie, PieChart, ResponsiveContainer, Cell, Tooltip, Legend} from "rechart
 const COLORS = ['#39f3bb', '#1d81a2', '#09bb9f'];
 
 function OrdersStatusChart() {
-    const ordersURI = 'http://localhost:8000/envioxpedido';
+    const API_URL = import.meta.env.VITE_API_URL;
+    const ordersURI = `${API_URL}/envioxpedido`;
 
     const [orders, setOrders] = useState([]);
     const [ordersStatus, setOrdersStatus] = useState([]);

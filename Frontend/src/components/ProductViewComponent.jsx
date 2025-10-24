@@ -18,8 +18,9 @@ function ProductViewComponent(props) {
     const [showWarningModal, setShowWarningModal] = useState(false);
     const [buyingAmount, setBuyingAmount] = useState(0);
     const [showLogInModal, setShowLogInModal] = useState(false);
+    const API_URL = import.meta.env.VITE_API_URL;
 
-    const URI = `http://localhost:8000/consultas/productos/${user?.CedulaCliente}`;
+    const URI = `${API_URL}/consultas/productos/${user?.CedulaCliente}`;
 
     const handleBagButtonClick = () => {
         if (!user) {

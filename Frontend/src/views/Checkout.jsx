@@ -8,7 +8,8 @@ import PurchaseModal from "../components/PurchaseModal.jsx";
 import PaymentForm from "../components/PaymentForm.jsx";
 
 function Checkout() {
-    const URI = 'http://localhost:8000/productos/'
+    const API_URL = import.meta.env.VITE_API_URL;
+    const URI = `${API_URL}/productos/`
     const { bagItems, addItemToBag, removeItemFromBag, emptyBag } = useProducts();
     const [addedItems, setAddedItems] = useState([]);
     const [total, setTotal] = useState(0);

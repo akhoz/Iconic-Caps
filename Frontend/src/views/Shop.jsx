@@ -4,7 +4,8 @@ import Product from "../components/Product.jsx";
 import {Link} from "react-router-dom";
 
 function Shop () {
-    const URI = 'http://localhost:8000/productos/'
+    const API_URL = import.meta.env.VITE_API_URL;
+    const URI = `${API_URL}/productos/`
 
     const [productos, setProducto] = useState([])
     useEffect( ()=>{

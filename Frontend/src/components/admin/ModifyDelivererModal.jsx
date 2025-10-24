@@ -4,7 +4,8 @@ import axios from "axios";
 import {IoClose, IoSearchOutline} from "react-icons/io5";
 
 function ModifyDelivererModal(props) {
-    const URI = 'http://localhost:8000/repartidores';
+    const API_URL = import.meta.env.VITE_API_URL;
+    const URI = `${API_URL}/repartidores`;
 
     const [name, setName] = useState('');
     const [cedula, setCedula] = useState('');

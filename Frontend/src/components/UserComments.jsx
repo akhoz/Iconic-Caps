@@ -7,7 +7,8 @@ import {useComments} from "../contexts/CommentsContext.jsx";
 
 function UserComments(props) {
     const { user } = useUser();
-    const URI = `http://localhost:8000/comentarios/cedula/${user.CedulaCliente}`
+    const API_URL = import.meta.env.VITE_API_URL;
+    const URI = `${API_URL}/comentarios/cedula/${user.CedulaCliente}`
     const [comentarios, setComentarios] = useState([])
     const { clickedComment, setClickedComment } = useComments();
 

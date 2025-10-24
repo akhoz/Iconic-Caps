@@ -13,7 +13,8 @@ import CancelOrderModal from "../components/CancelOrderModal.jsx";
 
 function Account() {
   const { user, logOut } = useUser();
-  const URI = `http://localhost:8000/consultas/pedidos/${user?.CedulaCliente}`;
+  const API_URL = import.meta.env.VITE_API_URL;
+  const URI = `${API_URL}/consultas/pedidos/${user?.CedulaCliente}`;
   const navigate = useNavigate();
 
   const [showAccountModal, setShowAccountModal] = useState(false);

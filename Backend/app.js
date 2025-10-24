@@ -1,5 +1,7 @@
 import express from "express";
 import cors from 'cors'
+import dotenv from 'dotenv';
+dotenv.config();
 
 import db from '../Backend/database/db.js'
 import productoRoutes from './routes/Productoroutes.js'
@@ -22,7 +24,7 @@ const app = express()
 
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: process.env.CORS_ORIGIN,
     credentials: true,
   })
 );
@@ -55,6 +57,8 @@ app.get('/', (req, res) => {
   res.send('Hola Mundo')
 })
 
-app.listen(8000, () => {
-  console.log('Server UP running in http://localhost:8000/')
-})
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`Server UP running on http://localhost:${PORT}/`);
+});
+

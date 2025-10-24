@@ -17,9 +17,10 @@ import Checkout from "./views/Checkout.jsx";
 import {useUser} from "./contexts/UserContext.jsx";
 import {CommentsProvider} from "./contexts/CommentsContext.jsx";
 import Admin from "./views/Admin.jsx";
+export const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
-    const URI = 'http://localhost:8000/productos/'
+    const URI = `${API_URL}/productos/`
     const { user, logIn, logOut, checkCookies } = useUser();
 
     useEffect(() => {

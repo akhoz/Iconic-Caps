@@ -3,9 +3,10 @@ import {IoClose} from "react-icons/io5";
 import axios from "axios";
 
 function PendingOrderModal(props) {
+    const API_URL = import.meta.env.VITE_API_URL;
     const handleDeliverOrder = async () => {
         try {
-            const res = await axios.put(`http://localhost:8000/envioxpedido/${props.orderSelected}`, {
+            const res = await axios.put(`${API_URL}/envioxpedido/${props.orderSelected}`, {
                 Estado: "Entregado"
             });
             console.log(res.data);
@@ -16,7 +17,7 @@ function PendingOrderModal(props) {
         }
     }
 
-    console.log(`http://localhost:8000/envioxpedido/${props.orderSelected}`)
+    console.log(`${API_URL}/envioxpedido/${props.orderSelected}`)
 
 
     return (

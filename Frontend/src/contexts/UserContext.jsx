@@ -10,10 +10,10 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [cookie, setCookie, removeCookie] = useCookies(['username']);
   const [user, setUser] = useState(null);
-
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const logIn = useCallback(async ({ Usuario, Contrasena }) => {
-    const { data } = await axios.post('http://localhost:8000/auth/login', {
+    const { data } = await axios.post(`${API_URL}/auth/login`, {
       Usuario,
       Contrasena
     }, { withCredentials: true });
@@ -29,7 +29,7 @@ export const UserProvider = ({ children }) => {
 
   const checkCookies = useCallback(async () => {
     if (cookie.username) {
-      const res = await axios.get(`http://localhost:8000/clientes/${cookie.username}`);
+      const res = await axios.get(`${API_URL}/clientes/${cookie.username}`);
       const clienteData = res.data;
       logIn(clienteData);
     }

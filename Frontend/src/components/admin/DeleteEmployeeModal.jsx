@@ -9,6 +9,7 @@ function DeleteEmployeeModal(props) {
     const [empleado, setEmpleado] = useState(null);
     const [invalidEmpleado, setInvalidEmpleado] = useState(false);
     const [URI, setURI] = useState('');
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const handleModelChange = (event) => {
         setCedulaEmpleado(event.target.value);
@@ -16,7 +17,7 @@ function DeleteEmployeeModal(props) {
 
     useEffect(() => {
         if (cedulaEmpleado) {
-            setURI(`http://localhost:8000/empleados/${cedulaEmpleado}`);
+            setURI(`${API_URL}/empleados/${cedulaEmpleado}`);
         } else {
             setEmpleado(null);
             setInvalidEmpleado(false);

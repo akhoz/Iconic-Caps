@@ -9,6 +9,7 @@ function DeleteProviderModal(props) {
     const [provedor, setProvedor] = useState(null);
     const [invalidProvedor, setInvalidProvedor] = useState(false);
     const [URI, setURI] = useState('');
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const handleNombreChange = (event) => {
         setNombreEmpresa(event.target.value);
@@ -16,7 +17,7 @@ function DeleteProviderModal(props) {
 
     useEffect(() => {
         if (nombreEmpresa) {
-            setURI(`http://localhost:8000/provedores/${nombreEmpresa}`);
+            setURI(`${API_URL}/provedores/${nombreEmpresa}`);
         } else {
             setProvedor(null);
             setInvalidProvedor(false);

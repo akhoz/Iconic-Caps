@@ -10,6 +10,7 @@ function CommentModal(props) {
     const [comment, setComment] = useState("");
     const [invalidComment, setInvalidComment] = useState(false);
     const currentDate = new Date();
+    const API_URL = import.meta.env.VITE_API_URL;
 
     function formatDate(date) {
         const year = date.getFullYear();
@@ -45,7 +46,7 @@ function CommentModal(props) {
             setInvalidComment(true);
             return;
         }
-        const response = await axios.post(`http://localhost:8000/comentarios`, {
+        const response = await axios.post(`${API_URL}/comentarios`, {
             Estrellas: absoluteRating,
             Comentario: comment,
             Fecha: formattedDate,

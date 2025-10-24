@@ -1,11 +1,16 @@
 import jwt from 'jsonwebtoken';
 import ClienteModel from '../models/ClienteModel.js';
 import PersonaModel from '../models/PersonaModel.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Hay otra issue que arregla el NO uso de .env 
 // Entonces voy a poner esto raw hasta que eso ya esté implementado
-const JWT_SECRET = 'super-secret-key';
-const JWT_EXPIRES_IN = '1h';
+//const JWT_SECRET = 'super-secret-key';
+//const JWT_EXPIRES_IN = '1h';
+
+const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1h';
 
 const buildSafeUser = (cliente) => ({
   CedulaCliente: cliente.CedulaCliente,
