@@ -42,6 +42,7 @@ function LogIn() {
   const handleLogInClick = async () => {
     try {
       // 1) Enviar credenciales al servidor
+      console.log(username, password)
       const { data } = await axios.post('http://localhost:8000/auth/login', {
         Usuario: username,
         Contrasena: password,
@@ -50,7 +51,7 @@ function LogIn() {
       const usuario = data.user;
 
       setCliente?.(usuario);
-      logIn(usuario);
+      logIn({ Usuario: username, Contrasena: password });
 
       if (rememberMe) {
         setCookie('username', usuario.Usuario, { path: '/' });

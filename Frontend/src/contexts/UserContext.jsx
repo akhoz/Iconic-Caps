@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { useCookies } from "react-cookie";
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
@@ -14,7 +16,7 @@ export const UserProvider = ({ children }) => {
     const { data } = await axios.post('http://localhost:8000/auth/login', {
       Usuario,
       Contrasena
-    });
+    }, { withCredentials: true });
     setUser(data.user);
     sessionStorage.setItem('user', JSON.stringify(data.user));
   }, []);
