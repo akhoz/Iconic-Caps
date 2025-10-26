@@ -54,27 +54,20 @@ export const getProductosCompradosByCliente = async (CedulaClienteConsultado) =>
   }
 };
 
-
-export const crearPedido = async (CedulaClienteSolicitante, porcentajeGarantia, direccionIngresada) => {
+// Este metodo fue modificado, ya no guarda la gatantia, la pone en 0
+// para que luego el trigger la calcle bien
+export const crearPedido = async (CedulaClienteSolicitante, _porcentajeGarantia, direccionIngresada) => {
   const transaction = await db.transaction();
   try {
     const [repartidor] = await db.query(
-      `
-      SELECT CedulaRepartidor
-      FROM Repartidor
-      ORDER BY RAND()
-      LIMIT 1
-      `,
+      `SELECT CedulaRepartidor FROM Repartidor ORDER BY RAND() LIMIT 1`,
       { type: db.QueryTypes.SELECT, transaction }
     );
     if (!repartidor) throw new Error('No hay repartidores disponibles');
-    const cedulaRepartidor = repartidor.CedulaRepartidor;
 
     await db.query(
-      `
-      INSERT INTO Pedido (CedulaCliente, FechaDeCompra)
-      VALUES (:CedulaClienteSolicitante, NOW())
-      `,
+      `INSERT INTO Pedido (CedulaCliente, FechaDeCompra)
+       VALUES (:CedulaClienteSolicitante, NOW())`,
       {
         replacements: { CedulaClienteSolicitante },
         type: db.QueryTypes.INSERT,
@@ -88,24 +81,24 @@ export const crearPedido = async (CedulaClienteSolicitante, porcentajeGarantia, 
     );
 
     await db.query(
-      `
-      INSERT INTO GarantiaXPedido (NumeroFacturaPedido, FechaInicio, FechaFinal, TipoGarantia)
-      VALUES (:NumeroFactura, NOW(), DATE_ADD(NOW(), INTERVAL 1 YEAR), :porcentajeGarantia)
-      `,
+      `INSERT INTO GarantiaXPedido (NumeroFacturaPedido, FechaInicio, FechaFinal, TipoGarantia)
+       VALUES (:NumeroFactura, NOW(), DATE_ADD(NOW(), INTERVAL 1 YEAR), :garantia)`,
       {
-        replacements: { NumeroFactura, porcentajeGarantia },
+        replacements: { NumeroFactura, garantia: '0.00' },
         type: db.QueryTypes.INSERT,
         transaction,
       }
     );
 
     await db.query(
-      `
-      INSERT INTO EnvioXPedido (NumeroFacturaPedido, CedulaRepartidor, Direccion, FechaEntrega, Estado)
-      VALUES (:NumeroFactura, :cedulaRepartidor, :direccionIngresada, DATE_ADD(NOW(), INTERVAL 1 MONTH), 'En proceso')
-      `,
+      `INSERT INTO EnvioXPedido (NumeroFacturaPedido, CedulaRepartidor, Direccion, FechaEntrega, Estado)
+       VALUES (:NumeroFactura, :cedulaRepartidor, :direccionIngresada, DATE_ADD(NOW(), INTERVAL 1 MONTH), 'En proceso')`,
       {
-        replacements: { NumeroFactura, cedulaRepartidor, direccionIngresada },
+        replacements: {
+          NumeroFactura,
+          cedulaRepartidor: repartidor.CedulaRepartidor,
+          direccionIngresada
+        },
         type: db.QueryTypes.INSERT,
         transaction,
       }
@@ -119,6 +112,7 @@ export const crearPedido = async (CedulaClienteSolicitante, porcentajeGarantia, 
     throw error;
   }
 };
+
 
 export const obtenerVista = async (vista) => {
   try {
