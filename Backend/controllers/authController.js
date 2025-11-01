@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import ClienteModel from '../models/ClienteModel.js';
 import PersonaModel from '../models/PersonaModel.js';
 import dotenv from 'dotenv';
+import bcrypt from 'bcrypt';
 dotenv.config();
 
 // Hay otra issue que arregla el NO uso de .env 
@@ -16,21 +17,18 @@ const buildSafeUser = (cliente) => ({
   CedulaCliente: cliente.CedulaCliente,
   Usuario: cliente.Usuario,
   Admin: cliente.Admin,
-  Persona: cliente.Persona
-    ? {
-      Cedula: cliente.Persona.Cedula,
-      Nombre: cliente.Persona.Nombre,
-      Apellido1: cliente.Persona.Apellido1,
-      Apellido2: cliente.Persona.Apellido2,
-    }
-    : undefined,
+  Persona: cliente.Persona ? {
+    Cedula: cliente.Persona.Cedula,
+    Nombre: cliente.Persona.Nombre,
+    PrimerApellido: cliente.Persona.PrimerApellido,
+    SegundoApellido: cliente.Persona.SegundoApellido,
+    Email: cliente.Persona.Email
+  } : null
 });
 
 export const login = async (req, res) => {
   try {
     const { Usuario, Contrasena } = req.body;
-    console.log('Body recibido:', req.body);
-
     if (!Usuario || !Contrasena) {
       return res.status(400).json({ message: 'Usuario y contraseña son requeridos' });
     }
@@ -38,30 +36,29 @@ export const login = async (req, res) => {
     const cliente = await ClienteModel.findOne({
       where: { Usuario },
       include: [{ model: PersonaModel }],
+      // puedes excluir explícitamente la contraseña si está en el modelo:
+      // attributes: { exclude: ['Contrasena'] }
     });
 
-    if (!cliente || cliente.Contrasena !== Contrasena) {
+    if (!cliente) {
       return res.status(401).json({ message: 'Credenciales inválidas' });
     }
 
-    // Cambios issue BOLA (Adrian) ---
-    // Crear token
-    const token = jwt.sign(
-      {
-        sub: cliente.CedulaCliente,
-        Usuario: cliente.Usuario,
-        Admin: cliente.Admin,
-      },
-      JWT_SECRET,
-      { expiresIn: JWT_EXPIRES_IN }
-    );
+    // comparar hash
+    const match = await bcrypt.compare(Contrasena, cliente.Contrasena || '');
+    if (!match) {
+      return res.status(401).json({ message: 'Credenciales inválidas' });
+    }
 
-    // Enviar cookie "jwt"
+    // Crear token JWT (si ya lo haces)
+    const token = jwt.sign({ id: cliente.CedulaCliente, user: cliente.Usuario }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+
+    // enviar cookie segura: en producción asegurarse secure: true (cuando HTTPS)
     res.cookie('jwt', token, {
-      httpOnly: true,    // No accesible desde JS
-      secure: false,     // Pónlo en true si usas HTTPS
-      sameSite: 'Lax',   // Protege un poco de CSRF
-      maxAge: 60 * 60 * 1000, // 1 hora
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // true en prod (HTTPS)
+      sameSite: 'Lax',
+      maxAge: 60 * 60 * 1000,
     });
 
     return res.json({ user: buildSafeUser(cliente) });
