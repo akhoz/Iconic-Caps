@@ -45,6 +45,32 @@ export const getProducto = async (req, res) => {
   }
 };
 
+export const getProductoSafe = async (req, res) => {
+  const modeloBuscado = req.params.modelo;
+  try {
+    // USO SEGURO: Usamos '?' como marcador de posición.
+    // Sequelize (db.query) se encarga de reemplazar de forma segura el valor
+    // y lo trata como DATO, no como código SQL.
+    const [productos] = await db.query(
+      'SELECT * FROM Producto WHERE Modelo = ? LIMIT 1',
+      {
+        // La clave es pasar el valor a 'replacements'
+        replacements: [modeloBuscado],
+        type: db.QueryTypes.SELECT // Especificamos el tipo de consulta
+      }
+    );
+
+    // Si no se encuentra nada, Sequelize devuelve un array vacío, que es seguro.
+    res.json(productos[0]);
+  } catch (error) {
+    // Manejo de errores genérico (ahora no se activará por ataques SQL)
+    res.status(500).json({
+      message: "Error al obtener el producto",
+      details: error.message
+    });
+  }
+};
+
 // Crear un registro
 
 export const createProducto = async (req, res) => {
