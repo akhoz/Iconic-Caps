@@ -2,7 +2,6 @@ import express from 'express'
 
 import {getAllClientes, getCliente, createCliente, updateUsuarioCliente, deleteCliente} from '../controllers/ClienteController.js'
 
-
 const router = express.Router()
 
 router.get('/', getAllClientes)

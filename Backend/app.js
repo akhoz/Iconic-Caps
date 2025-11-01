@@ -1,6 +1,5 @@
 import express from "express";
 import cors from 'cors'
-
 import db from '../Backend/database/db.js'
 import productoRoutes from './routes/Productoroutes.js'
 import clienteRoutes from './routes/Clienteroutes.js'
