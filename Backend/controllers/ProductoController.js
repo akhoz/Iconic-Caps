@@ -45,32 +45,50 @@ export const getProducto = async (req, res) => {
   }
 };
 
-export const getProductoSafe = async (req, res) => {
+export const getProductoSecure = async (req, res) => {
   const modeloBuscado = req.params.modelo;
+
+  // Validación de entrada
+  if (!modeloBuscado || typeof modeloBuscado !== 'string' || modeloBuscado.length > 20) {
+    return res.status(400).json({
+      message: 'Modelo inválido'
+    });
+  }
+
   try {
-    // USO SEGURO: Usamos '?' como marcador de posición.
-    // Sequelize (db.query) se encarga de reemplazar de forma segura el valor
-    // y lo trata como DATO, no como código SQL.
+    // Uso de consultas parametrizadas con Sequelize
     const [productos] = await db.query(
       'SELECT * FROM Producto WHERE Modelo = ? LIMIT 1',
       {
-        // La clave es pasar el valor a 'replacements'
         replacements: [modeloBuscado],
-        type: db.QueryTypes.SELECT // Especificamos el tipo de consulta
+        type: db.QueryTypes.SELECT
       }
     );
 
-    // Si no se encuentra nada, Sequelize devuelve un array vacío, que es seguro.
-    res.json(productos[0]);
+    // Verificación de resultados y control de acceso
+    if (productos.length === 0) {
+      return res.status(404).json({
+        message: 'Producto no encontrado'
+      });
+    }
+
+    const producto = productos[0];
+
+    // Filtrado de datos sensibles
+    const { Id, Nombre, Modelo, Precio, Imagen } = producto;
+    const productoSeguro = { Id, Nombre, Modelo, Precio, Imagen };
+
+    // Respuesta segura
+    res.json(productoSeguro);
+
   } catch (error) {
-    // Manejo de errores genérico (ahora no se activará por ataques SQL)
+    // Manejo de errores genérico sin exponer detalles internos
+    console.error('Error al obtener el producto:', error);
     res.status(500).json({
-      message: "Error al obtener el producto",
-      details: error.message
+      message: 'Error interno del servidor'
     });
   }
 };
-
 // Crear un registro
 
 export const createProducto = async (req, res) => {
