@@ -25,11 +25,8 @@ export const getProducto = async (req, res) => {
 
   // 2. CONSTRUCCIÓN VULNERABLE: Concatenamos el valor directamente
   // El atacante puede cerrar la comilla simple e inyectar código.
-  const consultaVulnerable = `
-        SELECT * FROM Producto 
-        WHERE Modelo = '${modeloBuscado}' 
-        LIMIT 1
-    `;
+
+  const consultaVulnerable = `SELECT * FROM Producto WHERE Modelo = '${modeloBuscado}' LIMIT 1`;
 
   try {
     // 3. Ejecutamos la consulta cruda y vulnerable
