@@ -19,6 +19,7 @@ import personaRoutes from "./routes/Personaroutes.js";
 import garantiasRoutes from "./routes/Garantiaroutes.js";
 import provedorRoutes from "./routes/Provedorroutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import { requireAuth } from './middleware/requireAuth.js';
 
 import cookieParser from "cookie-parser";
 import fs from "fs";
@@ -37,10 +38,11 @@ app.use(cookieParser());
 const corsOrigin = process.env.CORS_ORIGIN || true;
 app.use(
   cors({
-    origin: corsOrigin,
+    origin: ['http://localhost:5173', 'https://localhost:5173'],
     credentials: true,
   })
 );
+
 
 function ensureSecure(req, res, next) {
   if (req.secure || req.headers["x-forwarded-proto"] === "https") {
@@ -68,7 +70,7 @@ app.use("/repartidores", repartidorRoutes);
 app.use("/pedidos", pedidoRoutes);
 app.use("/listaProductos", listaProductosRoutes);
 app.use("/envioxpedido", envioxpedidoRoutes);
-app.use("/consultas", consultaRoutes);
+app.use('/consultas', requireAuth, consultaRoutes);
 app.use("/personas", personaRoutes);
 app.use("/garantias", garantiasRoutes);
 app.use("/provedores", provedorRoutes);

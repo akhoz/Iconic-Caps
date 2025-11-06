@@ -5,18 +5,13 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 dotenv.config();
 
-// Hay otra issue que arregla el NO uso de .env 
-// Entonces voy a poner esto raw hasta que eso ya esté implementado
-//const JWT_SECRET = 'super-secret-key';
-//const JWT_EXPIRES_IN = '1h';
-
-const JWT_SECRET = process.env.JWT_SECRET;
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1h';
+let { JWT_SECRET, JWT_EXPIRES_IN } = process.env;
+JWT_EXPIRES_IN = JWT_EXPIRES_IN || '1h';
 
 const buildSafeUser = (cliente) => ({
   CedulaCliente: cliente.CedulaCliente,
   Usuario: cliente.Usuario,
-  Admin: cliente.Admin,
+  Admin: !!cliente.Admin,
   Persona: cliente.Persona ? {
     Cedula: cliente.Persona.Cedula,
     Nombre: cliente.Persona.Nombre,
@@ -36,28 +31,34 @@ export const login = async (req, res) => {
     const cliente = await ClienteModel.findOne({
       where: { Usuario },
       include: [{ model: PersonaModel }],
-      // puedes excluir explícitamente la contraseña si está en el modelo:
-      // attributes: { exclude: ['Contrasena'] }
     });
 
-    if (!cliente) {
-      return res.status(401).json({ message: 'Credenciales inválidas' });
-    }
+    if (!cliente) return res.status(401).json({ message: 'Credenciales inválidas' });
 
-    // comparar hash
     const match = await bcrypt.compare(Contrasena, cliente.Contrasena || '');
-    if (!match) {
-      return res.status(401).json({ message: 'Credenciales inválidas' });
+    if (!match) return res.status(401).json({ message: 'Credenciales inválidas' });
+
+    if (!JWT_SECRET) {
+      console.error('FATAL: JWT_SECRET no definido en .env');
+      return res.status(500).json({ message: 'Config error' });
     }
 
-    // Crear token JWT (si ya lo haces)
-    const token = jwt.sign({ id: cliente.CedulaCliente, user: cliente.Usuario }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+    // >>>>> CLAVEEE: firma el token con los campos que usas luego (sub, Admin)
+    const token = jwt.sign(
+      {
+        sub: String(cliente.CedulaCliente),
+        Usuario: cliente.Usuario,
+        Admin: !!cliente.Admin,
+      },
+      JWT_SECRET,
+      { expiresIn: JWT_EXPIRES_IN }
+    );
 
-    // enviar cookie segura: en producción asegurarse secure: true (cuando HTTPS)
+    // En local estás usando https://localhost:3443 → usa secure:true
     res.cookie('jwt', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // true en prod (HTTPS)
-      sameSite: 'Lax',
+      secure: true,       // cookie solo se envía por HTTPS
+      sameSite: 'Lax',    // si algún día sirves front en otro dominio, usa 'None'
       maxAge: 60 * 60 * 1000,
     });
 
