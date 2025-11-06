@@ -17,6 +17,8 @@ import Checkout from "./views/Checkout.jsx";
 import {useUser} from "./contexts/UserContext.jsx";
 import {CommentsProvider} from "./contexts/CommentsContext.jsx";
 import Admin from "./views/Admin.jsx";
+
+axios.defaults.withCredentials = true;
 export const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
@@ -33,15 +35,20 @@ function App() {
     }, [logIn, checkCookies]);
 
 
-    const [productos, setProducto] = useState([])
-    useEffect( ()=>{
-        getProductos();
-    })
-
+        // App.jsx
+    const [productos, setProducto] = useState([]);
+    useEffect(() => {
     const getProductos = async () => {
-        const res = await axios.get(URI)
-        setProducto(res.data)
-    }
+        try {
+        const res = await axios.get(`${API_URL}/productos/`);
+        setProducto(res.data);
+        } catch (err) {
+        console.error('Error al obtener productos:', err);
+        }
+    };
+    getProductos();
+    }, []); 
+
 
     return (
         <div className="flex flex-col min-h-screen">

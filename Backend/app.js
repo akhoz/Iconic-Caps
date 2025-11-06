@@ -36,12 +36,12 @@ app.use(cookieParser());
 // CORS: en desarrollo puedes permitir origen dinámico con process.env.CORS_ORIGIN (comma-separated o '*')
 // En producción define CORS_ORIGIN explícito (ej: https://mi-frontend.com)
 const corsOrigin = process.env.CORS_ORIGIN || true;
-app.use(
-  cors({
-    origin: ['http://localhost:5173', 'https://localhost:5173'],
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: ['http://localhost:5173'], // o tu frontend real
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true, // si también usas cookies
+}));
 
 
 function ensureSecure(req, res, next) {

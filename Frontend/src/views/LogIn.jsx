@@ -5,6 +5,7 @@ import { useState } from "react";
 import WarningModal from "../components/WarningModal.jsx";
 import { useUser } from "../contexts/UserContext.jsx";
 import { useCookies } from "react-cookie";
+import api from '../lib/api';
 
 function LogIn() {
   const { logIn } = useUser();
