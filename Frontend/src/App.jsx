@@ -23,16 +23,17 @@ export const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
     const URI = `${API_URL}/productos/`
-    const { user, logIn, logOut, checkCookies } = useUser();
+
+
+    const { user, logIn, logOut } = useUser();
 
     useEffect(() => {
-        const storedUser = sessionStorage.getItem('user');
-        if (storedUser) {
-            logIn(JSON.parse(storedUser));
-        } else {
-            checkCookies();
-        }
-    }, [logIn, checkCookies]);
+    const storedUser = sessionStorage.getItem('user');
+    if (storedUser) {
+        // hidrata el estado desde sessionStorage (front-only)
+        logIn(JSON.parse(storedUser));
+    }
+    }, [logIn]);
 
 
         // App.jsx
