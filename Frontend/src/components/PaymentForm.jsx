@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import {useState} from "react";
 import {useUser} from "../contexts/UserContext.jsx";
 import axios from "axios";
+import api from "../lib/api";
 
 function PaymentForm(props) {
     const { user } = useUser();
@@ -15,6 +16,7 @@ function PaymentForm(props) {
     const [postalCode, setPostalCode] = useState("");
     const [formStatus, setFormStatus] = useState(false);
     const API_URL = import.meta.env.VITE_API_URL;
+    
 
     const verifyPaymentForm = async () => {
         if (!cardholder || !cardNumber || !expire || !cvv || !direction || !postalCode) {
@@ -23,27 +25,28 @@ function PaymentForm(props) {
         } else {
 
             console.log(user.CedulaCliente, props.warranty, direction);
-            const res = await axios.post(`${API_URL}/consultas/crearpedido`, {
-                CedulaClienteSolicitante: user.CedulaCliente,
-                porcentajeGarantia: props.warranty,
-                direccionIngresada: direction
+            // 1) Crear pedido (el backend toma la cédula del token)
+        const res = await api.post("/consultas/crearpedido", {
+            porcentajeGarantia: props.warranty,
+            direccionIngresada: direction,
+        });
+    
+        const factura = res.data.NumeroFactura;
+    
+        // 2) Crear lista de productos del pedido
+        for (const product of props.products) {
+            await api.post("/listaProductos/create", {
+            NumeroFacturaPedido: factura,
+            ModeloProducto: product.id,
+            CantidadProducto: product.amount,
             });
-            console.log(res.data);
-            const factura = res.data.NumeroFactura;
-            console.log(factura);
-
-            for (const product of props.products) {
-                await axios.post(`${API_URL}/listaProductos/create`, {
-                    NumeroFacturaPedido: factura,
-                    ModeloProducto: product.id,
-                    CantidadProducto: product.amount
-                })}
-            console.log('Pedido creado');
-
-            setFormStatus(true);
-            props.confirmPurchase();
         }
-    };
+                console.log('Pedido creado');
+
+                setFormStatus(true);
+                props.confirmPurchase();
+            }
+        };
 
     const handlePurchaseClick = () => {
         verifyPaymentForm();
