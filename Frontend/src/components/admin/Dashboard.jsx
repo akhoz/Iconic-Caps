@@ -5,10 +5,11 @@ import ProductsPurchasedChart from "./charts/ProductsPurchasedChart.jsx";
 import axios from "axios";
 
 function Dashboard() {
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const handleDownloadReport = async () => {
         try {
-            const res = await axios.get("http://localhost:8000/consultas/generar-pdf-vista", {
+            const res = await axios.get(`${API_URL}/consultas/generar-pdf-vista`, {
                 responseType: 'blob',
             });
 

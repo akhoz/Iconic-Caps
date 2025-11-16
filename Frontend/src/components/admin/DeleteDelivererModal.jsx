@@ -9,6 +9,7 @@ function DeleteDelivererModal(props) {
     const [repartidor, setRepartidor] = useState(null);
     const [invalidRepartidor, setInvalidRepartidor] = useState(false);
     const [URI, setURI] = useState('');
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const handleModelChange = (event) => {
         setCedulaRepartidor(event.target.value);
@@ -16,7 +17,7 @@ function DeleteDelivererModal(props) {
 
     useEffect(() => {
         if (cedulaRepartidor) {
-            setURI(`http://localhost:8000/repartidores/${cedulaRepartidor}`);
+            setURI(`${API_URL}/repartidores/${cedulaRepartidor}`);
         } else {
             setRepartidor(null);
             setInvalidRepartidor(false);

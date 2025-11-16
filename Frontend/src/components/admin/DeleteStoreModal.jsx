@@ -9,14 +9,15 @@ function DeleteStoreModal(props) {
     const [sucursal, setSucursal] = useState(null);
     const [invalidSucursal, setInvalidSucursal] = useState(false);
     const [URI, setURI] = useState('');
-
+    const API_URL = import.meta.env.VITE_API_URL;
+    
     const handleModelChange = (event) => {
         setNumeroSucursal(event.target.value);
     };
 
     useEffect(() => {
         if (numeroSucursal) {
-            setURI(`http://localhost:8000/sucursales/${numeroSucursal}`);
+            setURI(`${API_URL}/sucursales/${numeroSucursal}`);
         } else {
             setSucursal(null);
             setInvalidSucursal(false);

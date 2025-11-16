@@ -4,7 +4,8 @@ import axios from "axios";
 import {IoClose} from "react-icons/io5";
 
 function AddEmployeesModal(props) {
-    const URI = 'http://localhost:8000/empleados';
+    const API_URL = import.meta.env.VITE_API_URL;
+    const URI = `${API_URL}/empleados`;
     const [empleados, setEmpleados] = useState([]);
 
     const [name, setName] = useState('');

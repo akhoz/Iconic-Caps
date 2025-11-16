@@ -3,8 +3,9 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 
 function LocalStores() {
-    const employeesUri = "http://localhost:8000/empleados";
-    const storesUri = "http://localhost:8000/sucursales";
+    const API_URL = import.meta.env.VITE_API_URL;
+    const employeesUri = `${API_URL}/empleados`;
+    const storesUri = `${API_URL}/sucursales`;
     let storeCount = 1;
 
     const [employees, setEmployees] = useState([]);

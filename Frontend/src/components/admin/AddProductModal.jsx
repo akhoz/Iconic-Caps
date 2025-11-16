@@ -7,7 +7,8 @@ import { GiBilledCap } from "react-icons/gi";
 import axios from "axios";
 
 function AddProductModal(props) {
-    const URI = 'http://localhost:8000/productos';
+    const API_URL = import.meta.env.VITE_API_URL;
+    const URI = `${API_URL}/productos`;
 
     const [lastUploadedFile, setLastUploadedFile] = useState(null);
     const [fileName, setFileName] = useState('');

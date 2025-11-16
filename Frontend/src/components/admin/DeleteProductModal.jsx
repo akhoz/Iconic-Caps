@@ -9,6 +9,7 @@ function DeleteProductModal(props) {
     const [producto, setProducto] = useState(null);
     const [invalidProduct, setInvalidProduct] = useState(false);
     const [URI, setURI] = useState('');
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const handleModelChange = (event) => {
         setModelo(event.target.value);
@@ -16,7 +17,7 @@ function DeleteProductModal(props) {
 
     useEffect(() => {
         if (modelo) {
-            setURI(`http://localhost:8000/productos/${modelo}`);
+            setURI(`${API_URL}/productos/${modelo}`);
         } else {
             setProducto(null);
             setInvalidProduct(false);

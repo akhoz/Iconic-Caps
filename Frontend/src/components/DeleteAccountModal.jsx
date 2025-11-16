@@ -8,7 +8,8 @@ function DeleteAccountModal(props) {
     const [cookie, setCookie, removeCookie] = useCookies(['username']);
     const { user, logOut } = useUser();
     const navigate = useNavigate();
-    const URI = `http://localhost:8000/clientes/${user.Usuario}`;
+    const API_URL = import.meta.env.VITE_API_URL;
+    const URI = `${API_URL}/clientes/${user.Usuario}`;
 
 
 

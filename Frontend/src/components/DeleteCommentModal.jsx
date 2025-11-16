@@ -6,7 +6,8 @@ import {useNavigate} from "react-router-dom";
 function DeleteCommentModal(props) {
     const { clickedComment, deleteComment } = useComments();
     const navigate = useNavigate();
-    const URI = `http://localhost:8000/comentarios/${clickedComment}`;
+    const API_URL = import.meta.env.VITE_API_URL;
+    const URI = `${API_URL}/comentarios/${clickedComment}`;
 
     const handleButtonClick = async () => {
         props.handleCloseModal();

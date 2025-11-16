@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 
 function SignUp () {
+    const API_URL = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
 
     const [newName, setNewName] = useState("");
@@ -73,7 +74,7 @@ function SignUp () {
         getExistingUsernames();
     })
     const getExistingUsernames = async () => {
-        const res = await axios.get('http://localhost:8000/clientes');
+        const res = await axios.get(`${API_URL}/clientes`);
         const clientes = res.data;
         const nombres = clientes.map(cliente => cliente.Persona.Nombre);
         const primerApellido = clientes.map(cliente => cliente.Persona.PrimerApellido);
@@ -155,7 +156,7 @@ function SignUp () {
         }
 
         console.log(newCedula, nombre, primerApellido, segundoApellido, newEmail, newUsername, newPassword );
-        const res = await axios.post('http://localhost:8000/personas', {
+        const res = await axios.post(`${API_URL}/personas`, {
             Cedula: newCedula,
             Nombre: nombre,
             PrimerApellido: primerApellido,
@@ -164,7 +165,7 @@ function SignUp () {
         });
         console.log(res.data);
 
-        const res2 = await axios.post('http://localhost:8000/clientes', {
+        const res2 = await axios.post(`${API_URL}/clientes`, {
             CedulaCliente: newCedula,
             Usuario: newUsername,
             Contrasena: newPassword,

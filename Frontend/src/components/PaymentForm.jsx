@@ -14,6 +14,7 @@ function PaymentForm(props) {
     const [direction, setDirection] = useState("");
     const [postalCode, setPostalCode] = useState("");
     const [formStatus, setFormStatus] = useState(false);
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const verifyPaymentForm = async () => {
         if (!cardholder || !cardNumber || !expire || !cvv || !direction || !postalCode) {
@@ -22,7 +23,7 @@ function PaymentForm(props) {
         } else {
 
             console.log(user.CedulaCliente, props.warranty, direction);
-            const res = await axios.post('http://localhost:8000/consultas/crearpedido', {
+            const res = await axios.post(`${API_URL}/consultas/crearpedido`, {
                 CedulaClienteSolicitante: user.CedulaCliente,
                 porcentajeGarantia: props.warranty,
                 direccionIngresada: direction
@@ -32,7 +33,7 @@ function PaymentForm(props) {
             console.log(factura);
 
             for (const product of props.products) {
-                await axios.post('http://localhost:8000/listaProductos/create', {
+                await axios.post(`${API_URL}/listaProductos/create`, {
                     NumeroFacturaPedido: factura,
                     ModeloProducto: product.id,
                     CantidadProducto: product.amount

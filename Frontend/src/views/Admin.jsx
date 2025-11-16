@@ -51,6 +51,7 @@ function Admin() {
     const [showDeleteProvidersModal, setShowDeleteProvidersModal] = useState(false);
 
     const [showPendingOrderModal, setShowPendingOrderModal] = useState(false);
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const handleFeatures = () => {
         setShowFeatures(!showFeatures);
@@ -154,7 +155,7 @@ function Admin() {
         setSelectedOrder(order)
     }
 
-    const URI = `http://localhost:8000/consultas/pedidos-pendientes`
+    const URI = `${API_URL}/consultas/pedidos-pendientes`
     const [pendingOrders, setPendingOrders] = useState([])
     const [selectedOrder, setSelectedOrder] = useState(null)
 

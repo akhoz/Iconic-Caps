@@ -5,14 +5,15 @@ import axios from "axios";
 function ProductsPurchasedChart() {
     const [products, setProducts] = useState([]);
     const [productsChartData, setProductsChartData] = useState([]);
-
+    const API_URL = import.meta.env.VITE_API_URL;
+    
     useEffect(() => {
         getProducts();
     }, []);
 
     const getProducts = async () => {
         try {
-            const res = await axios.get('http://localhost:8000/consultas/cantidad-compras-producto');
+            const res = await axios.get(`${API_URL}/consultas/cantidad-compras-producto`);
             setProducts(res.data);
         } catch (error) {
             console.log(error);
