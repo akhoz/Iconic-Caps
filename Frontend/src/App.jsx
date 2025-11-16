@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import Home from "./views/Home.jsx";
 import Footer from "./components/Footer.jsx";
@@ -14,77 +14,77 @@ import Account from "./views/Account.jsx";
 import LocalStores from "./views/LocalStores.jsx";
 import ProductView from "./views/ProductView.jsx";
 import Checkout from "./views/Checkout.jsx";
-import {useUser} from "./contexts/UserContext.jsx";
-import {CommentsProvider} from "./contexts/CommentsContext.jsx";
+import { useUser } from "./contexts/UserContext.jsx";
+import { CommentsProvider } from "./contexts/CommentsContext.jsx";
 import Admin from "./views/Admin.jsx";
 export const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
-    const URI = `${API_URL}/productos/`
-    const { user, logIn, logOut, checkCookies } = useUser();
+  const URI = `${API_URL}/productos/`
+  const { user, logIn, logOut, checkCookies } = useUser();
 
-    useEffect(() => {
-        const storedUser = sessionStorage.getItem('user');
-        if (storedUser) {
-            logIn(JSON.parse(storedUser));
-        } else {
-            checkCookies();
-        }
-    }, [logIn, checkCookies]);
-
-
-    const [productos, setProducto] = useState([])
-    useEffect( ()=>{
-        getProductos();
-    })
-
-    const getProductos = async () => {
-        const res = await axios.get(URI)
-        setProducto(res.data)
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem('user');
+    if (storedUser) {
+      logIn(JSON.parse(storedUser));
+    } else {
+      checkCookies();
     }
+  }, [logIn, checkCookies]);
 
-    return (
-        <div className="flex flex-col min-h-screen">
-            <Router>
-                <Routes>
-                    <Route path="/" element={<HeaderFooterLayout><Home/></HeaderFooterLayout>}/>
-                    <Route path="/Shop" element={<HeaderFooterLayout><Shop/></HeaderFooterLayout>}/>
-                    <Route path="/About" element={<HeaderFooterLayout><About/></HeaderFooterLayout>}/>
-                    <Route path="/OurTeam" element={<HeaderFooterLayout><OurTeam/></HeaderFooterLayout>}/>
-                    <Route path="/LocalStores" element={<HeaderFooterLayout><LocalStores/></HeaderFooterLayout>}/>
-                    <Route path="/Product/:modelo" element={<HeaderFooterLayout><ProductView productos={productos}/></HeaderFooterLayout>} />
 
-                    <Route path="/LogIn" element={<LogIn/>}/>
-                    <Route path="/SignUp" element={<SignUp/>}/>
-                    <Route path="/Account" element={<AccountWithCommentsProvider/>}/>
-                    <Route path="/Checkout" element={<Checkout/>}/>
-                    <Route path="/Admin" element={<Admin/>}/>
-                </Routes>
-            </Router>
-        </div>
-    )
+  const [productos, setProducto] = useState([])
+  useEffect(() => {
+    getProductos();
+  }, []); // <=== IMPORTANTÍSIMO
+
+  const getProductos = async () => {
+    const res = await axios.get(URI)
+    setProducto(res.data)
+  }
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Router>
+        <Routes>
+          <Route path="/" element={<HeaderFooterLayout><Home /></HeaderFooterLayout>} />
+          <Route path="/Shop" element={<HeaderFooterLayout><Shop /></HeaderFooterLayout>} />
+          <Route path="/About" element={<HeaderFooterLayout><About /></HeaderFooterLayout>} />
+          <Route path="/OurTeam" element={<HeaderFooterLayout><OurTeam /></HeaderFooterLayout>} />
+          <Route path="/LocalStores" element={<HeaderFooterLayout><LocalStores /></HeaderFooterLayout>} />
+          <Route path="/Product/:modelo" element={<HeaderFooterLayout><ProductView productos={productos} /></HeaderFooterLayout>} />
+
+          <Route path="/LogIn" element={<LogIn />} />
+          <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/Account" element={<AccountWithCommentsProvider />} />
+          <Route path="/Checkout" element={<Checkout />} />
+          <Route path="/Admin" element={<Admin />} />
+        </Routes>
+      </Router>
+    </div>
+  )
 }
 
 // eslint-disable-next-line react/prop-types
 function HeaderFooterLayout({ children }) {
-    return (
-        <>
-            <Header/>
-            <div className="flex-1">
-                {children}
-            </div>
+  return (
+    <>
+      <Header />
+      <div className="flex-1">
+        {children}
+      </div>
 
-            <Footer/>
-        </>
-    );
+      <Footer />
+    </>
+  );
 }
 
 function AccountWithCommentsProvider() {
-    return (
-        <CommentsProvider>
-            <Account/>
-        </CommentsProvider>
-    );
+  return (
+    <CommentsProvider>
+      <Account />
+    </CommentsProvider>
+  );
 }
 
 export default App;
