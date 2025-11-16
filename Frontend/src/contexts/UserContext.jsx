@@ -3,42 +3,49 @@ import PropTypes from 'prop-types';
 import { useCookies } from "react-cookie";
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const [cookie, setCookie, removeCookie] = useCookies(['username']);
-    const [user, setUser] = useState(null);
+  const [cookie, setCookie, removeCookie] = useCookies(['username']);
+  const [user, setUser] = useState(null);
+  const API_URL = import.meta.env.VITE_API_URL;
 
-    const logIn = useCallback((userData) => {
-        setUser(userData);
-        sessionStorage.setItem('user', JSON.stringify(userData));
-    }, []);
+  const logIn = useCallback(async ({ Usuario, Contrasena }) => {
+    const { data } = await axios.post(`${API_URL}/auth/login`, {
+      Usuario,
+      Contrasena
+    }, { withCredentials: true });
+    setUser(data.user);
+    sessionStorage.setItem('user', JSON.stringify(data.user));
+  }, []);
 
-    const logOut = useCallback(() => {
-        setUser(null);
-        removeCookie('username', { path: '/' });
-        sessionStorage.removeItem('user');
-    }, [removeCookie]);
+  const logOut = useCallback(() => {
+    setUser(null);
+    removeCookie('username', { path: '/' });
+    sessionStorage.removeItem('user');
+  }, [removeCookie]);
 
-    const checkCookies = useCallback(async () => {
-        if (cookie.username) {
-            const res = await axios.get(`http://localhost:8000/clientes/${cookie.username}`);
-            const clienteData = res.data;
-            logIn(clienteData);
-        }
-    }, [cookie.username, logIn]);
+  const checkCookies = useCallback(async () => {
+    if (cookie.username) {
+      const res = await axios.get(`${API_URL}/clientes/${cookie.username}`);
+      const clienteData = res.data;
+      logIn(clienteData);
+    }
+  }, [cookie.username, logIn]);
 
-    return (
-        <UserContext.Provider value={{ user, logIn, logOut, checkCookies }}>
-            {children}
-        </UserContext.Provider>
-    );
+  return (
+    <UserContext.Provider value={{ user, logIn, logOut, checkCookies }}>
+      {children}
+    </UserContext.Provider>
+  );
 }
 
 export const useUser = () => useContext(UserContext);
 
 UserProvider.propTypes = {
-    children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default UserContext;

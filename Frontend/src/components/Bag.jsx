@@ -6,7 +6,8 @@ import { LiaShoppingBagSolid } from 'react-icons/lia';
 import {Link} from "react-router-dom";
 
 function Bag() {
-    const URI = 'http://localhost:8000/productos/'
+    const API_URL = import.meta.env.VITE_API_URL;
+    const URI = `${API_URL}/productos/`
 
     const { bagItems, addItemToBag, removeItemFromBag, emptyBag } = useProducts();
     const [isBagOpen, setIsBagOpen] = useState(false);

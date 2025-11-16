@@ -10,6 +10,7 @@ function ModifyUsernameModal(props) {
     const navigate = useNavigate();
     const { user, logOut } = useUser();
     const [cookie, setCookie, removeCookie] = useCookies(['username']);
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const [newUsername, setNewUsername] = useState("");
     const [currentUsernames, setCurrentUsernames] = useState([]);
@@ -24,7 +25,7 @@ function ModifyUsernameModal(props) {
     }
 
     const getExistingUsernames = async () => {
-        const res = await axios.get('http://localhost:8000/clientes');
+        const res = await axios.get(`${API_URL}/clientes`);
         const clientes = res.data;
         const usernames = clientes.map(cliente => cliente.Usuario);
         setCurrentUsernames(usernames);
@@ -44,7 +45,7 @@ function ModifyUsernameModal(props) {
         setUsernameAlreadyExists(false);
 
         props.handleCloseModal();
-        const res = await axios.put(`http://localhost:8000/clientes/${props.user.Usuario}`, {
+        const res = await axios.put(`${API_URL}/clientes/${props.user.Usuario}`, {
             Usuario: newUsername
         });
         console.log(res.data);

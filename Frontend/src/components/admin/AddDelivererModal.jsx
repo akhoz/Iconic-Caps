@@ -4,7 +4,8 @@ import axios from "axios";
 import {IoClose} from "react-icons/io5";
 
 function AddDelivererModal(props) {
-    const URI = 'http://localhost:8000/repartidores';
+    const API_URL = import.meta.env.VITE_API_URL;
+    const URI = `${API_URL}/repartidores`;
     const [repartidores, setRepartidores] = useState([]);
 
     const [name, setName] = useState('');

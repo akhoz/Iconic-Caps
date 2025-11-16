@@ -5,7 +5,8 @@ import {Pie, PieChart, ResponsiveContainer, Cell, Tooltip, Legend} from "rechart
 const COLORS = ['#39f3bb', '#18a1cd', '#15607a', '#1d81a2', '#09bb9f'];
 
 function ProductsRatingChart() {
-    const commentsURI = 'http://localhost:8000/comentarios';
+    const API_URL = import.meta.env.VITE_API_URL;
+    const commentsURI = `${API_URL}/comentarios`;
 
     const [comments, setComments] = useState([]);
     const [productsRating, setProductsRating] = useState([]);

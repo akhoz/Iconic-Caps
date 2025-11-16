@@ -14,7 +14,7 @@ function ModifyPasswordModal(props) {
     const navigate = useNavigate();
     const { user, logOut } = useUser();
     const [cookie, setCookie, removeCookie] = useCookies(['username']);
-
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -48,7 +48,7 @@ function ModifyPasswordModal(props) {
         setPasswordsDontMatch(false);
 
         props.handleCloseModal();
-        const res = await axios.put(`http://localhost:8000/clientes/${props.user.Usuario}`, {
+        const res = await axios.put(`${API_URL}/clientes/${props.user.Usuario}`, {
             Contrasena: newPassword
         });
         console.log(res.data);

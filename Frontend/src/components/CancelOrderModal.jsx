@@ -4,7 +4,8 @@ import axios from "axios";
 
 function CancelOrderModal(props) {
     const handleCancelOrder = async () => {
-        const res = await axios.put(`http://localhost:8000/envioxpedido/${props.orderNumber}`, {
+        const API_URL = import.meta.env.VITE_API_URL;
+        const res = await axios.put(`${API_URL}/envioxpedido/${props.orderNumber}`, {
             Estado: "Cancelado"
         });
         console.log(res.data);

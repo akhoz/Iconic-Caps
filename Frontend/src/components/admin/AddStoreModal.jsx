@@ -6,7 +6,8 @@ import { FaStore } from "react-icons/fa";
 import {IoClose} from "react-icons/io5";
 
 function AddStoreModal(props) {
-    const URI = 'http://localhost:8000/sucursales';
+    const API_URL = import.meta.env.VITE_API_URL;
+    const URI = `${API_URL}/sucursales`;
     const [sucursales, setSucursales] = useState([]);
 
     const [lastUploadedFile, setLastUploadedFile] = useState(null);

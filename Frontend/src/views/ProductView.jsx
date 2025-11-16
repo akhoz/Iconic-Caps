@@ -7,8 +7,9 @@ import Stars from "../components/Stars.jsx";
 
 function ProductView({productos}) {
     let { modelo } = useParams();
-
-    const URI = `http://localhost:8000/comentarios/modelo/${modelo}`
+    
+    const API_URL = import.meta.env.VITE_API_URL;
+    const URI = `${API_URL}/comentarios/modelo/${modelo}`
 
     const [comentarios, setComentarios] = useState([])
     useEffect( ()=>{
