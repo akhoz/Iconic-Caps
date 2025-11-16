@@ -1,7 +1,6 @@
 import express from 'express'
 
-import {getAllClientes, getCliente, createCliente, updateUsuarioCliente, deleteCliente} from '../controllers/ClienteController.js'
-
+import { getAllClientes, getCliente, createCliente, updateUsuarioCliente, deleteCliente } from '../controllers/ClienteController.js'
 import { requireAuth } from '../middleware/requireAuth.js'
 import { requireAdmin } from '../middleware/requireAdmin.js'
 
