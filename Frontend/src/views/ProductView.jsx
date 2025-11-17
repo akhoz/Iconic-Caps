@@ -46,13 +46,16 @@ function ProductView({productos}) {
             </p>
             <div className="flex w-full justify-center">
                 <div className="grid grid-cols-1 gap-x-10 gap-y-20 mx-8 w-full md:grid-cols-2 lg:grid-cols-3">
-                    {comentarios.map((comentario) => (
+                {comentarios.map((comentario) => {
+                    const authorName = comentario.Cliente?.Usuario ?? "Anonymous";
+
+                    return (
                         <div key={comentario.IdComentario}>
                             <div className="flex flex-row justify-between items-center">
                                 <h2 className="font-bold text-lg">
-                                    {comentario.Cliente.Usuario}
+                                    {authorName}
                                 </h2>
-                                <Stars rating={comentario.Estrellas}/>
+                                <Stars rating={comentario.Estrellas} />
                             </div>
                             <div className="flex flex-row justify-between items-center">
                                 <p>
@@ -63,7 +66,9 @@ function ProductView({productos}) {
                                 {comentario.Comentario}
                             </p>
                         </div>
-                    ))}
+                    );
+                })}
+
                 </div>
             </div>
         </div>

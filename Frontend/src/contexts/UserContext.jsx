@@ -1,51 +1,52 @@
-import { createContext, useContext, useState, useCallback } from "react";
-import PropTypes from 'prop-types';
-import { useCookies } from "react-cookie";
-import axios from 'axios';
-
-axios.defaults.withCredentials = true;
+// src/contexts/UserContext.jsx
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import PropTypes from "prop-types";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [cookie, setCookie, removeCookie] = useCookies(['username']);
-  const [user, setUser] = useState(null);
-  const API_URL = import.meta.env.VITE_API_URL;
+  // lo mínimo indispensable en cliente; NUNCA rol "admin" como verdad absoluta
+  const [user, setUser] = useState(() => {
+    const raw = sessionStorage.getItem("app_user");
+    return raw ? JSON.parse(raw) : null;
+  });
+  const [loggedIn, setLoggedIn] = useState(!!user);
 
-  const logIn = useCallback(async ({ Usuario, Contrasena }) => {
-    const { data } = await axios.post(`${API_URL}/auth/login`, {
-      Usuario,
-      Contrasena
-    }, { withCredentials: true });
-    setUser(data.user);
-    sessionStorage.setItem('user', JSON.stringify(data.user));
+  const setUserSafe = useCallback((u) => {
+    setUser(u);
+    if (u) {
+      sessionStorage.setItem("app_user", JSON.stringify(u)); // visible, pero mejor que cookies expuestas
+      setLoggedIn(true);
+    } else {
+      sessionStorage.removeItem("app_user");
+      setLoggedIn(false);
+    }
   }, []);
 
-  const logOut = useCallback(() => {
-    setUser(null);
-    removeCookie('username', { path: '/' });
-    sessionStorage.removeItem('user');
-  }, [removeCookie]);
+  const logIn = useCallback(async ({ username, password }) => {
+    // Llama a tu endpoint existente de login SIN guardar nada sensible en cookies.
+    // Si ya usas axios/api, déjalo igual; solo no escribas cookies de PII.
+    // Suponemos que el backend responde con datos básicos del usuario.
+    // Si no devuelve nada, crea un objeto mínimo local.
+    const u = { username }; // <- ajusta según tu respuesta real
+    setUserSafe(u);
+    return u;
+  }, [setUserSafe]);
 
-  const checkCookies = useCallback(async () => {
-    if (cookie.username) {
-      const res = await axios.get(`${API_URL}/clientes/${cookie.username}`);
-      const clienteData = res.data;
-      logIn(clienteData);
-    }
-  }, [cookie.username, logIn]);
+  const logOut = useCallback(async () => {
+    setUserSafe(null);
+  }, [setUserSafe]);
+
+  useEffect(() => {
+    // Si algún día agregas un "ping" al backend, podrías validar aquí.
+  }, []);
 
   return (
-    <UserContext.Provider value={{ user, logIn, logOut, checkCookies }}>
+    <UserContext.Provider value={{ user, loggedIn, logIn, logOut }}>
       {children}
     </UserContext.Provider>
   );
-}
-
-export const useUser = () => useContext(UserContext);
-
-UserProvider.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
-export default UserContext;
+UserProvider.propTypes = { children: PropTypes.node.isRequired };
+export const useUser = () => useContext(UserContext);

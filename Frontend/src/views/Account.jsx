@@ -10,11 +10,13 @@ import axios from "axios";
 import ModifyUsernameModal from "../components/ModifyUsernameModal.jsx";
 import ModifyPasswordModal from "../components/ModifyPasswordModal.jsx";
 import CancelOrderModal from "../components/CancelOrderModal.jsx";
+import api from '../lib/api';
+
 
 function Account() {
   const { user, logOut } = useUser();
   const API_URL = import.meta.env.VITE_API_URL;
-  const URI = `${API_URL}/consultas/pedidos/${user?.CedulaCliente}`;
+  const URI = `/consultas/pedidos/${user?.CedulaCliente}`;
   const navigate = useNavigate();
 
   const [showAccountModal, setShowAccountModal] = useState(false);
@@ -29,43 +31,68 @@ function Account() {
   const [orderSelected, setOrderSelected] = useState(0);
 
   useEffect(() => {
-    if (user) {
-      getPedidos()
-    }
-  });
-
-  const getPedidos = async () => {
-    const res = await axios.get(URI);
-    const pedidosData = res.data;
-
-    const pedidosAgrupados = {};
-    pedidosData.forEach(pedido => {
-      if (pedidosAgrupados.hasOwnProperty(pedido.NumeroFactura)) {
-        pedidosAgrupados[pedido.NumeroFactura].push({
-          Modelo: pedido.ModeloProducto,
-          Cantidad: pedido.CantidadProducto
-        });
-      } else {
-        pedidosAgrupados[pedido.NumeroFactura] = [{
-          Modelo: pedido.ModeloProducto,
-          Cantidad: pedido.CantidadProducto
-        }];
+    if (!user) return;
+  
+    const fetchPedidos = async () => {
+      try {
+        await getPedidos();
+      } catch (err) {
+        console.error('Error al obtener pedidos:', err);
+        if (err?.response?.status === 401) {
+          // Opcional: redirigir a login, refrescar token, etc.
+          // navigate('/login');
+        }
       }
-    });
+    };
+  
+    fetchPedidos();
+  }, [user]); 
+  
 
-    const pedidosAgrupadosArray = Object.keys(pedidosAgrupados).map(numeroFactura => ({
-      NumeroFactura: parseInt(numeroFactura),
-      ModeloProducto: pedidosAgrupados[numeroFactura],
-      Estado: pedidosData.find(pedido => pedido.NumeroFactura === parseInt(numeroFactura)).Estado,
-      FechaDeCompra: pedidosData.find(pedido => pedido.NumeroFactura === parseInt(numeroFactura)).FechaDeCompra,
-      Repartidor: pedidosData.find(pedido => pedido.NumeroFactura === parseInt(numeroFactura)).Repartidor
-    }));
+  // Reemplaza tu getPedidos por este:
+  const getPedidos = async () => {
+    try {
+      const cedula = user?.CedulaCliente;
+      if (!cedula) return; // evita llamadas si aún no hay user
 
-    const pedidosEntregadosArray = pedidosAgrupadosArray.filter(pedido => pedido.Estado === "Entregado");
-    const pedidosEnProcesoArray = pedidosAgrupadosArray.filter(pedido => pedido.Estado === "En proceso");
-    setPedidosEntregados(pedidosEntregadosArray);
-    setPedidosEnProceso(pedidosEnProcesoArray);
-  }
+      // Usa el wrapper con token/cookies
+      const { data = [] } = await api.get(`/consultas/pedidos/${cedula}`);
+
+      // Agrupación por NumeroFactura en una sola pasada
+      const agrupado = data.reduce((acc, p) => {
+        const nf = Number(p.NumeroFactura);
+        if (!acc[nf]) {
+          acc[nf] = {
+            NumeroFactura: nf,
+            ModeloProducto: [],
+            Estado: p.Estado,
+            FechaDeCompra: p.FechaDeCompra,
+            Repartidor: p.Repartidor
+          };
+        }
+        acc[nf].ModeloProducto.push({
+          Modelo: p.ModeloProducto,
+          Cantidad: p.CantidadProducto
+        });
+        return acc;
+      }, {});
+
+      const pedidosAgrupadosArray = Object.values(agrupado);
+
+      const pedidosEntregadosArray = pedidosAgrupadosArray.filter(
+        (pedido) => pedido.Estado === "Entregado"
+      );
+      const pedidosEnProcesoArray = pedidosAgrupadosArray.filter(
+        (pedido) => pedido.Estado === "En proceso"
+      );
+
+      setPedidosEntregados(pedidosEntregadosArray);
+      setPedidosEnProceso(pedidosEnProcesoArray);
+    } catch (err) {
+      throw err;
+    }
+  };
+
 
 
   const handleLogOutClick = () => {

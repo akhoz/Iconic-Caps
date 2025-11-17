@@ -38,15 +38,26 @@ export const obtenerProductosComprados = async (req, res) => {
 };
 
 export const crearNuevoPedido = async (req, res) => {
-  const { CedulaClienteSolicitante, porcentajeGarantia, direccionIngresada } = req.body;
+  const { porcentajeGarantia, direccionIngresada } = req.body;
+  const cedulaToken = String(req.user.sub); // <-- sacada del token
+
+  if (!cedulaToken) {
+    return res.status(401).json({ error: 'No se pudo obtener la cédula desde el token' });
+  }
 
   try {
-    const nuevaFactura = await crearPedido(CedulaClienteSolicitante, porcentajeGarantia, direccionIngresada);
+    const nuevaFactura = await crearPedido(
+      cedulaToken,
+      porcentajeGarantia,
+      direccionIngresada
+    );
     res.status(201).json({ NumeroFactura: nuevaFactura });
   } catch (error) {
+    console.error('Error al crear pedido:', error);
     res.status(500).json({ error: 'Error al crear el pedido' });
   }
 };
+
 
 export const obtenerDatosDesdeVista = async (req, res) => {
   const { vista } = req.params;
