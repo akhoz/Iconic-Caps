@@ -4,12 +4,10 @@ import axios from 'axios';
 import { useState } from "react";
 import WarningModal from "../components/WarningModal.jsx";
 import { useUser } from "../contexts/UserContext.jsx";
-import { useCookies } from "react-cookie";
+import api from '../lib/api'; // si no lo usas aquí, puedes quitar este import
 
 function LogIn() {
   const { logIn } = useUser();
-  const [cookie, setCookie, removeCookie] = useCookies(['username']);
-
   const [username, setUsername] = useState('x');
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -22,8 +20,8 @@ function LogIn() {
   const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
-    const v = e.target.value;
-    setUsername(v === '' ? 'x' : v);
+    const v = e.target.value || 'x';
+    setUsername(v);
   };
 
   const handlePasswordChange = (e) => setPassword(e.target.value);
@@ -32,32 +30,23 @@ function LogIn() {
 
   const handleLogInClick = async () => {
     try {
-      // Enviar credenciales al backend (flujo seguro)
-      const { data } = await axios.post(
-        `${API_URL}/auth/login`,
-        {
-          Usuario: username,
-          Contrasena: password,
-        },
-        { withCredentials: true }
-      );
+      // 1) Enviar credenciales al servidor
+      const { data } = await axios.post(`${API_URL}/auth/login`, {
+        Usuario: username,
+        Contrasena: password,
+      });
 
-      const usuario = data.user;
+      const usuario = data.user; // lo que devuelva tu backend (username, Admin, Email, etc.)
 
-      // Guardar sesión en contexto
-      logIn({ Usuario: usuario.Usuario, Admin: usuario.Admin });
+      // 2) NO cookies. Guarda solo en estado/contexto + sessionStorage para la UI
+      //    (App.jsx ya rehidrata leyendo sessionStorage.getItem('user'))
+      sessionStorage.setItem('user', JSON.stringify(usuario));
+      // Si tu UserContext expone logIn para setear el estado de la UI, úsalo:
+      logIn(usuario);
 
-      // Remember me
-      if (rememberMe) {
-        setCookie('username', usuario.Usuario, { path: '/' });
-      }
-
-      // Redirección por rol
-      if (usuario.Admin) {
-        navigate('/Admin');
-      } else {
-        navigate('/Account');
-      }
+      // 3) Redirección (solo UI). No es autorización real.
+      if (usuario?.Admin) navigate('/Admin');
+      else navigate('/Account');
     } catch (err) {
       const is401 = err?.response?.status === 401;
 
@@ -76,10 +65,7 @@ function LogIn() {
   return (
     <>
       <div className="flex flex-col mt-20 lg:mt-0 lg:h-screen lg:flex-row">
-        <div
-          className="flex flex-col items-center justify-center mt-10 lg:mt-0 lg:w-3/4"
-          data-aos="fade-right"
-        >
+        <div className="flex flex-col items-center justify-center mt-10 lg:mt-0 lg:w-3/4" data-aos="fade-right">
           <img src="/img/iconic-caps-logo.png" alt="iconic-caps-logo" className="w-1/6" />
           <h1 className="text-4xl font-bold">Log In</h1>
 
@@ -106,17 +92,12 @@ function LogIn() {
               />
               <p className="text-md text-gray-600 pl-3">Remember Me</p>
             </div>
-
-            <div className="flex items-center justify-center bg-black text-white font-bold p-2 rounded-md mb-5 hover:scale-105 transition-transform">
+            <div className="flex items-center justify-center bg-black text-white font-bold p-2 rounded-md mb-5 transition-transform transform hover:scale-105">
               <button onClick={handleLogInClick} className="w-full h-full">
                 Log In
               </button>
             </div>
-
-            <a
-              className="text-md text-gray-600 mb-2 hover:scale-105 transition-transform"
-              href="#"
-            >
+            <a className="text-md text-gray-600 mb-2 transition-transform transform hover:scale-105" href="#">
               I forgot my password
             </a>
 
@@ -132,10 +113,10 @@ function LogIn() {
         <div className="hidden lg:flex flex-col bg-black justify-center items-center w-1/4">
           <img src="/img/slogan.png" alt="slogan" />
         </div>
-
         <Link
           to="/"
-          className="flex flex-row items-center space-x-2 absolute top-0 left-0 ml-4 mt-4 text-black font-bold text-md hover:scale-105 transition-transform"
+          className="flex flex-row items-center space-x-2 absolute top-0 left-0 ml-4 mt-4 text-black font-bold text-md transition-transform transform hover:scale-105"
+          data-aos="fade-right"
         >
           <FaArrowLeft />
           <span>Home</span>
@@ -143,17 +124,15 @@ function LogIn() {
       </div>
 
       {showModal && (
-        <>
-          <div className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-y-auto">
-            <WarningModal
-              warningTitle={errorTitle}
-              warningDescription={errorMsg}
-              handleCloseModal={handleCloseModal}
-            />
-          </div>
-          <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>
-        </>
+        <div className="fixed z-50 inset-0 flex items-center m-5 justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none lg:m-0">
+          <WarningModal
+            warningTitle={errorTitle}
+            warningDescription={errorMsg}
+            handleCloseModal={handleCloseModal}
+          />
+        </div>
       )}
+      {showModal && <div className="fixed inset-0 w-full h-screen bg-black z-30 opacity-80"></div>}
     </>
   );
 }

@@ -1,115 +1,70 @@
-// ** Métodos para el CRUD + Login con migración en caliente **
+//** Métodos para el CRUD**/
 
+import ClienteModel from "../models/ClienteModel.js"
+import PersonaModel from "../models/PersonaModel.js"
 import bcrypt from 'bcrypt';
-import ClienteModel from "../models/ClienteModel.js";
-import PersonaModel from "../models/PersonaModel.js";
 
-const SALT_ROUNDS = 12;
-
-const looksHashed = (value = "") =>
-  typeof value === "string" && (/^\$2[aby]\$/.test(value) || /^\$argon2/.test(value));
-
+//Mostrar todos los registros
 export const getAllClientes = async (req, res) => {
   try {
     const clientes = await ClienteModel.findAll({
-      attributes: { exclude: ['Contrasena'] },
-      include: [{ model: PersonaModel, required: false }]
+      include: [{ model: PersonaModel }],
+      attributes: { exclude: ['Contrasena'] }
     });
-    return res.json(clientes);
+    res.json(clientes);
   } catch (error) {
-    console.error('[getAllClientes]', error);
-    return res.status(500).json({ message: 'Error interno' });
+    res.status(500).json({ message: error.message });
   }
 };
 
 export const getCliente = async (req, res) => {
-  try {
-    const includePassword = req.query.withPassword === 'true';
-
-    const cliente = await ClienteModel.findOne({
-      where: { Usuario: req.params.Usuario },
-      include: [{ model: PersonaModel, required: false }],
-    });
-
-    if (!cliente) {
-      return res.status(404).json({ message: 'Cliente no encontrado' });
+    try {
+        const cliente = await ClienteModel.findOne({
+          where: { Usuario: req.params.Usuario },
+          include: [{ model: PersonaModel }],
+          attributes: { exclude: ['Contrasena'] }
+        });
+        res.json(cliente);
+    } catch (error) {
+        res.json({ message: error.message });
     }
-
-    return res.json(cliente);
-  } catch (error) {
-    console.error('[getCliente]', error);
-    return res.status(500).json({ message: 'Error interno' });
-  }
 };
 
 
 export const createCliente = async (req, res) => {
-  try {
-    const { Contrasena, Persona, ...rest } = req.body;
-
-    if (!Contrasena || Contrasena.length < 8) {
-      return res.status(400).json({ message: 'La contraseña debe tener al menos 8 caracteres' });
-    }
-
-    const hashed = await bcrypt.hash(Contrasena, SALT_ROUNDS);
-
-    const nuevo = await ClienteModel.create(
-      {
-        ...rest,
-        Contrasena: hashed,
-        ...(Persona ? { Persona } : {})
-      },
-      Persona ? { include: [{ model: PersonaModel }] } : undefined
-    );
-
-    const { Contrasena: _omit, ...safe } = nuevo.get({ plain: true });
-    return res.status(201).json({ message: 'Cliente creado con éxito', cliente: safe });
-  } catch (error) {
-    console.error('[createCliente]', error);
-    return res.status(500).json({ message: 'Error interno' });
-  }
-};
-
-
-export const updateUsuarioCliente = async (req, res) => {
-  try {
-    const { Usuario: nuevoUsuario, Contrasena: nuevaContrasena } = req.body;
-
-    const payload = {};
-    if (nuevoUsuario) payload.Usuario = nuevoUsuario?.trim();
-
-    if (typeof nuevaContrasena !== 'undefined') {
-      if (!nuevaContrasena || nuevaContrasena.length < 8) {
-        return res.status(400).json({ message: 'La contraseña debe tener al menos 8 caracteres' });
+    try {
+      const data = { ...req.body };
+  
+      if (data.Contrasena) {
+        const saltRounds = 12; // ajustar si necesario
+        data.Contrasena = await bcrypt.hash(data.Contrasena, saltRounds);
       }
-      payload.Contrasena = await bcrypt.hash(nuevaContrasena, SALT_ROUNDS);
+  
+      await ClienteModel.create(data);
+      res.json({ message: "Cliente creado con éxito" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
+  };
 
-    if (Object.keys(payload).length === 0) {
-      return res.status(400).json({ message: 'No se enviaron campos válidos para actualizar' });
+  export const updateUsuarioCliente = async (req, res) => {
+    try {
+      const payload = { ...req.body };
+  
+      if (payload.Contrasena) {
+        const saltRounds = 12;
+        payload.Contrasena = await bcrypt.hash(payload.Contrasena, saltRounds);
+      }
+  
+      await ClienteModel.update(payload, {
+        where: { Usuario: req.params.Usuario }
+      });
+  
+      res.json({ message: "Cliente actualizado con éxito" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
-
-    const [updated] = await ClienteModel.update(payload, {
-      where: { Usuario: req.params.Usuario },
-    });
-
-    if (updated === 0) {
-      return res.status(404).json({ message: 'Cliente no encontrado' });
-    }
-
-    const clienteActualizado = await ClienteModel.findOne({
-      where: { Usuario: payload.Usuario || req.params.Usuario },
-      attributes: { exclude: ['Contrasena'] },
-      include: [{ model: PersonaModel, required: false }]
-    });
-
-    return res.json({ message: 'Cliente actualizado', cliente: clienteActualizado });
-  } catch (error) {
-    console.error('[updateUsuarioCliente]', error);
-    return res.status(500).json({ message: 'Error interno' });
-  }
-};
-
+  };
 
 export const deleteCliente = async (req, res) => {
   try {
